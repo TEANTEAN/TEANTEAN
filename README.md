@@ -6,11 +6,11 @@ Peer Groups (people with shared commonalities) benefit from participating by bui
 
 ## Structure 
 ```bash
-├── data_sample
 ├── docs
 ├── prototypes
 │   ├── high_fidelity
 │   └── low_fidelity
 ├── tests
 ├── ui
+├── data_sample
 └── README.md
