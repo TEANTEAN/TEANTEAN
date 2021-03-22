@@ -7,10 +7,10 @@ Peer Groups (people with shared commonalities) benefit from participating by bui
 ## Structure 
 ```bash
 ├── docs
+├── tests
 ├── prototypes
 │   ├── high_fidelity
 │   └── low_fidelity
-├── tests
 ├── ui
 ├── data_sample
 └── README.md
