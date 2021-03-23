@@ -1,6 +1,6 @@
 # SWEN90013 Masters Advanced Software Project<br />
 
-*Year: 2021*<br />
+*Year:* 2021<br />
 *Team name*: Team GN<br />
 *Inception sprint tag*: TBA<br />
 *Submission tag 2*: TBA<br />
