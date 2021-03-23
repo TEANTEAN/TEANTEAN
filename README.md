@@ -4,13 +4,3 @@ An online peer-led focus group for unrivalled research — genyus Roundtable is 
 
 Peer Groups (people with shared commonalities) benefit from participating by building confidence and interpersonal connections plus enhancing self-advocacy skills, while Research and Health Organisations who are looking to better support their constituents also benefit from the process of conducting a Roundtable by collecting non-biased research.
 
-## Structure 
-```bash
-├── docs
-├── tests
-├── prototypes
-│   ├── high_fidelity
-│   └── low_fidelity
-├── ui
-├── data_sample
-└── README.md
