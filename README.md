@@ -30,6 +30,7 @@ The project solution will encompass all current processes involved in the genyus
 | Name | Email | Student ID |
 | ---- | ---------- | ----- |
 | Luke Rosa | lrosa@student.unimelb.edu.au | 319522 |
+| Yang Zhou | yangz7@student.unimelb.edu.au | NA |
 
 <br />
 
