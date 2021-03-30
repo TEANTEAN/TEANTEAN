@@ -3,10 +3,10 @@
 *Year:* 2021<br />
 *Team name*: Team GN<br />
 *Inception sprint tag*: TBA<br />
-*Submission tag 2*: TBA<br />
-*Submission tag 3*: TBA<br />
-*Submission tag 4*: TBA<br />
-*Submission tag 5*: TBA<br /><br />
+*Sprint 1 tag*: TBA<br />
+*Sprint 2 tag*: TBA<br />
+*Sprint 3 tag*: TBA<br />
+*Sprint 4 tag*: TBA<br /><br />
 
 ## Project Summary
 
@@ -16,6 +16,7 @@ An online peer-led focus group for unrivalled research — genyus Roundtable is 
 Peer Groups (people with shared commonalities) benefit from participating by building confidence and interpersonal connections plus enhancing self-advocacy skills, while Research and Health Organisations who are looking to better support their constituents also benefit from the process of conducting a Roundtable by collecting non-biased research.
 
 The project solution will encompass all current processes involved in the genyus Roundtable:
+
 - Creation of a branded landing page for each focus group, in partnership with Research and Health Organisation Partners;
 - The branded landing page will feature: information on the focus group, dates and times for each Roundtable, the ability for participants to self-allocate into a Roundtable or email support with a request to add additional Roundtables;
 - The ability for genyus admin to approve or decline participants who register for a Roundtable;
@@ -28,17 +29,26 @@ The project solution will encompass all current processes involved in the genyus
 ### About the Team
 
 | Name | Email | Student ID |
-| ---- | ---------- | ----- |
+| - | - | - |
 | Luke Rosa | lrosa@student.unimelb.edu.au | 319522 |
-| Yang Zhou | yangz7@student.unimelb.edu.au | NA |
+| Yang Zhou | yangz7@student.unimelb.edu.au | 693507 |
+| Joel Launder | jlaunder@student.unimelb.edu.au | 910495 |
+| "Chuan" Chuanyuan Liu | liuchuanyuan@gmail.com | 884140 |
+| "Eric" Pei-Chen Chen | peichenc@student.unimelb.edu.au | 860261 |
+| "William" Zhentao He | zhentaoh2@student.unimelb.edu.au | 951916 |
+| "Max" Jiacheng Ye | jiachengy1@student.unimelb.edu.au | 904973 |
+| Nicolas Montorio | nmontorio@student.unimelb.edu.au | 911211 |
+| "Jason" Mingyu Su | msu2@student.unimelb.edu.au | 912474 |
+| Sam Webster | swebster1@student.unimelb.edu.au | 639399 |
+| "Tean" Surasak Janeiad | sjaneiad@student.unimelb.edu.au | 1146826 |
 
 <br />
 
 ### Changelog
 
-| Sprint | Change |
-| ---- | ---------- |
-| Inception | |
+| Sprint | Change | Description |
+| - | - | - |
+| Inception | | |
 
 <br />
 
