@@ -22,9 +22,11 @@ class ResearchPartner {
 }
 
 class Participant {
+  mobileNumber
 }
 
 class Series {
+  url
   title
   description
   videoLink
@@ -75,10 +77,10 @@ Certificate -up-|> Notification
 ResearchPartner -up-|> User
 Admin -up-|> User
 Participant -up-|> User
-PeerLeader -up-|> User
+PeerLeader -up-|> Participant
 
 Admin "1" -down- "*" Series: creates >
-ResearchPartner "1" -down- "*" Series: parters for >
+ResearchPartner "1" -down- "*" Series: partners for >
 Participant "*" -down-- "*" Roundtable: participates in >
 Participant "1" - "*" Registration: submits >
 Roundtable "1" - "*" Registration: is for <
