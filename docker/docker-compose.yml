@@ -1,38 +1,40 @@
 version: '3'
+
 services:
   strapi:
-    build:
-      context: strapi
-      dockerfile: Dockerfile
+    image: strapi/strapi
+    container_name: strapi
+    restart: unless-stopped
+    #env_file: .env
     environment:
+      DATABASE_AUTHENTICATION_DATABASE: admin
       DATABASE_CLIENT: mongo
       DATABASE_NAME: strapi
       DATABASE_HOST: mongo
       DATABASE_PORT: 27017
       DATABASE_USERNAME: strapi
-      DATABASE_PASSWORD: strapi
-    volumes:
-      - ./strapi/strapi-app:/srv/app
-    ports:
-      - '1337:1337'
-    depends_on:
-      - mongo
+      DATABASE_PASSWORD: password
     networks:
       - strapi-app-network
+    volumes:
+      - .strapi/app:/srv/app
+    ports:
+      - "1337:1337"
 
   mongo:
-    build:
-      context: mongo
-      dockerfile: Dockerfile
+    image: mongo
+    container_name: mongo
+    restart: unless-stopped
+    #env_file: .env
     environment:
-      MONGO_INITDB_DATABASE: strapi
       MONGO_INITDB_ROOT_USERNAME: strapi
-      MONGO_INITDB_ROOT_PASSWORD: strapi
-    volumes:
-      - ./mongo/db-data:/data/db
-      - ./mongo/backup:/backup
+      MONGO_INITDB_ROOT_PASSWORD: password
     networks:
       - strapi-app-network
+    volumes:
+      - .mongo/strapidata:/data/db
+    ports:
+      - "27017:27017"
 
   nextjs:
     ports:
@@ -42,6 +44,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./next/app:/usr/src/app
+
 
 networks:
   strapi-app-network:
