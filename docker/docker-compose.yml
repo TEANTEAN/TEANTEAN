@@ -17,6 +17,8 @@ services:
       - '1337:1337'
     depends_on:
       - mongo
+    networks:
+      - strapi-app-network
 
   mongo:
     build:
@@ -28,6 +30,9 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: strapi
     volumes:
       - ./mongo/db-data:/data/db
+      - ./mongo/backup:/backup
+    networks:
+      - strapi-app-network
 
   nextjs:
     ports:
@@ -38,3 +43,6 @@ services:
     volumes:
       - ./next/app:/usr/src/app
 
+networks:
+  strapi-app-network:
+    driver: bridge
