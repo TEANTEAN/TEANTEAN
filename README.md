@@ -41,6 +41,7 @@ The project solution will encompass all current processes involved in the genyus
 | "Jason" Mingyu Su | msu2@student.unimelb.edu.au | 912474 |
 | Sam Webster | swebster1@student.unimelb.edu.au | 639399 |
 | "Tean" Surasak Janeiad | sjaneiad@student.unimelb.edu.au | 1146826 |
+| Callum Dowling | dowlingcj@student.unimelb.edu.au | 1009257 |
 
 <br />
 
@@ -53,3 +54,20 @@ The project solution will encompass all current processes involved in the genyus
 <br />
 
 ### Setup Instructions
+- Navigate into docker directory
+- Ensure docker and docker-compose are installed correctly https://docs.docker.com/compose/install/
+- Use command: docker-compose up -d, this will download all required images and make 3 seperate services, strapi, mongo, and nextjs
+- By default nextjs is running on port 3000 and strapi in port 1337 but these details can be viewed in the docker-compose yml
+- It will also sort out the dns settings as docker can use networks, so for example the nextjs container can access the strapi container by juse using strapi:3000 instead of an ip address
+
+## Guide for updating database
+- The mongo database is version controlled by creating a volume from <git root dir>/docker/strapi/backup to container /backup this volume is a binary dump of the database and is restored each time the docker image is built as specified in the mongo Dockerfile
+- The workflow for changing the database is the following:
+1. Edit required strapi information
+2. docker exec -t <container hash> mongodump -u strapi -p strapi --out /backup/
+3. Push changes to git
+4. Other people will now have access to the new database
+- I believe chaning the database from anywhere except strapi should be disallowed at first, because it could cause strapi to break down
+
+
+

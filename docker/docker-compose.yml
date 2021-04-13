@@ -17,7 +17,7 @@ services:
     networks:
       - strapi-app-network
     volumes:
-      - .strapi/app:/srv/app
+      - ./strapi/app:/srv/app
     ports:
       - "1337:1337"
 
@@ -32,7 +32,8 @@ services:
     networks:
       - strapi-app-network
     volumes:
-      - .mongo/strapidata:/data/db
+      - ./mongo/strapidata:/data/db
+      - ./mongo/backup:/backup
     ports:
       - "27017:27017"
 
