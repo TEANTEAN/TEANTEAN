@@ -1,0 +1,102 @@
+@startuml
+
+right header
+<font color=blue>genyus Roundtable</font>
+Domain Model
+endheader
+
+left to right direction
+
+actor genyusAdmin
+actor ResearchPartner
+actor Participant
+Participant <|-- PeerLeader
+
+package "genyus Roundtable" {
+  usecase "Reach out to\ngenyus Roundtable" as UC1
+  usecase "Create an account" as UC2
+  usecase "Log into\nmy account" as UC3
+  usecase "Create a series\nlanding page" as UC4
+  usecase "Upload the Series\ndescription and graphics" as UC5
+  usecase "Integrate a calendar\nwith a Series" as UC6
+  usecase "Select dates and\ntimes of Roundtables" as UC7
+  usecase "Create a list of questions" as UC8
+  usecase "Create a 'consent to be recorded" as UC9
+  usecase "Obtain a shareable\nURL for a Series" as UC10
+  usecase "Register for a Roundtable" as UC11
+  usecase "Provide my mobile phone number" as UC12
+  usecase "Receive confirmation email" as UC13
+  usecase "Receive confirmation text" as UC14
+  usecase "Provide suggestions\nfor more Roundtable\ntimes" as UC15
+  usecase "Fill out the\nintroduction and biography\nquestions" as UC16
+  usecase "Send a confirmation email" as UC17
+  usecase "Send a confirmation text" as UC18
+  usecase "View all Participants attending" as UC19
+  usecase "Send a text reminder" as UC20
+  usecase "Send an email reminder" as UC21
+  usecase "Receive a text reminder" as UC22
+  usecase "Receive an email reminder" as UC23
+  usecase "Upload recording" as UC24
+  usecase "Upload transcript" as UC25
+  usecase "Create a questionnaire\nfor the Peer Leader" as UC26
+  usecase "Answer post-Roundtable questions" as UC27
+  usecase "Send post-Roundtable answers" as UC28
+  usecase "Create a landing\npage for a past\nSeries" as UC29
+  usecase "Email all Series Participants" as UC30
+  usecase "Access uploads" as UC31
+  usecase "Reward Participants\nwith a Certificate" as UC32
+  usecase "Receive payment for\ncompleting a Series" as UC33
+  usecase "Receive a certificate\nfor completing a Series" as UC34
+  usecase "Reward Participants with financial payment" as UC35
+  usecase "Create a receipt of payment" as UC36
+  usecase "Create a receipt of certificate" as UC37
+
+}
+
+ResearchPartner --> UC1
+genyusAdmin --> UC2
+genyusAdmin --> UC3
+ResearchPartner --> UC3
+PeerLeader --> UC3
+genyusAdmin --> UC4
+genyusAdmin --> UC5
+genyusAdmin --> UC6
+genyusAdmin --> UC7
+genyusAdmin --> UC8
+genyusAdmin --> UC9
+genyusAdmin --> UC10
+Participant --> UC11
+Participant --> UC12
+Participant --> UC13
+Participant --> UC14
+Participant --> UC15
+Participant --> UC16
+genyusAdmin --> UC17
+genyusAdmin --> UC18
+genyusAdmin --> UC19
+genyusAdmin --> UC20
+genyusAdmin --> UC21
+Participant --> UC22
+PeerLeader --> UC22
+Participant --> UC23
+PeerLeader --> UC23
+genyusAdmin --> UC24
+genyusAdmin --> UC25
+genyusAdmin --> UC26
+PeerLeader --> UC27
+PeerLeader --> UC28
+genyusAdmin --> UC29
+genyusAdmin --> UC30
+genyusAdmin --> UC31
+PeerLeader --> UC31
+ResearchPartner --> UC31
+genyusAdmin --> UC32
+PeerLeader --> UC33
+Participant --> UC33
+PeerLeader --> UC34
+Participant --> UC34
+genyusAdmin --> UC35
+genyusAdmin --> UC36
+genyusAdmin --> UC37
+
+@enduml
