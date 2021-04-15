@@ -1,0 +1,100 @@
+@startuml
+
+right header
+<font color=blue>genyus Roundtable</font>
+Domain Model
+endheader
+
+class User {
+  firstName
+  lastName
+  email
+}
+
+
+class Admin {
+}
+
+class PeerLeader {
+}
+
+class ResearchPartner {
+  organisation
+}
+
+class Participant {
+  mobileNumber
+}
+
+class Series {
+  url
+  title
+  description
+  videoLink
+}
+
+class Roundtable {
+  dateTime
+  zoomLink
+  capacity
+}
+
+class RoundtableNotes {
+  recording
+  transcript
+}
+
+class Registration {
+}
+
+class Notification {
+  title
+  message
+}
+
+class Questionnaire {
+}
+
+class Question {
+  question
+}
+
+class Reminder {
+}
+
+class FinancialPayment {
+  currency
+  amount
+  dateTime
+}
+
+class Certificate {
+}
+
+Reminder -up-|> Notification
+FinancialPayment -up-|> Notification
+Certificate -up-|> Notification
+
+ResearchPartner -up-|> User
+Admin -up-|> User
+Participant -up-|> User
+PeerLeader -up-|> Participant
+
+Admin "1" -down- "*" Series: creates >
+ResearchPartner "1" -down- "*" Series: partners for >
+Participant "*" -down-- "*" Roundtable: participates in >
+Participant "1" - "*" Registration: submits >
+Roundtable "1" - "*" Registration: is for <
+PeerLeader "1" - "*" Roundtable: leads >
+Admin "1" - "*" Notification: creates >
+Admin "1" - "*" Registration: reviews >
+User "1..*" -left- "*" Notification: receives >
+Roundtable "1" --down- "0..1" RoundtableNotes: document < 
+Series "1" -down- "1..*" Roundtable: contains >
+Questionnaire "1" -down- "*" Question: contains >
+Series "1" -down- "1" Questionnaire: contains >
+Registration "*" - "*" Question: responds to >
+(Question, Registration) .. Response
+Admin "1" - "0..*" RoundtableNotes: uploads >
+
+@enduml

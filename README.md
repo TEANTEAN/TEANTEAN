@@ -46,10 +46,32 @@ The project solution will encompass all current processes involved in the genyus
 
 ### Changelog
 
-| Sprint | Change | Description |
-| - | - | - |
-| Inception | | |
+| Change | Description |
+| - | - |
+| Project scope | - Project scope was confirmed in conjunction with the client
+| Requirements | Created:<br/>- Motivational Goal Model<br/>- Personas<br/>- User Stories<br/>- Acceptance Criteria<br/>
+| Design concept | Created:<br/>- Mood Board<br/>- Wireframes<br/>- Design Notebook<br/>|
+| 4+1 Architecture View | Created:<br/>- Logical View<br/>- Physical View<br/>- Development/Implementation View<br/>- Scenarios/Use Cases View<br/>
+| Testing and Quality Assurance | Created:<br/>- Acceptance Testing<br/>- Accessibility Testing<br/>- Functional Testing<br/>- Integration Testing<br/>- Unit Testing |
 
 <br />
 
-### Setup Instructions
+### Setup Instructions (draft)
+
+- Navigate into docker directory
+- Ensure docker and docker-compose are installed correctly <https://docs.docker.com/compose/install/>
+- Use command: docker-compose up -d, this will download all required images and make 3 seperate services, strapi, mongo, and nextjs
+- By default nextjs is running on port 3000 and strapi in port 1337 but these details can be viewed in the docker-compose yml
+- It will also sort out the dns settings as docker can use networks, so for example the nextjs container can access the strapi container by juse using strapi:3000 instead of an ip address
+
+## Guide for updating database
+
+- The mongo database is version controlled by creating a volume from <git root dir>/docker/strapi/backup to container /backup this volume is a binary dump of the database and is restored each time the docker image is built as specified in the mongo Dockerfile
+- The workflow for changing the database is the following:
+
+1. Edit required strapi information
+2. docker exec -t <container hash> mongodump -u strapi -p strapi --out /backup/
+3. Push changes to git
+4. Other people will now have access to the new database
+
+- I believe chaning the database from anywhere except strapi should be disallowed at first, because it could cause strapi to break down
