@@ -2,7 +2,7 @@
 
 *Year:* 2021<br />
 *Team name*: Team GN<br />
-*Inception sprint tag*: inception<br />
+*Inception sprint tag*: Inception Sprint <https://github.com/SWEN90013-2021-GN/GN/releases/tag/Inception><br />
 *Sprint 1 tag*: TBA<br />
 *Sprint 2 tag*: TBA<br />
 *Sprint 3 tag*: TBA<br />
