@@ -43,9 +43,6 @@ services:
     build:
       context: next
       dockerfile: Dockerfile
-    volumes:
-      - ./next/app:/usr/src/app
-
 
 networks:
   strapi-app-network:
