@@ -60,16 +60,15 @@ The project solution will encompass all current processes involved in the genyus
 - By default nextjs is running on port 3000 and strapi in port 1337 but these details can be viewed in the docker-compose yml
 - It will also sort out the dns settings as docker can use networks, so for example the nextjs container can access the strapi container by juse using strapi:3000 instead of an ip address
 
-### Guide for updating database
-- The mongo database is version controlled by creating a volume from <git root dir>/docker/strapi/backup to container /backup this volume is a binary dump of the database and is restored each time the docker image is built as specified in the mongo Dockerfile
-- The workflow for changing the database is the following:
-1. Edit required strapi information
-2. docker exec -t <container hash> mongodump -u strapi -p strapi --out /backup/
-3. Push changes to git
-4. Other people will now have access to the new database
-- I believe chaning the database from anywhere except strapi should be disallowed at first, because it could cause strapi to break down
-
-## Guide for updating frontend
+## Add feature to frontend
 1. When you build a docker image, it will copy the required files for you, this takes about 30 seconds so it might be a good idea to test your changes on a local next build, to do this you can use yarn next build (in next directory), then yarn start -p 2999 (note nextjs uses port 3000 by default, so we need to use different one to avoid conflict)
 2. Then, you can simple rebuild image with docker-compose up -d --build, the changes will be reflected on the docker next version on port 3000.
 3. Commit your changes
+
+## Add backend feature without db model change AND Add backend feature with db model change
+1. Access strapi frontend (localhost:1337)
+2. make some changes
+3. docker ps, find the hash of the mongo container
+4. navigate to the /docker/mongo directory
+5. docker exec -t <hash> mongodump -u strapi -p password --out /backup/
+6. rebuild with docker-compose up -d --build or push to git
