@@ -2,7 +2,7 @@
 
 *Year:* 2021<br />
 *Team name*: Team GN<br />
-*Inception sprint tag*: TBA<br />
+*Inception sprint tag*: Inception Sprint <https://github.com/SWEN90013-2021-GN/GN/releases/tag/Inception><br />
 *Sprint 1 tag*: TBA<br />
 *Sprint 2 tag*: TBA<br />
 *Sprint 3 tag*: TBA<br />
@@ -47,23 +47,32 @@ The project solution will encompass all current processes involved in the genyus
 
 ### Changelog
 
-| Sprint | Change | Description |
-| - | - | - |
-| Inception | | |
+| Change | Description |
+| - | - |
+| Project scope | - Project scope was confirmed in conjunction with the client
+| Requirements | Created:<br/>- Motivational Goal Model<br/>- Personas<br/>- User Stories<br/>- Acceptance Criteria<br/>
+| Design concept | Created:<br/>- Mood Board<br/>- Wireframes<br/>- Design Notebook<br/>|
+| 4+1 Architecture View | Created:<br/>- Logical View<br/>- Physical View<br/>- Development/Implementation View<br/>- Scenarios/Use Cases View<br/>
+| Testing and Quality Assurance | Created:<br/>- Acceptance Testing<br/>- Accessibility Testing<br/>- Functional Testing<br/>- Integration Testing<br/>- Unit Testing |
 
 <br />
 
-## Setup Instructions
+### Setup Instructions (draft)
 - Navigate into docker directory
-- Ensure docker and docker-compose are installed correctly https://docs.docker.com/compose/install/
+- Ensure docker and docker-compose are installed correctly <https://docs.docker.com/compose/install/>
 - Use command: docker-compose up -d, this will download all required images and make 3 seperate services, strapi, mongo, and nextjs
 - By default nextjs is running on port 3000 and strapi in port 1337 but these details can be viewed in the docker-compose yml
 - It will also sort out the dns settings as docker can use networks, so for example the nextjs container can access the strapi container by juse using strapi:3000 instead of an ip address
 
 ## Add feature to frontend
-1. When you build a docker image, it will copy the required files for you, this takes about 30 seconds so it might be a good idea to test your changes on a local next build, to do this you can use yarn next build (in next directory), then yarn start -p 2999 (note nextjs uses port 3000 by default, so we need to use different one to avoid conflict)
+1. When you build a docker image, it will copy the required files for you, this takes about 30 seconds so it might be a good idea to test your changes on a local next build.
 2. Then, you can simple rebuild image with docker-compose up -d --build, the changes will be reflected on the docker next version on port 3000.
 3. Commit your changes
+
+## Testing next locally
+1. Ensure node and yarn are installed on your system.
+2. Run next locally by navigating to the next directory and running yarn dev -p 2999 (note nextjs uses port 3000 by default, so we need to use different one to avoid conflict)
+3. Alternatively , to do this you can use yarn next build (in next directory), then yarn start -p 2999 (note nextjs uses port 3000 by default, so we need to use different one to avoid conflict)
 
 ## Add backend feature without db model change AND Add backend feature with db model change
 1. Access strapi frontend (localhost:1337)
@@ -72,3 +81,4 @@ The project solution will encompass all current processes involved in the genyus
 4. navigate to the /docker/mongo directory
 5. docker exec -t <hash> mongodump -u strapi -p password --out /backup/
 6. rebuild with docker-compose up -d --build or push to git
+
