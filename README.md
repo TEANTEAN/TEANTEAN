@@ -64,6 +64,15 @@ The project solution will encompass all current processes involved in the genyus
 - By default nextjs is running on port 3000 and strapi in port 1337 but these details can be viewed in the docker-compose yml
 - It will also sort out the dns settings as docker can use networks, so for example the nextjs container can access the strapi container by juse using strapi:3000 instead of an ip address
 
+## Using lifesaver script
+- Lifesaver script provides some common operations 
+- USAGE: ./lifesaver.sh <args>
+		up - brings up docker container
+		down - brings down containers
+		destroy - clean docker slate including removing volumes
+		save front - save changes to frontend
+		save back - save changes to backend
+
 ## Add feature to frontend
 1. When you build a docker image, it will copy the required files for you, this takes about 30 seconds so it might be a good idea to test your changes on a local next build.
 2. Then, you can simple rebuild image with docker-compose up -d --build, the changes will be reflected on the docker next version on port 3000.
