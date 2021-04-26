@@ -1,6 +1,6 @@
 # General
 .DS_Store
-docker/mongo/db-data/
-docker/next/app/
-docker/next/.next/
-docker/mongo/strapidata/
+mongo/db-data/
+next/app/
+next/.next/
+mongo/strapidata/
