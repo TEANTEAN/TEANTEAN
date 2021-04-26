@@ -32,7 +32,6 @@ services:
     networks:
       - strapi-app-network
     volumes:
-      - ./mongo/strapidata:/data/db
       - ./mongo/backup:/backup
     ports:
       - "27017:27017"

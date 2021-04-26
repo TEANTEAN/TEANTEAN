@@ -14,7 +14,7 @@ elif [ $1 == "destroy" ]; then
 elif [ $1 == "save" ] && [ $2 == "front" ]; then 
 	exec docker-compose build
 elif [ $1 == "save" ] && [ $2 == "back" ]; then
-	exec "docker exec -t mongo mongodump -u strapi -p password --out ./mongo/backup/; docker-compose up -d --build"
+	exec docker exec -t mongo mongodump -u strapi -p password --out ./mongo/backup/; docker-compose up -d --build
 else
 	echo "USAGE: 
 		up - brings up docker container

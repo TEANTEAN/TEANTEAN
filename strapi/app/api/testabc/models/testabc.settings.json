@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "testabcs",
+  "info": {
+    "name": "testabc"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "asdqwe": {
+      "type": "richtext"
+    }
+  }
+}
