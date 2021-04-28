@@ -41,6 +41,7 @@ The project solution will encompass all current processes involved in the genyus
 | "Jason" Mingyu Su | msu2@student.unimelb.edu.au | 912474 |
 | Sam Webster | swebster1@student.unimelb.edu.au | 639399 |
 | "Tean" Surasak Janeiad | sjaneiad@student.unimelb.edu.au | 1146826 |
+| Callum Dowling | dowlingcj@student.unimelb.edu.au | 1009257 |
 
 <br />
 
@@ -56,22 +57,121 @@ The project solution will encompass all current processes involved in the genyus
 
 <br />
 
-### Setup Instructions (draft)
+## Using the lifesaver script
+- Lifesaver script provides some common operations 
+- USAGE: ./lifesaver.sh <args>
+		up - brings up docker container
+		down - brings down containers
+		destroy - clean docker slate including removing volumes
+		save front - save changes to frontend
+		save back - save changes to backend
 
-- Navigate into docker directory
+## Setup Instructions
+- Pull this project to your local machine with 
+```shell
+git clone https://github.com/SWEN90013-2021-GN/GN.git
+``` 
+If you don't have Git installed, do this now. If you're working on Windows, make sure you install Git Bash as part of the Git installation. 
+- Navigate to the root project directory, you should see the file `livesaver.sh`. This is a script that automates some of the more complex docker commands. 
 - Ensure docker and docker-compose are installed correctly <https://docs.docker.com/compose/install/>
-- Use command: docker-compose up -d, this will download all required images and make 3 seperate services, strapi, mongo, and nextjs
-- By default nextjs is running on port 3000 and strapi in port 1337 but these details can be viewed in the docker-compose yml
-- It will also sort out the dns settings as docker can use networks, so for example the nextjs container can access the strapi container by juse using strapi:3000 instead of an ip address
 
-## Guide for updating database
+##### Extra Steps For Windows Users
+- Make sure either Git Bash is installed (this is generally an option when you first install git) or you have a different method of running bash scripts
+- If you want to run scripts in powershell or windows terminal, add our project's root directory to your PATH and restart your computer (https://helpdeskgeek.com/windows-10/add-windows-path-environment-variable/)
 
-- The mongo database is version controlled by creating a volume from <git root dir>/docker/strapi/backup to container /backup this volume is a binary dump of the database and is restored each time the docker image is built as specified in the mongo Dockerfile
-- The workflow for changing the database is the following:
+##### Linux + Windows
+- Install the Docker VSCode plugin (ms-azuretools.vscode-docker). This gives VSCode the ability to see and manage docker containers and images.
+- Click on the Docker whale icon on the left, you should see something like this:
 
-1. Edit required strapi information
-2. docker exec -t <container hash> mongodump -u strapi -p strapi --out /backup/
-3. Push changes to git
-4. Other people will now have access to the new database
+![docker vscode extension](./images/docker-vscode-plugin.png)
 
-- I believe chaning the database from anywhere except strapi should be disallowed at first, because it could cause strapi to break down
+- Download the necessary docker images and start all of our containers using
+```shell
+./lifesaver.sh up
+```
+
+- Once the containers are up and running, you should be able to see them inside the docker plugin
+- Right click the `strapi/strapi` container to see what's happening inside
+![docker vscode view container](./images/docker-view-container.png)
+
+- A terminal will open in vscode. You'll have to wait for strapi to download dependencies. This may take a while:
+![strapi dep install](./images/strapi-deps.png)
+
+- Once this is complete, all of your services should be up and running. Check that the urls below each return something.
+
+| Service | Port Connected To Docker Container | URL |
+| - | - | - |
+| NextJS | 3000 | http://localhost:3000 |
+| Mongo | 27017 | http://localhost:27017 |
+| Strapi | 1337 | http://localhost:1337 |
+
+## Adding a feature to the frontend
+- Make sure no containers are running either through the docker vscode plugin, or with
+```shell
+./lifesaver.sh down
+```
+- Bring up the backend to interact with
+```shell
+./lifesaver.sh up-backend
+```
+
+- Navigate to the next directory and start next in development mode
+```shell
+yarn dev
+```
+
+- You can now make changes and next will hot-reload
+- Ensure that your changes also run in a production environment by running
+```shell
+yarn build
+yarn start
+```
+
+- Once finished, save the frontend with
+```shell
+./lifesaver.sh save front
+```
+
+- You can now commit and push your changes
+
+## Adding a feature to the backend
+- Make sure no containers are running either through the docker vscode plugin, or with
+```shell
+./lifesaver.sh down
+```
+- Bring up the backend with
+```shell
+./lifesaver.sh up-backend
+```
+- You can now modify strapi from inside the UI (model changes) or from a code editor (middleware/controller/logic overrides)
+
+- After making your changes to strapi and **before commiting the final changes to git**, run the backend save script to backup and rebuild the backend containers with your changes
+
+```shell
+./lifesaver.sh save back
+```
+
+- You can now commit and push your changes
+
+## (WIP) Running strapi locally - not working yet for Windows users
+TODO: node_modules installed on linux (docker environment) can't be used on windows
+
+- Running Strapi locally for development will allow you to make changes and test them without having to rebuild a new container, however Strapi still needs a connection to the database
+- Run the following lifesaver script to start just the mongo container
+```shell
+./lifesaver.sh up-db
+```
+- Navigate to the `strapi/app/` directory and start strapi in development mode
+```shell
+cd strapi
+cd app 
+yarn develop
+```
+
+- You can now modify strapi from inside the UI (model changes) or from a code editor (middleware/controller/logic overrides)
+
+- After making your changes to strapi and **before commiting the changes to git**, run the backend save script to rebuild the backend containers with your changes
+
+```shell
+./lifesaver.sh save back
+```

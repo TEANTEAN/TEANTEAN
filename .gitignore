@@ -1,2 +1,6 @@
 # General
 .DS_Store
+mongo/db-data/
+next/app/
+next/.next/
+mongo/strapidata/

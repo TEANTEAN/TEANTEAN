@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "test_sams",
+  "info": {
+    "name": "test-sam"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "description": {
+      "type": "string"
+    }
+  }
+}
