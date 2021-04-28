@@ -4,9 +4,9 @@
 if [ $1 == "up" ]; then
 	exec docker-compose up -d
 elif [ $1 == "up-db" ]; then
-	exec docker-compose up mongo -d
+	exec docker-compose up -d mongo
 elif [ $1 == "up-backend" ]; then
-	exec docker-compose up strapi mongo -d
+	exec docker-compose up -d mongo strapi
 elif [ $1 == "down" ]; then
 	exec docker-compose down
 elif [ $1 == "destroy" ]; then 
@@ -14,7 +14,7 @@ elif [ $1 == "destroy" ]; then
 elif [ $1 == "save" ] && [ $2 == "front" ]; then 
 	exec docker-compose build
 elif [ $1 == "save" ] && [ $2 == "back" ]; then
-	exec docker exec -t mongo mongodump -u strapi -p password --out ./mongo/backup/; docker-compose up -d --build
+	exec docker exec -t mongo mongodump -u strapi -p password --out ./backup/ ; docker-compose up -d --build
 else
 	echo "USAGE: 
 		up - brings up docker container
