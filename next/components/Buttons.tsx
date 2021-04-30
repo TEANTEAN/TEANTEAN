@@ -61,6 +61,9 @@ export const GeneralButton: React.FC<GeneralButtonProps & ButtonProps> = ({
 	onClick,
 	// If you try adding a prop here that isn't in GeneralButtonProps or ButtonProps,
 	// It'll give you an error
+
+	//adding this in means any other props not specified here will be passed through to the Button component
+	...rest
 }) => {
 	return (
 		<Button
@@ -72,6 +75,8 @@ export const GeneralButton: React.FC<GeneralButtonProps & ButtonProps> = ({
 			startIcon={startIcon ? startIcon : undefined}
 			endIcon={endIcon ? endIcon : undefined}
 			onClick={onClick ? onClick : undefined}
+			// Adding in this ...rest means any other props passed to GeneralButton will flow through to Button
+			{...rest}
 		>
 			{children}
 		</Button>
