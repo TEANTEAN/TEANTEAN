@@ -1,7 +1,11 @@
+import { NextPage } from "next";
 import Head from "next/head";
 import { GeneralButton } from "../components/Buttons";
 
-export default function Home() {
+// Here you can see how our manually added 'requiredProps' hasn't been included, 
+// so this component throws an error.
+
+const Home: NextPage = () => {
 	return (
 		<div>
 			<Head>
@@ -13,3 +17,5 @@ export default function Home() {
 		</div>
 	);
 }
+
+export default Home;
