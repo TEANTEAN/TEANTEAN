@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { GeneralButton } from "../components/Buttons";
 
 export default function Home() {
 	return (
@@ -8,6 +9,7 @@ export default function Home() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<h1>genyus Rountable</h1>
+			<GeneralButton href="/buttons">Button Library</GeneralButton>
 		</div>
 	);
 }
