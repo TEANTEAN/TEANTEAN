@@ -6,7 +6,7 @@ import {
 	TextButton,
 	IconLabelButton,
 	LoneIconButton,
-} from "../Components/Buttons";
+} from "components/Buttons";
 
 /* Test page used to display all the button types and also testing out mui's grid component */
 function Test() {
