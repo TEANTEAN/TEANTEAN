@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "cypress run",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
@@ -18,6 +20,7 @@
     "@material-ui/types": "^5.1.0",
     "@types/node": "^15.0.1",
     "@types/react": "^17.0.4",
+    "cypress": "^7.2.0",
     "typescript": "^4.2.4"
   }
 }
