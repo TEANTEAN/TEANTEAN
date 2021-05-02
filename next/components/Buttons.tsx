@@ -44,16 +44,19 @@ interface SimpleButtonProps {
 	onClick?: ()=> void;
 }
 
+// Props that are always required for a button with an icon
 interface IconProps {
 	type: "delete" | "download" | "upload";
 	fontSize?: "inherit" | "default" | "small" | "large";
 }
 
+// Props required for a button made of only an icon
 interface LoneIconProps {
 	size?: "small" | "medium";
 	onClick?: ()=> void;
 }
 
+// Props required for a button made of an icon and some text label
 interface IconLabelProps {
 	children: React.ReactNode;
 	iconPosition: "start" | "end"
