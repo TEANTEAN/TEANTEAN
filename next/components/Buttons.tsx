@@ -17,38 +17,56 @@ interface GeneralButtonProps {
 	// 1. extend their type instead with `interface GeneralButtonProps extends ButtonProps`
 	// 2. use an intersection of types as done below (which I prefer, extending types can get messy)
 
-	// Declare a prop like this:
-	requiredProp: number;
-	// You can add optional props with a '?' like below
-	optionalProp?: string;
-	// You can declare prop types as either of multiple types:
-	stringOrNumber?: string | number;
-	// or two types joined together
-	stringAndNumber?: string & number;
-	// You can even make your own types, and use those however you want:
-	fakeType?: FakeType;
-	listOfFakeTypes?: FakeType[];
+	// // Declare a prop like this:
+	// requiredProp: number;
+	// // You can add optional props with a '?' like below
+	// optionalProp?: string;
+	// // You can declare prop types as either of multiple types:
+	// stringOrNumber?: string | number;
+	// // or two types joined together
+	// stringAndNumber?: string & number;
+
+	children: React.ReactNode;
+	color?: "inherit" | "primary" | "secondary" | "default";
+	disabled?: boolean;
+	href?: string;
+	variant?: "text" | "outlined" | "contained";
+	size?: "small" | "medium" | "large";
+	startIcon?: React.ReactNode;
+	endIcon?: React.ReactNode;
+	onClick?: ()=>void;
 }
 
-interface FakeType {
-
+// Interface for Basic/Secondary/Text buttons which restricts the props used
+interface SimpleButtonProps {
+	children: React.ReactNode;
+	color?: "inherit" | "primary" | "secondary" | "default";
+	onClick?: ()=> void;
 }
 
-// Because MUI has these already, we won't need to write our own documentation:
-// /** A general button that can do most things.
-//  * @param {string} color Choice of Primary or Secondary based on the theme.
-//  * @param {boolean} disabled To dissallow clicking of the button.
-//  * @param {string} href a link to a url
-//  * @param {string} variant (contained | outlined | text) type of button
-//  * @param {string} size (smaall | medium | large) size of the button
-//  */
+interface IconProps {
+	type: "delete" | "download" | "upload";
+	fontSize?: "inherit" | "default" | "small" | "large";
+}
+
+interface LoneIconProps {
+	size?: "small" | "medium";
+	onClick?: ()=> void;
+}
+
+interface IconLabelProps {
+	children: React.ReactNode;
+	iconPosition: "start" | "end"
+	color?:"inherit" | "primary" | "secondary" | "default";
+	onClick?: ()=> void;
+}
 
 
 // Here we've told TS that this component is a React Functional Component (React.FC) accepts the props
 // from both GeneralButtonProps and ButtonProps (MUI's exposed props)
 // The ':' can be placed after any variable declaration to define the type, but TS is pretty damn great
 // at inferring types so you often don't need to unless TS hasn't been able to infer the type. 
-export const GeneralButton: React.FC<GeneralButtonProps & ButtonProps> = ({
+export const GeneralButton: React.FC<GeneralButtonProps> = ({
 	children,
 	color,
 	// You can highlight over these props and should now see types
@@ -63,7 +81,7 @@ export const GeneralButton: React.FC<GeneralButtonProps & ButtonProps> = ({
 	// It'll give you an error
 
 	//adding this in means any other props not specified here will be passed through to the Button component
-	...rest
+	//...rest
 }) => {
 	return (
 		<Button
@@ -76,7 +94,7 @@ export const GeneralButton: React.FC<GeneralButtonProps & ButtonProps> = ({
 			endIcon={endIcon ? endIcon : undefined}
 			onClick={onClick ? onClick : undefined}
 			// Adding in this ...rest means any other props passed to GeneralButton will flow through to Button
-			{...rest}
+			//{...rest}
 		>
 			{children}
 		</Button>
@@ -84,7 +102,7 @@ export const GeneralButton: React.FC<GeneralButtonProps & ButtonProps> = ({
 };
 
 // Basic primary button with out all the customisability as the GeneralButton
-export const BasicButton = ({ children, color, onClick }) => {
+export const BasicButton: React.FC<SimpleButtonProps> = ({ children, color, onClick }) => {
 	return (
 		<GeneralButton
 			variant="contained"
@@ -98,7 +116,7 @@ export const BasicButton = ({ children, color, onClick }) => {
 
 // Basic outlined button. Outlined buttons are medium-emphasis buttons.
 // They contain actions that are important, but aren’t the primary action in an app.
-export const SecondaryButton = ({ children, color, onClick }) => {
+export const SecondaryButton: React.FC<SimpleButtonProps> = ({ children, color, onClick }) => {
 	return (
 		<GeneralButton
 			variant="outlined"
@@ -111,7 +129,7 @@ export const SecondaryButton = ({ children, color, onClick }) => {
 };
 
 // Button that only contains text with no outlines
-export const TextButton = ({ children, color, onClick }) => {
+export const TextButton: React.FC<SimpleButtonProps> = ({ children, color, onClick }) => {
 	return (
 		<GeneralButton
 			variant="text"
@@ -124,7 +142,7 @@ export const TextButton = ({ children, color, onClick }) => {
 };
 
 // A button that only contains an icon and no text
-export const LoneIconButton = ({ fontSize, size, type, onClick }) => {
+export const LoneIconButton: React.FC<IconProps & LoneIconProps> = ({ fontSize, size, type, onClick }) => {
 	return (
 		<IconButton
 			aria-label="delete"
@@ -137,7 +155,7 @@ export const LoneIconButton = ({ fontSize, size, type, onClick }) => {
 };
 
 // A button that contains text and an icon on a specified side
-export const IconLabelButton = ({
+export const IconLabelButton: React.FC<IconProps & IconLabelProps> = ({
 	children,
 	type,
 	iconPosition,
@@ -161,7 +179,7 @@ export const IconLabelButton = ({
 };
 
 // Returns the material ui icon of a certain type
-const IconMaker = ({ type, fontSize }) => {
+const IconMaker: React.FC<IconProps> = ({ type, fontSize }) => {
 	let icon = null;
 	if (type == "delete")
 		icon = <DeleteIcon fontSize={fontSize ? fontSize : "default"} />;
