@@ -19,6 +19,11 @@ export const theme = createMuiTheme({
 			main: "#e64a19",
 		},
 	},
+	props: {
+    MuiTextField: {
+      variant: "outlined",
+    }
+  },
 });
 
 // Default dark mode from mui incase we want to try it
