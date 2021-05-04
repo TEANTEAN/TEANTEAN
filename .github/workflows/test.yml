@@ -1,0 +1,13 @@
+name: genyus Network Test Workflow
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Docker Stack
+        run: docker-compose up -d
+      - name: Run Tests
+        run: |
+          cd ./next/
+          yarn test
