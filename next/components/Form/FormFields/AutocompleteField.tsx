@@ -12,7 +12,6 @@ interface CustomAutoCompleteFieldProps<OptionType> {
   getOptionLabel: (option: OptionType) => string;
   getOptionValue: (option: OptionType) => any;
   disabled?: boolean;
-  helperText?: string;
   defaultValue?: OptionType;
   fullWidth?: boolean;
   rules?: FormFieldRules;

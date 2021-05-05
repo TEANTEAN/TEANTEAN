@@ -8,7 +8,6 @@ export interface CustomTextFieldProps {
   name: string;
   label: string;
   required?: boolean;
-  helperText?: string;
   type?: string;
   disabled?: boolean;
   defaultValue?: string | number;
@@ -20,6 +19,10 @@ function CustomTextField(props: CustomTextFieldProps) {
   // Injected by the Form Wrapper Component
   // @ts-ignore
   const { control } = props.methods;
+
+  if (!control) {
+    throw new Error(`TextField must be placed as a direct child of Form`);
+  }
 
   return (
     <Controller

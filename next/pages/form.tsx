@@ -66,7 +66,7 @@ const FormTest: NextPage = () => {
           label="Autocomplete name"
           options={names}
           getOptionLabel={(name) => name.name}
-          getOptionValue={(name) => name}
+          getOptionValue={(name) => name.id}
         />
         <DatePickerField name="date" label="Date" defaultValue={new Date()} />
       </Form>

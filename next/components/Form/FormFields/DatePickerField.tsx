@@ -8,7 +8,6 @@ interface CustomDateFieldProps {
   name: string;
   label: string;
   format?: string;
-  helperText?: string;
   disabled?: boolean;
   defaultValue?: Date;
   fullWidth?: boolean;
@@ -22,12 +21,16 @@ const CustomDateField = (props: CustomDateFieldProps) => {
   // @ts-ignore
   const { control } = props.methods;
 
+  if (!control) {
+    throw new Error("DatePickerField must be placed as a direct child of Form");
+  }
+
   return (
     <Controller
       control={control}
       name={props.name}
       defaultValue={props.defaultValue ?? null}
-      render={({ field, fieldState, ...rest }) => (
+      render={({ field, fieldState }) => (
         <KeyboardDatePicker
           autoOk
           disableToolbar
@@ -42,7 +45,6 @@ const CustomDateField = (props: CustomDateFieldProps) => {
           error={!!fieldState.error}
           helperText={fieldState.error ? fieldState.error.message : " "}
           disabled={props.disabled}
-          {...rest}
           // Accessibility
           aria-label={props.label}
           aria-invalid={!!fieldState.error}
