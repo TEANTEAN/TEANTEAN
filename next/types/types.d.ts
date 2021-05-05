@@ -11,4 +11,4 @@ interface FormFieldRules {
   valueAsNumber?: boolean;
   valueAsDate?: boolean;
   setValueAs?: (value: any) => any;
-};
+}
