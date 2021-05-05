@@ -19,8 +19,9 @@ interface GeneralButtonProps {
 	onClick?: ()=>void;
 }
 
-// The 
-export const GeneralButton: React.FC<Props & GeneralButtonProps> = ({
+// The multipurpose button, allows you do everything that the mui button can. 
+// Some props have been removed.
+export const GeneralButton: React.FC<GeneralButtonProps> = ({
 	children,
 	color,
 	disabled,
