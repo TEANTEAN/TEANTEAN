@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build Docker Stack
-        run: docker-compose up -d
+        run: docker-compose up
       - name: Run Tests
         run: |
           cd ./next/
