@@ -2,11 +2,15 @@
 
 *Year:* 2021<br />
 *Team name*: Team GN<br />
-*Inception sprint tag*: Inception Sprint <https://github.com/SWEN90013-2021-GN/GN/releases/tag/Inception><br />
-*Sprint 1 tag*: TBA<br />
-*Sprint 2 tag*: TBA<br />
-*Sprint 3 tag*: TBA<br />
-*Sprint 4 tag*: TBA<br /><br />
+*Inception sprint tag*: <https://github.com/SWEN90013-2021-GN/GN/releases/tag/Inception>  
+*Sprint 1a tag*: https://github.com/SWEN90013-2021-GN/GN/releases/tag/1a  
+*Sprint 1b tag*: TBA<br />
+*Sprint 2a tag*: TBA<br />
+*Sprint 2b tag*: TBA<br />
+*Sprint 3a tag*: TBA<br />
+*Sprint 3b tag*: TBA<br />
+*Sprint 4a tag*: TBA<br />
+*Sprint 4b tag*: TBA<br /><br />
 
 ## Project Summary
 
