@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "participants",
+  "info": {
+    "name": "Participants"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "roundtable": {
+      "model": "roundtables",
+      "via": "participants"
+    },
+    "payment": {
+      "via": "participant",
+      "model": "payment"
+    },
+    "certificate": {
+      "via": "participant",
+      "model": "certificate"
+    }
+  }
+}

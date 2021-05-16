@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "payments",
+  "info": {
+    "name": "Payment"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "currency": {
+      "type": "enumeration",
+      "enum": [
+        "AUD",
+        "USD"
+      ]
+    },
+    "amount": {
+      "type": "float"
+    },
+    "datePaid": {
+      "type": "datetime"
+    },
+    "participant": {
+      "model": "participants",
+      "via": "payment"
+    }
+  }
+}
