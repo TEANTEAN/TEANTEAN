@@ -1,0 +1,46 @@
+.MuiGrid-item {
+    border: thin dashed green;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.0075em;
+    color: #1976d2;
+    margin: 0 0 30px 0;
+}
+
+h3 {
+    font-size: 1rem;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+    margin: 0 0 30px 0;
+}
+
+.flex-container {
+    display: -webkit-flex;
+    display: flex;
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-end;
+}
+
+.wrap {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+body {
+    font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
+        "Arial", sans-serif;
+    padding: 20px 20px 60px;
+    margin: 0 auto;
+}
