@@ -1,0 +1,9 @@
+{
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "all": true,
+    "exclude": [
+        "cypress/",
+        ".next/"
+    ],
+    "temp-directory": ".nyc_output"
+}

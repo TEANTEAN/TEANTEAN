@@ -6,9 +6,6 @@
       "dom.iterable",
       "esnext"
     ],
-    "types": [
-      "cypress"
-    ],
     "allowJs": true,
     "skipLibCheck": true,
     // "noErrorTruncation": true,
@@ -25,7 +22,7 @@
     "sourceMap": true,
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
   ],
   "include": [
     "next-env.d.ts",

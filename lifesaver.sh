@@ -15,6 +15,10 @@ elif [ $1 == "save" ] && [ $2 == "front" ]; then
 	exec docker-compose build
 elif [ $1 == "save" ] && [ $2 == "back" ]; then
 	exec docker exec -t mongo mongodump -u strapi -p password --out ./backup/ ; docker-compose up -d --build
+elif [ $1 == "test" ]; then
+	exec docker exec -t gn_nextjs_1 yarn test
+elif [ $1 == "coverage" ]; then
+	exec docker exec -t gn_nextjs_1 yarn run coverage
 else
 	echo "USAGE: 
 		up - brings up docker container
