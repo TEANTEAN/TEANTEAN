@@ -8,8 +8,6 @@ import theme from "styles/theme";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
-import "../styles/test.css";
-
 const App = ({ Component, pageProps }: AppProps) => (
   <>
     <Head>
