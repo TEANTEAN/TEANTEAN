@@ -11,3 +11,7 @@ jobs:
         run: docker-compose exec -it gn_nextjs_1 ./node_modules/.bin/cypress install
       - name: Run Tests
         run: docker-compose exec -it gn_nextjs_1 yarn test
+      - name: Generate coverage report
+        run: |
+          docker-compose exec -it gn_nextjs_1 yarn run coverage
+          docker-compose exec -it gn_nextjs_1 yarn run coverage-report
