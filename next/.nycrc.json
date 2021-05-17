@@ -1,9 +1,13 @@
 {
     "extends": "@istanbuljs/nyc-config-typescript",
+    "check-coverage": false,
     "all": true,
-    "exclude": [
-        "cypress/",
-        ".next/"
+    "instrument": true,
+    "sourceMap": true,
+    "reporter": "html",
+    "include": [
+        "pages/",
+        "components/"
     ],
     "temp-directory": ".nyc_output"
 }
