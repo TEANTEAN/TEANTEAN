@@ -6,6 +6,6 @@ context('Forms', () => {
     });
 
     it('Check submit button', () => {
-        cy.contains('Submit');
+        cy.contains('Submit').click();
     });
 });
