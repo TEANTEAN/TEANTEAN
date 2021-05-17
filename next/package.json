@@ -9,7 +9,7 @@
     "test": "cypress run",
     "cypress": "cypress open",
     "coverage": "rimraf ./coverage ./.nyc-output && nyc yarn test",
-    "coverage-report": "nyc report --reporter=text --branch 100"
+    "coverage-report": "nyc report --reporter=text"
   },
   "dependencies": {
     "@date-io/date-fns": "1.x",
@@ -44,7 +44,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^4.0.8",
-    "nyc": "^15.1.0",
+    "nyc": "^13.3.0",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.2.4"

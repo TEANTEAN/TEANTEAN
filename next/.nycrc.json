@@ -1,13 +1,10 @@
 {
-    "extends": "@istanbuljs/nyc-config-typescript",
     "check-coverage": false,
-    "all": true,
     "instrument": true,
     "sourceMap": true,
-    "reporter": "html",
+    "reporter": [],
     "include": [
-        "pages/",
-        "components/"
-    ],
-    "temp-directory": ".nyc_output"
+        "pages/**",
+        "components/**"
+    ]
 }

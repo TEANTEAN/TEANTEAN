@@ -5,7 +5,11 @@ context('Buttons', () => {
         cy.visit('http://localhost:3000/buttons');
     });
 
-    it('Check basic button', () => {
-        cy.contains('Basic Button');
+    it('Click basic button', () => {
+        cy.contains('Basic Button').click();
+    });
+
+    it('Click download button', () => {
+        cy.contains('Download').click();
     });
 });
