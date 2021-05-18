@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "roundtables",
+  "info": {
+    "name": "Roundtables",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "zoomLink": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "dateTime": {
+      "type": "datetime"
+    },
+    "capacity": {
+      "type": "integer"
+    },
+    "series": {
+      "model": "roundtable-series"
+    },
+    "peerLeader": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "participants": {
+      "via": "roundtable",
+      "collection": "participants"
+    }
+  }
+}

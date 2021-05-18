@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "series",
+  "info": {
+    "name": "Roundtable Series",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "researchPartner": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "roundtableSeries"
+    },
+    "videoLink": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/roundtables",
+      "handler": "roundtables.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/roundtables/count",
+      "handler": "roundtables.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/roundtables/:id",
+      "handler": "roundtables.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/roundtables",
+      "handler": "roundtables.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/roundtables/:id",
+      "handler": "roundtables.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/roundtables/:id",
+      "handler": "roundtables.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
