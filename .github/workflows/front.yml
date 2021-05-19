@@ -1,4 +1,4 @@
-name: Front-end pipeline
+name: Frontend Pipeline
 on:
   push:
     paths:
