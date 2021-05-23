@@ -9,6 +9,8 @@ jobs:
         run: docker-compose up -d
       - name: Install Cypress
         run: docker exec -t gn_nextjs_1 ./node_modules/.bin/cypress install
+      - name: Install Cypress Dependencies
+        run: apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
       - name: Run Tests
         run: docker exec -t gn_nextjs_1 yarn test
       - name: Generate coverage report
