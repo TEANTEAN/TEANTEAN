@@ -10,7 +10,7 @@ jobs:
       - name: Install Cypress
         run: docker exec -t gn_nextjs_1 ./node_modules/.bin/cypress install
       - name: Install Cypress Dependencies
-        run: docker exec -t gn_nextjs_1 yarn add cypress --dev
+        run: docker exec -t gn_nextjs_1 sudo yarn add cypress --dev
       - name: Run Tests
         run: docker exec -t gn_nextjs_1 yarn test
       - name: Generate coverage report
