@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "certificates",
+  "info": {
+    "name": "Certificate"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "dateSent": {
+      "type": "datetime"
+    },
+    "url": {
+      "type": "string"
+    },
+    "participant": {
+      "model": "participants",
+      "via": "certificate"
+    }
+  }
+}

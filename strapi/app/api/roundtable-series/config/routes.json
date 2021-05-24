@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/roundtable-series",
+      "handler": "roundtable-series.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/roundtable-series/count",
+      "handler": "roundtable-series.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/roundtable-series/:id",
+      "handler": "roundtable-series.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/roundtable-series",
+      "handler": "roundtable-series.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/roundtable-series/:id",
+      "handler": "roundtable-series.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/roundtable-series/:id",
+      "handler": "roundtable-series.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
