@@ -9,7 +9,7 @@
     "test": "cypress run",
     "cypress": "cypress open",
     "coverage": "rimraf ./coverage ./.nyc-output && nyc yarn test",
-    "coverage-report": "nyc report --reporter=text --check-coverage --lines 90"
+    "coverage-report": "nyc report --reporter=text --check-coverage --lines 50"
   },
   "dependencies": {
     "@date-io/date-fns": "1.x",
