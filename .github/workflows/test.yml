@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build Docker Stack
-        run: echo "test"
+        run: docker-compose up -d
       - name: Install Cypress
         run: |
           cd $GITHUB_WORKSPACE/next
