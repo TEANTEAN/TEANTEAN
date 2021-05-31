@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - GN140/feature/set-up-backend-depoly-workflow
+    paths:
+      - "strapi/app/**"
+      - ".github/workflows/backend.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "genyus-backend-strapi " #Must be unique in Heroku
+          heroku_email: "genyusnetwork.devops@gmail.com"
+          appdir: "strapi/app"
+        env:
+          HD_DATABASE_URI: ${{secrets.DATABASE_URI}}
+          HD_DATABASE_NAME: ${{secrets.DATABASE_NAME}}
+   
