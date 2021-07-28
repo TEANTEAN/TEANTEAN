@@ -30,3 +30,19 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## View Code Coverage
+
+To run the tests with code coverage, run the coverage script using from the `/next/` folder:
+
+```bash
+yarn run coverage
+```
+
+Then, to view the coverage report, run the coverage report script using:
+
+```bash
+yarn run coverage-report
+```
+
+This will show a table of all the front-end files and the coverage for each file and folder using different metrics.

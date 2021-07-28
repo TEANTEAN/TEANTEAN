@@ -39,4 +39,3 @@ EXPOSE 3000
 # RUN npx next telemetry disable
 
 CMD ["yarn", "start"]
-

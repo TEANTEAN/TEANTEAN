@@ -6,9 +6,6 @@
       "dom.iterable",
       "esnext"
     ],
-    "types": [
-      "cypress"
-    ],
     "allowJs": true,
     "skipLibCheck": true,
     // "noErrorTruncation": true,
@@ -22,7 +19,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": ".",
-    "sourceMap": true,
+    "sourceMap": true
   },
   "exclude": [
     "node_modules"
