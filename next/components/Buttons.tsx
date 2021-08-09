@@ -53,7 +53,7 @@ interface SimpleButtonProps {
 }
 
 // Basic primary button with out all the customisability as the GeneralButton
-export const BasicButton: React.FC<SimpleButtonProps> = ({
+export const BasicButton: React.FunctionalComponent<SimpleButtonProps> = ({
   children,
   color,
   onClick,

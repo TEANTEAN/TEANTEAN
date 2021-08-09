@@ -2,6 +2,7 @@ import React from "react";
 import { NextPage } from "next";
 import Head from "next/head";
 import { GeneralButton } from "components/Buttons";
+import Image from "next/image";
 
 const Home: NextPage = () => (
   <div>
@@ -12,6 +13,7 @@ const Home: NextPage = () => (
     <h1>genyus Rountable</h1>
     <GeneralButton href="/buttons">Button Library</GeneralButton>
     <GeneralButton href="/form">Form example</GeneralButton>
+    <Image width="500px" height="400px" src="/gn-logo.png" />
   </div>
 );
 

@@ -35,9 +35,8 @@ const names: Name[] = [
 ];
 
 const FormTest: NextPage = () => {
-  const [submittedValues, setSubmittedValues] = React.useState<FormValues>(
-    null
-  );
+  const [submittedValues, setSubmittedValues] =
+    React.useState<FormValues>(null);
 
   const onSubmit = (data: FormValues) => {
     setSubmittedValues(data);

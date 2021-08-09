@@ -3,10 +3,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Grid from "@material-ui/core/Grid";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import AutocompleteField from "components/Form/FormFields/AutocompleteField";
-import DatePickerField from "components/Form/FormFields/DatePickerField";
-import NumberField from "components/Form/FormFields/NumberField";
-import TextField from "components/Form/FormFields/TextField";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -71,4 +67,7 @@ function Form<FormValues>({ onSubmit, children }: FormProps<FormValues>) {
 }
 
 export default Form;
-export { AutocompleteField, DatePickerField, NumberField, TextField };
+export { default as AutocompleteField } from "components/Form/FormFields/AutocompleteField";
+export { default as NumberField } from "components/Form/FormFields/NumberField";
+export { default as TextField } from "components/Form/FormFields/TextField";
+export { default as DatePickerField } from "components/Form/FormFields/DatePickerField";
