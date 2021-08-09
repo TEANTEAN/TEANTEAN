@@ -1,5 +1,5 @@
 import { useState } from "react";
-import withAuth from "./components/withAuth"
+import withAuth from "./components/withAuth";
 import { getSession } from 'next-auth/client'
 import axios from 'axios';
 
@@ -60,8 +60,13 @@ export default function createNewUser() {
     setTimeout(function() {setPostSuccess(false)}, 5000);
   }
 
-  return (
-    <div>
+  const {session, haveAuthenticated} = withAuth({redirectTo: "/dashboard", permittedRole:"genyus admin"});
+  if (!session) {
+    return <h1>Loading...</h1>
+  }
+  if (session && haveAuthenticated()) {
+    return (
+      <div>
       <h1>{postSuccess ? `User Was Created` : `Create New User`}</h1>
       <form onSubmit={handleSubmit}>
       <label>
@@ -86,10 +91,7 @@ export default function createNewUser() {
     </form>
     </div>
     
-  )
+    )
+  }
+  return (<p>Redirecting...</p>)
 }
-
-/** Simplest auth with no in app data requirements*/
-export const getServerSideProps = withAuth(async (context) => {
-  return {props: {}}
-}, 'genyus admin');
