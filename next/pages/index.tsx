@@ -13,7 +13,7 @@ const Home: NextPage = () => (
     <h1>genyus Rountable</h1>
     <GeneralButton href="/buttons">Button Library</GeneralButton>
     <GeneralButton href="/form">Form example</GeneralButton>
-    <Image width="500px" height="400px" src="/gn-logo.png" />
+    <GeneralButton href="/login">Login</GeneralButton>
   </div>
 );
 

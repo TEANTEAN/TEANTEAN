@@ -1,6 +1,8 @@
 import React from "react";
 import { signIn, getCsrfToken } from "next-auth/client";
 import { useState } from "react";
+import TextField from '@material-ui/core/TextField';
+
 
 export default function Login({ csrfToken }) {
   const [username, setUsername] = useState("");
@@ -15,8 +17,14 @@ export default function Login({ csrfToken }) {
     });
   };
   return (
-    <form method="post" onSubmit={handleSubmit}>
-      <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+    <form method='post' onSubmit={handleSubmit}>
+        <TextField
+          id="standard-password-input"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+        />
+      <input name='csrfToken' type='hidden' defaultValue={csrfToken}/>
       <label>
         Username
         <input
