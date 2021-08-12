@@ -22,9 +22,10 @@
     "sourceMap": true
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
   ],
   "include": [
+    "next.config.js",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
