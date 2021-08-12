@@ -72,7 +72,7 @@ const LoginForm: React.FC = () => {
         } catch (err) {
           handleError(err.toString());
         }
-      }, 10000);
+      }, 15000);
       await signIn("credentials", {
         redirect: false,
         username: data.username,
