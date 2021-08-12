@@ -118,9 +118,10 @@ If you don't have Git installed, do this now. If you're working on Windows, make
 ```shell
 ./lifesaver.sh up-backend
 ```
-
-- Navigate to the next directory and start next in development mode
+	
+- Navigate to the next directory and 1) install packages 2) start next in development mode
 ```shell
+yarn install
 yarn dev
 ```
 
