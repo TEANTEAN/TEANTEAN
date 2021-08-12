@@ -1,18 +1,15 @@
-import React, { ReactChild, ReactNode } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import Grid from "@material-ui/core/Grid";
+import React, { ReactNode } from "react";
+import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex",
-      alignItems: "center",
+      // The '&' symbol means this will apply to children of this component
       // Passes this prop to all children that are MuiTextField
-      "& .MuiTextField-root": {
-        width: "75%",
-        maxWidth: "500px",
+      "& .MuiFormControl-root": {
+        width: "100%",
       },
       // Helper text needs to be displayed below the field
       "& .MuiFormHelperText-root": {
@@ -20,48 +17,37 @@ const useStyles = makeStyles((theme: Theme) =>
         bottom: theme.spacing(-3),
       },
     },
-    gridItemWrapper: {
-      margin: theme.spacing(2),
-      marginTop: theme.spacing(2),
-      position: "relative",
-    },
   })
 );
 
 interface FormProps<FormValues> {
   onSubmit: SubmitHandler<FormValues>;
+  methods: UseFormReturn<FormValues>;
+  id?: string;
   children?: ReactNode;
+  disableAutoComplete?: boolean;
 }
 
-function Form<FormValues>({ onSubmit, children }: FormProps<FormValues>) {
+function Form<FormValues>({
+  onSubmit,
+  id,
+  methods,
+  children,
+  disableAutoComplete,
+}: FormProps<FormValues>) {
   const classes = useStyles();
-  const methods = useForm<FormValues>();
   const { handleSubmit } = methods;
 
+  const autoComplete = disableAutoComplete ? "off" : "on";
+
   return (
-    // Handle form submission using react-hook-form's exposed method
-    // this lets us use react-hook-form's validation
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container className={classes.root}>
-        {/* Wrap each child of this component in a grid item with styles defined at the top of this file */}
-        {React.Children.map(children, (child: ReactChild) => (
-          <Grid item xs={12} className={classes.gridItemWrapper}>
-            {/* Inject all of react hook form's methods into each child */}
-            {React.isValidElement(child)
-              ? React.createElement(child.type, {
-                  ...{
-                    ...(child.props as {}),
-                    methods,
-                    key: child.props.name,
-                  },
-                })
-              : child}
-          </Grid>
-        ))}
-        <Grid item>
-          <Button type="submit">Submit</Button>
-        </Grid>
-      </Grid>
+    <form
+      id={id}
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete={autoComplete}
+      noValidate
+    >
+      <Box className={classes.root}>{children}</Box>
     </form>
   );
 }
@@ -70,4 +56,7 @@ export default Form;
 export { default as AutocompleteField } from "components/Form/FormFields/AutocompleteField";
 export { default as NumberField } from "components/Form/FormFields/NumberField";
 export { default as TextField } from "components/Form/FormFields/TextField";
+export { default as PasswordField } from "components/Form/FormFields/PasswordField";
 export { default as DatePickerField } from "components/Form/FormFields/DatePickerField";
+export { default as SelectField } from "components/Form/FormFields/SelectField";
+export { default as Checkbox } from "components/Form/FormFields/Checkbox";
