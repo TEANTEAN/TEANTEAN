@@ -12,6 +12,7 @@ import LoadingButton from "components/LoadingButton";
 import Fade from "@material-ui/core/Fade";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -50,6 +51,7 @@ const LoginForm: React.FC = () => {
 
   const methods = useForm<FormData>();
   const classes = useStyles();
+  const router = useRouter();
 
   const handleError = (message: string) => {
     console.log(message);
@@ -73,12 +75,14 @@ const LoginForm: React.FC = () => {
           handleError(err.toString());
         }
       }, 15000);
-      await signIn("credentials", {
+      const res = await signIn("credentials", {
         redirect: false,
         username: data.username,
         password: data.password,
-        // callbackUrl: "http://localhost:3000/",
+        callbackUrl: "http://localhost:3000/",
       });
+      if (res?.error) throw new Error(res.error);
+      if (res.url) router.replace(res.url);
     } catch (err) {
       handleError(err.toString());
     }
