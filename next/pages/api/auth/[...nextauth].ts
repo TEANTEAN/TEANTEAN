@@ -4,27 +4,29 @@ import Providers from "next-auth/providers";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next-auth/internals/utils";
 
+// What is required for the sign in
+const customCredentials = {
+  username: {
+    label: "Username",
+    type: "text",
+    placeholder: "John@does.com",
+  },
+  password: {
+    label: "Password",
+    type: "password",
+  },
+};
+
 const options = {
   providers: [
     Providers.Credentials({
       name: "Credentials",
-      // What is required for the sign in
-      credentials: {
-        username: {
-          label: "Username",
-          type: "text",
-          placeholder: "John@does.com",
-        },
-        password: {
-          label: "Password",
-          type: "password",
-        },
-      },
+      credentials: customCredentials,
       // How credentials is used to authenticate
-      async authorize(credentials) {
+      async authorize(credentials: typeof customCredentials) {
         try {
           const { data } = await axios.post(
-            `${process.env.BACKEND_URL}/auth/local`,
+            `https://genyus-backend-strapi.herokuapp.com/auth/local`,
             {
               identifier: credentials.username,
               password: credentials.password,
@@ -33,9 +35,8 @@ const options = {
           const user = data;
           if (user) {
             return user;
-          } else {
-            return null;
           }
+          return null;
         } catch (e) {
           throw new Error("Error on user authentication");
         }
@@ -46,9 +47,8 @@ const options = {
     jwt: true,
   },
   callbacks: {
-    jwt: async (token, user, account) => {
+    jwt: async (token, user) => {
       const isSignIn = !!user;
-
       if (isSignIn) {
         token.jwt = user.jwt;
         token.id = user.user.id;
@@ -72,7 +72,7 @@ const options = {
   },
   pages: {
     signIn: "/login",
-    error: "/login", // Redirect to login on error
+    // error: "/login", // Redirect to login on error
   },
 };
 
