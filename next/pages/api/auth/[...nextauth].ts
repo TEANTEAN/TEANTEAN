@@ -3,6 +3,7 @@ import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next-auth/internals/utils";
+import { refreshAxiosClientAuth } from "util/gnAxiosClient";
 
 // What is required for the sign in
 const customCredentials = {
@@ -34,6 +35,7 @@ const options = {
           );
           const user = data;
           if (user) {
+            await refreshAxiosClientAuth();
             return user;
           }
           return null;
