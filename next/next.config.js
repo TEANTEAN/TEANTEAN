@@ -11,6 +11,7 @@ module.exports = (phase) => {
           NEXT_PUBLIC_ENV_NAME: process.env.NEXT_PUBLIC_ENV_NAME,
           NEXT_PUBLIC_HOST: process.env.NEXT_PUBLIC_HOST,
           BUILD_HOST: process.env.NEXT_PUBLIC_HOST,
+          NEXTAUTH_URL: process.env.NEXTAUTH_URL,
           BACKEND_URL: process.env.BACKEND_URL,
         },
       };
@@ -23,6 +24,8 @@ module.exports = (phase) => {
           NEXT_PUBLIC_ENV_NAME: process.env.NEXT_PUBLIC_ENV_NAME,
           NEXT_PUBLIC_HOST: process.env.NEXT_PUBLIC_HOST,
           BUILD_HOST: process.env.NEXT_PUBLIC_HOST,
+          NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+          BACKEND_URL: process.env.BACKEND_URL,
         },
       };
   }
