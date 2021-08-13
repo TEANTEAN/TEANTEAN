@@ -1,7 +1,7 @@
 import React from "react";
 import { NextPage } from "next";
 import { signOut } from "next-auth/client";
-import withAuth, { WithAuthHook } from "../components/withAuth";
+import withAuth, { WithAuthHook } from "components/withAuth";
 
 const Dashboard: NextPage = () => {
   const { session, haveAuthenticated }: WithAuthHook = withAuth({
