@@ -7,9 +7,10 @@ import Head from "next/head";
 import theme from "styles/theme";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import {Provider} from 'next-auth/client';
 
 const App = ({ Component, pageProps }: AppProps) => (
-  <>
+  <Provider session={pageProps.session}>
     <Head>
       <meta name="theme-color" content={theme.palette.primary.main} />
       <meta
@@ -23,7 +24,7 @@ const App = ({ Component, pageProps }: AppProps) => (
         <Component {...pageProps} />
       </ThemeProvider>
     </MuiPickersUtilsProvider>
-  </>
+  </Provider>
 );
 
 export default App;

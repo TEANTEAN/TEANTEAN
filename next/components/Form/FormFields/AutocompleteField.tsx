@@ -6,11 +6,12 @@ import { Controller } from "react-hook-form";
 import { FormFieldRules } from "types/types";
 
 interface CustomAutoCompleteFieldProps<OptionType> {
+  control: any;
   options: OptionType[];
   name: string;
   label: string;
   getOptionLabel: (option: OptionType) => string;
-  getOptionValue: (option: OptionType) => any;
+  className?: string;
   disabled?: boolean;
   defaultValue?: OptionType;
   fullWidth?: boolean;
@@ -20,23 +21,13 @@ interface CustomAutoCompleteFieldProps<OptionType> {
 function CustomAutoCompleteField<OptionType>(
   props: CustomAutoCompleteFieldProps<OptionType>
 ) {
-  // Injected by the Form Wrapper Component
-  // @ts-ignore
-  const { control } = props.methods;
-
-  if (!control) {
-    throw new Error(
-      "AutocompleteField must be placed as a direct child of Form"
-    );
-  }
-
   const getOptionSelected = (option, value) =>
     props.getOptionLabel(option) === props.getOptionLabel(value);
 
   return (
     <Controller
-      control={control}
       name={props.name}
+      control={props.control}
       defaultValue={props.defaultValue ?? null}
       render={({ field, fieldState }) => (
         <Autocomplete
@@ -49,6 +40,7 @@ function CustomAutoCompleteField<OptionType>(
           renderInput={(params) => (
             <TextField
               {...params}
+              className={props.className}
               fullWidth={!!props.fullWidth}
               name={props.name}
               id={props.name}
@@ -56,6 +48,7 @@ function CustomAutoCompleteField<OptionType>(
               helperText={fieldState.error ? fieldState.error.message : " "}
               error={!!fieldState.error}
               disabled={props.disabled}
+              autoComplete="off"
               // Accessibility
               aria-label={props.label}
               aria-invalid={!!fieldState.error}

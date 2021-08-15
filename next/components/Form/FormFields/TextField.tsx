@@ -1,32 +1,30 @@
-/* eslint-disable react/prop-types, react/destructuring-assignment */
+/* eslint-disable react/prop-types, react/destructuring-assignment, react/jsx-no-duplicate-props */
 import { TextField } from "@material-ui/core";
 import React from "react";
 import { Controller } from "react-hook-form";
-import { FormFieldRules } from "types/types";
+import { InputProps } from "@material-ui/core/Input";
+import type { FormFieldRules } from "types/types";
 
 export interface CustomTextFieldProps {
+  control: any;
   name: string;
   label: string;
+  className?: string;
+  autoComplete?: string;
   required?: boolean;
   type?: string;
   disabled?: boolean;
   defaultValue?: string | number;
   maxLength?: number;
   rules?: FormFieldRules;
+  InputProps?: InputProps;
+  inputRef?: React.Ref<any>;
 }
 
 function CustomTextField(props: CustomTextFieldProps) {
-  // Injected by the Form Wrapper Component
-  // @ts-ignore
-  const { control } = props.methods;
-
-  if (!control) {
-    throw new Error(`TextField must be placed as a direct child of Form`);
-  }
-
   return (
     <Controller
-      control={control}
+      control={props.control}
       name={props.name}
       defaultValue={props.defaultValue ?? ""}
       render={({ field, fieldState }) => (
@@ -42,9 +40,12 @@ function CustomTextField(props: CustomTextFieldProps) {
             error={!!fieldState.error}
             disabled={props.disabled}
             inputProps={{ maxLength: props.maxLength }}
+            autoComplete={props.autoComplete ? props.autoComplete : "off"}
             // Accessibility
             aria-label={props.label}
             aria-invalid={!!fieldState.error}
+            InputProps={props.InputProps}
+            inputRef={props.inputRef}
           />
         </>
       )}
