@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex",
       alignItems: "center",
-      width: "fit-content",
     },
     wrapper: {
       margin: theme.spacing(1),
