@@ -27,9 +27,10 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.3.6",
-    "yarn": "^1.22.11",
+    "react-player": "^2.9.0",
     "source-map-support": "^0.5.19",
-    "ts-node": "^9.1.1"
+    "ts-node": "^9.1.1",
+    "yarn": "^1.22.11"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.5",
