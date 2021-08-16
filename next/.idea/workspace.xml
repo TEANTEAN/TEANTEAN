@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="86e618e4-7276-4d85-9f23-73aa1f8bb7aa" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/GalleryText.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/GalleryText.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/landing.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/landing.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
