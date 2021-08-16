@@ -23,6 +23,7 @@ type textData = {
 }
 
 type textProps = {
+<<<<<<< Updated upstream
     data: textData,
     width: string,
 }
@@ -34,17 +35,36 @@ function TextBox({data, width}: textProps): JSX.Element {
     return (
     <Card className={classes.root}>
           <CardContent style={{width: width}}>
+=======
+    data: textData
+}
+
+function TextBox({data}: textProps): JSX.Element {
+    const {textTitle, textContent} = data;
+    const classes = useStyles()
+
+    return (
+    <Card className={classes.root}>
+          <CardContent>
+>>>>>>> Stashed changes
 
             <Typography variant="h5" component="h2">
               {textTitle}
             </Typography>
 
+<<<<<<< Updated upstream
 
 
             <Typography variant="body2" color="textSecondary" component="p">
               {textContent.split('\n').map((a) => (<p> {a} </p>) ) }
             </Typography>
           <br/>
+=======
+            <Typography variant="body1" color="textSecondary" component="p">
+              {textContent}
+            </Typography>
+
+>>>>>>> Stashed changes
           </CardContent>
     </Card>
     )
