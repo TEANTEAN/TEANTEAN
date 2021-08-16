@@ -3,7 +3,6 @@ import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next-auth/internals/utils";
-import { refreshAxiosClientAuth } from "util/gnAxiosClient";
 
 // What is required for the sign in
 const customCredentials = {
@@ -27,7 +26,7 @@ const options = {
       async authorize(credentials: typeof customCredentials) {
         try {
           const { data } = await axios.post(
-            `https://genyus-backend-strapi.herokuapp.com/auth/local`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/local`,
             {
               identifier: credentials.username,
               password: credentials.password,
@@ -35,7 +34,6 @@ const options = {
           );
           const user = data;
           if (user) {
-            await refreshAxiosClientAuth();
             return user;
           }
           return null;
