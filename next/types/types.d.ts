@@ -12,13 +12,3 @@ interface FormFieldRules {
   valueAsDate?: boolean;
   setValueAs?: (value: any) => any;
 }
-
-interface GNSession {
-  user: {
-    name: string;
-    email: string;
-    image: uri;
-  };
-  accessToken: string;
-  expires: "YYYY-MM-DDTHH:mm:ss.SSSZ";
-}
