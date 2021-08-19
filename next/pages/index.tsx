@@ -9,10 +9,12 @@ const Home: NextPage = () => (
       <title>Create Next App</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <h1>genyus Rountable</h1>
+    <h1>genyus Rountable (Admin)</h1>
     <GeneralButton href="/buttons">Button Library</GeneralButton>
     <GeneralButton href="/form">Form example</GeneralButton>
     <GeneralButton href="/login">Login</GeneralButton>
+    <GeneralButton href="/createaccount">Create Account</GeneralButton>
+    <GeneralButton href="/createseries">Create Series</GeneralButton>
   </div>
 );
 

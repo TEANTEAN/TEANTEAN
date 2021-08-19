@@ -17,12 +17,7 @@ export default function Login({ csrfToken }) {
   }
   return (
     <form method='post' onSubmit={handleSubmit}>
-        <TextField
-          id="standard-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-        />
+        
       <input name='csrfToken' type='hidden' defaultValue={csrfToken}/>
       <label>
         Username
@@ -32,7 +27,10 @@ export default function Login({ csrfToken }) {
         Password
         <input name='password' type='password' onChange={e=>setPassword(e.target.value)}/>
       </label>
+      
       <button type='submit'>Sign in</button>
+
+     
     </form>
   )
 }
