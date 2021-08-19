@@ -1,16 +1,52 @@
 import React from "react";
+import {createStyles, 
+        makeStyles,
+        AppBar,
+        Toolbar,
+        IconButton} from "@material-ui/core";
+import TelegramIcon from "@material-ui/icons/Telegram";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import YouTubeIcon from "@material-ui/icons/YouTube";
+import TwitterIcon from "@material-ui/icons/Twitter";
 
-function Footer() : JSX.Element {
-    return (
-    <section style={{ position: "absolute", bottom: "0", right:"0",left:"0",backgroundColor:"#1989B5"}}>
-        <div style={{float: "right", marginRight:"20px"}}>
-            <img src= {"/telegram.png"} height="30" style={{marginTop: "10px", marginBottom: "5px", marginLeft: "10px"}}/>
-            <img src= {"/facebook.png"} height="30" style={{marginTop: "10px", marginBottom: "5px", marginLeft: "10px"}}/>
-            <img src= {"/youtube.png"} height="30" style={{marginTop: "10px", marginBottom: "5px", marginLeft: "10px"}}/>
-            <img src= {"/twitter.png"} height="30" style={{marginTop: "10px", marginBottom: "5px", marginLeft: "10px"}}/>
-        </div>
-    </section>
+const useStyles = makeStyles(() =>
+  createStyles({
+    footer:{
+        backgroundColor: "primary",
+        top: "auto",
+        bottom: 0,
+        position: "fixed",
+    },
+    icon:{
+        fontSize: 40,
+        color: "black",
+    },
+    box:{
+        justifyContent: "flex-end",
+    }
+  })
+);
+
+const Footer = () => {
+    const classes = useStyles();
+    return(
+        <AppBar className={classes.footer}>
+            <Toolbar className={classes.box}>
+                <IconButton size="small" href="/login">
+                    <TelegramIcon className={classes.icon}/>
+                </IconButton>
+                <IconButton size="small" href="/login">
+                    <FacebookIcon className={classes.icon}/>
+                </IconButton>
+                <IconButton size="small" href="/login">
+                    <YouTubeIcon className={classes.icon}/>
+                </IconButton>
+                <IconButton size="small" href="/login">
+                    <TwitterIcon className={classes.icon}/>
+                </IconButton>
+            </Toolbar>
+        </AppBar>
     );
-}
+};
 
 export default Footer; 
