@@ -154,7 +154,6 @@ const CreateSeries: NextPage = () => {
       </label>
     </div>
 
-
     <Typography gutterBottom variant="subtitle2">
                   Roundtable Management (Calendly)
                 </Typography>
