@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - jiacheng/hotfix/appcrash
     paths:
       - "strapi/app/**"
       - ".github/workflows/backend.yml"

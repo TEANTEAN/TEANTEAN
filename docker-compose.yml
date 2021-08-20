@@ -1,25 +1,25 @@
 version : '3'
 
 services:
-  strapi:
-    image: strapi/strapi
-    container_name: strapi
-    restart: unless-stopped
-    #env_file: .env
-    environment:
-      DATABASE_AUTHENTICATION_DATABASE: admin
-      DATABASE_CLIENT: mongo
-      DATABASE_NAME: strapi
-      DATABASE_HOST: mongo
-      DATABASE_PORT: 27017
-      DATABASE_USERNAME: strapi
-      DATABASE_PASSWORD: password
-    networks:
-      - strapi-app-network
-    volumes:
-      - ./strapi/app:/srv/app
-    ports:
-      - "1337:1337"
+  # strapi:
+  #   image: strapi/strapi
+  #   container_name: strapi
+  #   restart: unless-stopped
+  #   #env_file: .env
+  #   environment:
+  #     DATABASE_AUTHENTICATION_DATABASE: admin
+  #     DATABASE_CLIENT: mongo
+  #     DATABASE_NAME: strapi
+  #     DATABASE_HOST: mongo
+  #     DATABASE_PORT: 27017
+  #     DATABASE_USERNAME: strapi
+  #     DATABASE_PASSWORD: password
+  #   networks:
+  #     - strapi-app-network
+  #   volumes:
+  #     - ./strapi/app:/srv/app
+  #   ports:
+  #     - "1337:1337"
 
   mongo:
     image: mongo
