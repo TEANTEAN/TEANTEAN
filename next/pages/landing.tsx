@@ -21,33 +21,29 @@ const testData2: textData = {
 
 function Booking(): JSX.Element {
     return (
-        <Grid container >
-            <Grid item sm={12}>
+        <Grid container xs={12}>
+            <Grid item xs={12} >
                 <Header />
             </Grid>
-            <Grid item sm={12}>
-                <Grid container >
-                    <Grid item sm={12} md={8}>
-                        <ReactPlayer
-                            url='https://www.youtube.com/watch?v=ZCs3NeBXg2E&ab_channel=genyusnetwork'
-                            width="100%"
-                        />
-                    </Grid>
-                    <Grid item sm={12} md={4}>
-                        <Grid container>
-                            <Grid item sm={12}>
-                                <TextBox data={testData1}>
-                                    <BasicButton>Enquire</BasicButton>
-                                </TextBox>
-                            </Grid>
-                            <Grid item sm={12}>
-                                <TextBox data={testData2}/>
-                            </Grid>
+            <Grid container xs={12}>
+                <Grid item xs={12} md={7} style={{padding: "24px"}}>
+                    <ReactPlayer
+                        url='https://www.youtube.com/watch?v=ZCs3NeBXg2E&ab_channel=genyusnetwork'
+                        width="100%"
+                    />
+                </Grid>
+                    <Grid container item md={5} xs={12} >
+                        <Grid item xs={12} style={{padding: "24px 24px 0 24px"}}>
+                            <TextBox data={testData1}>
+                                <BasicButton>Enquire</BasicButton>
+                            </TextBox>
                         </Grid>
-                    </Grid>
+                        <Grid item sm={12} style={{padding: "24px 24px 24px 24px"}}> 
+                            <TextBox data={testData2}/>
+                        </Grid>
                 </Grid>
             </Grid>
-            <Grid item sm={12}>
+            <Grid item xs={12}>
                 <Footer />
             </Grid>
         </Grid>

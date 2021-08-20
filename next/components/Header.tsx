@@ -24,18 +24,20 @@ function Header() : JSX.Element{
         fontSize: 40,
     };
     return(
-        <Grid container alignItems='center' justifyContent='flex-end'>
-            <Grid item xs={9}>
-                <a style={LogoStyleTop}>gen</a>
-                <a style={LogoStyleTop2}>y</a>
-                <a style={LogoStyleTop}>us</a>
-                <br/>
-                <a style={LogoStyleBot}>Roundtable</a>
-            </Grid>
-            <Grid item xs={3} style={{textAlign: 'right'}}>
-                <Button variant='contained' color="primary">
-                    Login
-                </Button>
+        <Grid container alignItems='center' justifyContent='flex-end' xs={12}>
+            <Grid item container xs={12} style={{padding: "0 16px 0 16px"}}>
+                <Grid item xs={9}>
+                    <a style={LogoStyleTop}>gen</a>
+                    <a style={LogoStyleTop2}>y</a>
+                    <a style={LogoStyleTop}>us</a>
+                    <br/>
+                    <a style={LogoStyleBot}>Roundtable</a>
+                </Grid>
+                <Grid item xs={3} style={{textAlign: 'right', paddingTop: "24px"}}>
+                    <Button variant='contained' color="primary">
+                        Login
+                    </Button>
+                </Grid>
             </Grid>
             <Grid item xs={12}>
                 <Divider style={{height: "4px"}}/>
