@@ -21,20 +21,20 @@ services:
   #   ports:
   #     - "1337:1337"
 
-  mongo:
-    image: mongo
-    container_name: mongo
-    restart: unless-stopped
-    #env_file: .env
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: strapi
-      MONGO_INITDB_ROOT_PASSWORD: password
-    networks:
-      - strapi-app-network
-    volumes:
-      - ./mongo/backup:/backup
-    ports:
-      - "27017:27017"
+  # mongo:
+  #   image: mongo
+  #   container_name: mongo
+  #   restart: unless-stopped
+  #   #env_file: .env
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: strapi
+  #     MONGO_INITDB_ROOT_PASSWORD: password
+  #   networks:
+  #     - strapi-app-network
+  #   volumes:
+  #     - ./mongo/backup:/backup
+  #   ports:
+  #     - "27017:27017"
 
   nextjs:
     ports:
