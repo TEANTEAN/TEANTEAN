@@ -4,3 +4,4 @@ mongo/db-data/
 next/app/
 next/.next/
 mongo/strapidata/
+.idea/
