@@ -23,7 +23,8 @@ const options = {
       name: "Credentials",
       credentials: customCredentials,
       // How credentials is used to authenticate
-      async authorize(credentials: typeof customCredentials) {
+      // @ ts-ignore
+      async authorize(credentials) {
         try {
           const { data } = await axios.post(
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/local`,
