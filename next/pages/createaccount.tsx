@@ -4,6 +4,7 @@ import React from "react";
 // import { makeStyles } from '@material-ui/core/styles';
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import Button from "@material-ui/core/Button";
@@ -76,12 +77,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const postNewUser = async (newUserData, setPending) => {
+const postNewUser = async (newUserData: FormValues) => {
   const data = {
     username: newUserData.username,
     email: newUserData.email,
     password: newUserData.password,
-    role: newUserData?.level?.level?.toLowerCase() || "Authenticated",
+    role: newUserData.level?.level?.toLowerCase() || "Authenticated",
   };
   try {
     // Send New User data to strapi
@@ -99,11 +100,7 @@ const postNewUser = async (newUserData, setPending) => {
         // New role value to assign to the user
         const newUserRole = { role: { _id: sRole._id } };
         // Update the user role
-        const updatedUser = await gnFetch.put(
-          `/users/${createdUserId}`,
-          newUserRole
-        );
-        if (updatedUser.status === 200) setPending(false);
+        await gnFetch.put(`/users/${createdUserId}`, newUserRole);
       }
     }
   } catch (e) {
@@ -121,16 +118,22 @@ const CreateAccount: NextPage = () => {
   const [submittedValues, setSubmittedValues] =
     React.useState<FormValues>(null);
   const methods = useForm<FormValues>();
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     setPending(true);
     setSubmittedValues(data);
-    postNewUser(data, setPending);
+    try {
+      await postNewUser(data);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setPending(false);
+    }
   };
 
   if (session && haveAuthenticated()) {
     return (
       <>
-        <div className={classes.root}>
+        <Box className={classes.root}>
           <Paper className={classes.paper}>
             <Typography gutterBottom variant="subtitle1">
               Account Management
@@ -281,7 +284,7 @@ const CreateAccount: NextPage = () => {
               </LoadingButton>
             </Form>
           </Paper>
-        </div>
+        </Box>
 
         {submittedValues && (
           <Typography variant="body1">
