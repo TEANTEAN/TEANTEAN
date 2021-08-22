@@ -1,23 +1,23 @@
-import React, { FormEvent, useState } from "react";
-import {
-  Box,
-  Button,
-  Grid,
-  Paper,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import React from "react";
+import { NextPage } from "next";
+import { Box, Button, Grid, Paper, Typography } from "@material-ui/core";
 import { Help } from "@material-ui/icons";
+import Form, { TextField } from "components/Form";
+import { useForm } from "react-hook-form";
 
-export default function Enquiry(): JSX.Element {
-  const [formName, setFormName] = useState("");
-  const [formEmail, setFormEmail] = useState("");
-  const [formPhone, setFormPhone] = useState("");
-  const [formMessage, setFormMessage] = useState("");
+interface FormData {
+  fullname: string;
+  email: string;
+  phone: string;
+  message: string;
+}
 
-  function enquirySubmit(e: FormEvent<HTMLFormElement>): void {
-    console.log(e);
-  }
+const Enquiry: NextPage = () => {
+  const methods = useForm<FormData>();
+
+  const enquirySubmit = async (data: FormData) => {
+    console.log(data);
+  };
 
   return (
     <Box padding={3}>
@@ -44,39 +44,44 @@ export default function Enquiry(): JSX.Element {
       </Box>
       <Paper>
         <Box padding={3}>
-          <form onSubmit={enquirySubmit}>
+          <Form<FormData> methods={methods} onSubmit={enquirySubmit}>
             <Grid container direction="row" spacing={3}>
               <Grid container item xs={6} spacing={3} alignContent="flex-start">
                 <Typography variant="h6">Information</Typography>
                 <Grid item xs={12}>
                   <TextField
-                    autoFocus
-                    required
-                    fullWidth
+                    control={methods.control}
                     label="Full name"
-                    variant="standard"
-                    value={formName}
-                    onChange={(e) => setFormName(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
+                    name="fullname"
                     required
-                    fullWidth
-                    label="Email"
-                    variant="standard"
-                    value={formEmail}
-                    onChange={(e) => setFormEmail(e.target.value)}
+                    rules={{
+                      required: {
+                        value: true,
+                        message: "Please enter your full name",
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    fullWidth
+                    control={methods.control}
+                    label="Email"
+                    name="email"
+                    required
+                    rules={{
+                      required: {
+                        value: true,
+                        message: "Please enter your Email",
+                      },
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    control={methods.control}
                     label="Phone"
+                    name="phone"
                     type="tel"
-                    variant="standard"
-                    value={formPhone}
-                    onChange={(e) => setFormPhone(e.target.value)}
                   />
                 </Grid>
               </Grid>
@@ -84,13 +89,17 @@ export default function Enquiry(): JSX.Element {
                 <Typography variant="h6">Enquiry</Typography>
                 <Grid item xs={12}>
                   <TextField
-                    required
-                    fullWidth
-                    multiline
+                    control={methods.control}
                     label="Message"
-                    variant="standard"
-                    value={formMessage}
-                    onChange={(e) => setFormMessage(e.target.value)}
+                    name="message"
+                    multiline
+                    required
+                    rules={{
+                      required: {
+                        value: true,
+                        message: "Please enter your enquiry",
+                      },
+                    }}
                   />
                 </Grid>
               </Grid>
@@ -100,9 +109,10 @@ export default function Enquiry(): JSX.Element {
                 </Button>
               </Grid>
             </Grid>
-          </form>
+          </Form>
         </Box>
       </Paper>
     </Box>
   );
-}
+};
+export default Enquiry;

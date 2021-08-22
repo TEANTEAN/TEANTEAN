@@ -19,6 +19,7 @@ export interface CustomTextFieldProps {
   rules?: FormFieldRules;
   InputProps?: InputProps;
   inputRef?: React.Ref<any>;
+  multiline?: boolean;
 }
 
 function CustomTextField(props: CustomTextFieldProps) {
@@ -41,6 +42,8 @@ function CustomTextField(props: CustomTextFieldProps) {
             disabled={props.disabled}
             inputProps={{ maxLength: props.maxLength }}
             autoComplete={props.autoComplete ? props.autoComplete : "off"}
+            required={!!props.required}
+            multiline={!!props.multiline}
             // Accessibility
             aria-label={props.label}
             aria-invalid={!!fieldState.error}
