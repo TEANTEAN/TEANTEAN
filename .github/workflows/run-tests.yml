@@ -1,0 +1,22 @@
+name: Run Tests
+on: [push]
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Docker Stack
+        run: docker-compose up -d
+      - name: Install Cypress
+        run: |
+          cd $GITHUB_WORKSPACE/next
+          yarn install --frozen-lockfile
+      - name: Run Tests
+        run: |
+          cd $GITHUB_WORKSPACE/next
+          yarn test
+      - name: Generate coverage report
+        run: |
+          cd $GITHUB_WORKSPACE/next
+          yarn run coverage
+          yarn run coverage-report

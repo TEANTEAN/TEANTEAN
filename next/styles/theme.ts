@@ -1,6 +1,6 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 
-export const theme = createMuiTheme({
+const theme = createMuiTheme({
   palette: {
     // The genyus blue
     primary: {
@@ -12,18 +12,15 @@ export const theme = createMuiTheme({
     },
   },
   props: {
-    MuiTextField: {
-      variant: "outlined",
+    MuiTextField: {},
+    // @ts-ignore -- Mui doesn't include types for lab (non-stable) components
+    MuiAlert: {
+      elevation: 6,
+      variant: "filled",
     },
   },
 });
 
-// Default dark mode from mui incase we want to try it
-const darkTheme = createMuiTheme({
-  palette: {
-    type: "dark",
-  },
-});
-
-export default theme;
-export { darkTheme };
+// Makes font sizes automatically adjust based on screen size (media queries)
+const responsiveTheme = responsiveFontSizes(theme);
+export default responsiveTheme;

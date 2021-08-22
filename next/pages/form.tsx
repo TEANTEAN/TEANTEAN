@@ -6,6 +6,8 @@ import Form, {
 } from "components/Form";
 import React from "react";
 import Typography from "@material-ui/core/Typography";
+import { useForm } from "react-hook-form";
+import Button from "@material-ui/core/Button";
 
 interface FormValues {
   email: string;
@@ -35,9 +37,10 @@ const names: Name[] = [
 ];
 
 const FormTest: NextPage = () => {
-  const [submittedValues, setSubmittedValues] = React.useState<FormValues>(
-    null
-  );
+  const [submittedValues, setSubmittedValues] =
+    React.useState<FormValues>(null);
+
+  const methods = useForm<FormValues>();
 
   const onSubmit = (data: FormValues) => {
     setSubmittedValues(data);
@@ -45,8 +48,9 @@ const FormTest: NextPage = () => {
 
   return (
     <>
-      <Form<FormValues> onSubmit={onSubmit}>
+      <Form<FormValues> methods={methods} onSubmit={onSubmit}>
         <TextField
+          control={methods.control}
           name="email"
           label="Email"
           rules={{
@@ -60,15 +64,27 @@ const FormTest: NextPage = () => {
             },
           }}
         />
-        <TextField name="hello" label="hello" defaultValue="hi" disabled />
+        <TextField
+          control={methods.control}
+          name="hello"
+          label="hello"
+          defaultValue="hi"
+          disabled
+        />
         <AutocompleteField<Name>
+          control={methods.control}
           name="name"
           label="Autocomplete name"
           options={names}
           getOptionLabel={(name) => name.name}
-          getOptionValue={(name) => name.id}
         />
-        <DatePickerField name="date" label="Date" defaultValue={new Date()} />
+        <DatePickerField
+          control={methods.control}
+          name="date"
+          label="Date"
+          defaultValue={new Date()}
+        />
+        <Button type="submit">Submit</Button>
       </Form>
       {submittedValues && (
         <Typography variant="body1">

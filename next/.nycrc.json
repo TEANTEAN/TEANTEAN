@@ -1,0 +1,10 @@
+{
+    "check-coverage": false,
+    "instrument": true,
+    "sourceMap": true,
+    "reporter": [],
+    "include": [
+        "pages/**",
+        "components/**"
+    ]
+}
