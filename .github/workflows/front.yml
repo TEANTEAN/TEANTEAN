@@ -10,7 +10,6 @@ on:
 
 jobs:
   git-sync:
-    needs: run-tests
     runs-on: ubuntu-latest
     steps:
       - name: Sync next to genyusnetwork.devops private repo
