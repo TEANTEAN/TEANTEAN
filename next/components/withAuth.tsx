@@ -4,7 +4,7 @@ import { Session } from "next-auth";
 import { useSession } from "next-auth/client";
 
 export interface WithAuthHook {
-  session: Session & { user?: { role?: string } };
+  session: Session;
   haveAuthenticated: () => boolean;
 }
 

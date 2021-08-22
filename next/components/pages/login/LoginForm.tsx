@@ -65,10 +65,10 @@ const LoginForm: React.FC = () => {
     try {
       console.log(data);
       setPending(true);
-      setTimeout(() => {
+      const t1 = setTimeout(() => {
         setIsTakingAWhile(true);
       }, 3000);
-      setTimeout(() => {
+      const t2 = setTimeout(() => {
         try {
           throw new Error("Unable to connect");
         } catch (err) {
@@ -82,6 +82,9 @@ const LoginForm: React.FC = () => {
         callbackUrl: "http://localhost:3000/",
       });
       if (res?.error) throw new Error(res.error);
+      // Login was successful
+      clearTimeout(t1);
+      clearTimeout(t2);
       if (res.url) router.replace(res.url);
     } catch (err) {
       handleError(err.toString());
