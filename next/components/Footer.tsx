@@ -1,15 +1,14 @@
 import React from "react";
+import {Grid} from "@material-ui/core"
 
 function Footer() : JSX.Element {
     return (
-    <section style={{ position: "absolute", bottom: "0", right:"0",left:"0",backgroundColor:"#1989B5"}}>
-        <div style={{float: "right", marginRight:"20px"}}>
-            <img src= {"/telegram.png"} height="30" style={{marginTop: "10px", marginBottom: "5px", marginLeft: "10px"}}/>
-            <img src= {"/facebook.png"} height="30" style={{marginTop: "10px", marginBottom: "5px", marginLeft: "10px"}}/>
-            <img src= {"/youtube.png"} height="30" style={{marginTop: "10px", marginBottom: "5px", marginLeft: "10px"}}/>
-            <img src= {"/twitter.png"} height="30" style={{marginTop: "10px", marginBottom: "5px", marginLeft: "10px"}}/>
-        </div>
-    </section>
+        <Grid container xs={12} justifyContent="flex-end" style={{backgroundColor:"#1989B5"}} >
+            <img src= {"/facebook.png"} height="30" />
+            <img src= {"/telegram.png"} height="30" style={{padding: "0 8px 0 8px"}}/>
+            <img src= {"/twitter.png"} height="30" />
+            <img src= {"/youtube.png"} height="30"  style={{padding: "0 8px 0 8px"}}/>
+        </Grid>
     );
 }
 
