@@ -11,33 +11,51 @@ const useStyles = makeStyles({
         padding: "5px 20px 5px 20px",
         width: "max-content"
     },
+    articleContainer: {
+        borderRadius: 10, 
+        display:"flex", 
+        flexDirection: "column"
+    },
+    articleContent: {
+        width: "100%", 
+        flex: "1 0 auto"
+    },
 })
 
-export type articleData = {
+export type ArticleData = {
     status: string,
     text: string,
     date: Date,
     link: string,
 }
 
-export type articleProps = {
-    data: articleData
+export type ArticleProps = {
+    data: ArticleData
 }
 
-function Article({data}: articleProps): JSX.Element {
+/**
+ * @function Article
+ * @param articleProps
+ * @returns a single box that contains information about a time-slot and a 
+ * button to register that time slot
+ * @author Chuan
+ */
+function Article({data}: ArticleProps): JSX.Element {
     const {status, text, date, link} = data;
     const classes = useStyles()
     function onClick() {
         console.log(link)
     }
     return (
-    <Card color="primary" style={{borderRadius: 10, display:"flex", flexDirection: "column"}}>
+    <Card color="primary" className={classes.articleContainer}>
         <Typography className={classes.status} variant="subtitle1" component="p">
             {status}
         </Typography>
-        <CardContent style={{width: "100%", flex: "1 0 auto"}} >
+        <CardContent className={classes.articleContent} >
             <Typography variant="h5" component="h3">
-                {date.toDateString()}
+                {date.toDateString()} 
+                <br/>
+                {date.toLocaleTimeString()}
             </Typography>
             <Typography variant="body1" color="textSecondary" component="p">
                 {text}
@@ -49,14 +67,20 @@ function Article({data}: articleProps): JSX.Element {
 }
 
 export type GalleryProps = {
-    data: articleData[],
-    columnWidth?: number,
+    data: ArticleData[],
 }
 
+/**
+ * @function Gallery
+ * @param GalleryProps
+ * @returns An element that displays varying columns of articles based on 
+ * screen width sorted chronologically.
+ * @author Chuan
+ */
 function Gallery({data}: GalleryProps): JSX.Element {
     return (
-        <Grid container spacing={3} >
-            {data.map((data, i) => (
+        <Grid container spacing={3} xs={12}>
+            {data.sort((e1,e2) => e1.date > e2.date ? 1 : 1).map((data, i) => (
                 <Grid item key={i} xs={12} sm={6} md={4} lg={3} xl={2}>
                     <Article data={data}/>
                 </Grid>
