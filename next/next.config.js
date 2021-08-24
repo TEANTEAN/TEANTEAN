@@ -26,7 +26,8 @@ module.exports = (phase) => {
           BUILD_HOST: process.env.NEXT_PUBLIC_HOST,
           NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
           NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-        },
+        },    
       };
   }
+
 };
