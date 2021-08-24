@@ -14,6 +14,7 @@ const Home: NextPage = () => (
     <GeneralButton href="/form">Form example</GeneralButton>
     <GeneralButton href="/login">Login</GeneralButton>
     <GeneralButton href="/booking">Booking</GeneralButton>
+    <GeneralButton href="/enquiry">Enquiry</GeneralButton>
     <GeneralButton href="/createaccount">Create Account</GeneralButton>
     <GeneralButton href="/createseries">Create Series</GeneralButton>
     <GeneralButton href="/landing">Landing</GeneralButton>
