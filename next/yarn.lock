@@ -4343,7 +4343,7 @@ globby@^4.0.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-google-auth-library@^7.0.2:
+google-auth-library@^7.0.2, google-auth-library@^7.6.2:
   version "7.6.2"
   resolved "https://registry.nlark.com/google-auth-library/download/google-auth-library-7.6.2.tgz#8654985dbd06d8519f09c9c2318c4092f289a501"
   integrity sha1-hlSYXb0G2FGfCcnCMYxAkvKJpQE=

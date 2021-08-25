@@ -51,6 +51,7 @@ const Home: NextPage = () => (
     <GeneralButton href="/landing">Landing</GeneralButton>
     <GeneralButton href="/viewexample">View Example</GeneralButton>
     <GeneralButton href="/downloadexample">Download Example</GeneralButton>
+    <GeneralButton href="/googleexample">google Example</GeneralButton>
   </div>
 );
 
