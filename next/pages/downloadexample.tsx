@@ -1,8 +1,25 @@
 import { google, drive_v3, Common } from "googleapis";
 import { NextPage, GetServerSideProps } from "next";
 
+/***
+ * A NOTE about authentication for downloading.
+ * For a file inside Google Drive,
+ * everyone can view it after the server account retrieve it from the Google Drive.
+ * However, for downloading, since we are directly initiate the download link from Google Drive,
+ * only the users that have permissions can download it.
+ * 
+ * So before testing out this page, navigate to the "permissionexample.tsx",
+ * and change the value of "email" const to your email address
+ * then run the permission example page
+ * then run the download page. :)
+ */
 export async function getServerSideProps(context) {
     
+    /**
+     * Set up authentication & drive object
+     * keyFile is the credential file
+     * scopes are the level of authentication.
+     */
     const auth = new google.auth.GoogleAuth({
         keyFile: 'server-credentials.json',
         scopes: ['https://www.googleapis.com/auth/drive.metadata.readonly']
@@ -38,6 +55,19 @@ export async function getServerSideProps(context) {
     //     }
     // }
 
+    /***
+     * Retrive list,
+     * 'q' is the regex pattern. Here I specify that only get mimeType=video
+     * 'pageSize' is the number of pages should be looped
+     * 'fields' specifies what should be included in response,
+     *        here I only want 'nextPageToken' (for looping)
+     *                      and 'files'.
+     * 'files' is the File Resource type.
+     * Use 'files(xx, yy, zz, ...)' to specify what should be included inside response
+     * 
+     * 'res' is the response object, it is a full http response json.
+     * the acquired data is retrieved by 'res.data'
+     */
     const res = await drive.files.list({
         q: "mimeType='video/mp4'",
         pageSize: 10,

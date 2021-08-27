@@ -3,6 +3,11 @@ import { NextPage, GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps = async (context) =>  {
 
+    /**
+     * Set up authentication & drive object
+     * keyFile is the credential file
+     * scopes are the level of authentication.
+     */
     const auth = new google.auth.GoogleAuth({
         keyFile: 'server-credentials.json',
         scopes: ['https://www.googleapis.com/auth/drive.metadata.readonly']
@@ -13,6 +18,19 @@ export const getServerSideProps: GetServerSideProps = async (context) =>  {
         auth,
     });
 
+    /***
+     * Retrive list,
+     * 'q' is the regex pattern. Here I specify that only get mimeType=video
+     * 'pageSize' is the number of pages should be looped
+     * 'fields' specifies what should be included in response,
+     *        here I only want 'nextPageToken' (for looping)
+     *                      and 'files'.
+     * 'files' is the File Resource type.
+     * Use 'files(xx, yy, zz, ...)' to specify what should be included inside response
+     * 
+     * 'res' is the response object, it is a full http response json.
+     * the acquired data is retrieved by 'res.data'
+     */
     const res = await drive.files.list({
         q: "mimeType='video/mp4'",
         pageSize: 10,
@@ -37,6 +55,10 @@ export const getServerSideProps: GetServerSideProps = async (context) =>  {
     }
 }
 
+/***
+ * NOTE!!! the parameter passed here MUST match
+ * with the name that is specified in 'props:{ xxx }'
+ */
 function ViewPage({ files }) {  
 
     console.log(3);
