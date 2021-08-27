@@ -1,49 +1,50 @@
-import React,{ CSSProperties } from "react";
-import {Button, Grid, Divider} from "@material-ui/core";
+import React from "react";
+import { GeneralButton } from "components/Buttons";
+import {
+  createStyles,
+  makeStyles,
+  Box,
+  AppBar,
+  Toolbar,
+  IconButton,
+} from "@material-ui/core";
 
-function Header() : JSX.Element{
-    const LogoStyleTop: CSSProperties = {
-        fontFamily: "Work Sans, sans-serif",
-        color:"#1989B5",
-        fontWeight: 380,
-        fontSize: 40,
-    };
-    const LogoStyleTop2: CSSProperties = {
-        fontFamily: "Work Sans, sans-serif",
-        color:"#FFDC00",
-        fontWeight: 380,
-        fontSize: 40,
-    };
-    const LogoStyleBot: CSSProperties = {
-        borderRadius: "50px",
-        fontFamily: "Work Sans, sans-serif",
-        color:"#1989B5",
-        letterSpacing: "1.24px",
-        lineHeight: "18px",
-        fontWeight: 680,
-        fontSize: 40,
-    };
-    return(
-        <Grid container alignItems='center' justifyContent='flex-end' xs={12}>
-            <Grid item container xs={12} style={{padding: "0 16px 0 16px"}}>
-                <Grid item xs={9}>
-                    <a style={LogoStyleTop}>gen</a>
-                    <a style={LogoStyleTop2}>y</a>
-                    <a style={LogoStyleTop}>us</a>
-                    <br/>
-                    <a style={LogoStyleBot}>Roundtable</a>
-                </Grid>
-                <Grid item xs={3} style={{textAlign: 'right', paddingTop: "24px"}}>
-                    <Button variant='contained' color="primary">
-                        Login
-                    </Button>
-                </Grid>
-            </Grid>
-            <Grid item xs={12}>
-                <Divider style={{height: "4px"}}/>
-            </Grid>
-        </Grid>
-    );
-}
+const useStyles = makeStyles(() =>
+  createStyles({
+    header: {
+      top: "0",
+      position: "relative",
+      backgroundColor: "transparent",
+    },
+    logo: {
+      height: 80,
+    },
+    box: {
+      justifyContent: "space-between",
+      marginBottom: "10px",
+    },
+    login: {
+      marginRight: "30px",
+    },
+  })
+);
+
+const Header = () => {
+  const classes = useStyles();
+  return (
+    <AppBar className={classes.header}>
+      <Toolbar className={classes.box}>
+        <IconButton size="small" href="/login">
+          <img src="/gn-logo.png" alt="Genyus Logo" className={classes.logo} />
+        </IconButton>
+        <Box className={classes.login}>
+          <GeneralButton href="/login" size="large">
+            Login
+          </GeneralButton>
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+};
 
 export default Header;

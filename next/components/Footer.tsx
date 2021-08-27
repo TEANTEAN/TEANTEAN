@@ -1,15 +1,54 @@
 import React from "react";
-import {Grid} from "@material-ui/core"
+import {
+  createStyles,
+  makeStyles,
+  AppBar,
+  Toolbar,
+  IconButton,
+} from "@material-ui/core";
+import TelegramIcon from "@material-ui/icons/Telegram";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import YouTubeIcon from "@material-ui/icons/YouTube";
+import TwitterIcon from "@material-ui/icons/Twitter";
 
-function Footer() : JSX.Element {
-    return (
-        <Grid container xs={12} justifyContent="flex-end" style={{backgroundColor:"#1989B5"}} >
-            <img src= {"/facebook.png"} height="30" />
-            <img src= {"/telegram.png"} height="30" style={{padding: "0 8px 0 8px"}}/>
-            <img src= {"/twitter.png"} height="30" />
-            <img src= {"/youtube.png"} height="30"  style={{padding: "0 8px 0 8px"}}/>
-        </Grid>
-    );
-}
+const useStyles = makeStyles(() =>
+  createStyles({
+    footer: {
+      backgroundColor: "primary",
+      top: "auto",
+      bottom: 0,
+      position: "fixed",
+    },
+    icon: {
+      fontSize: 40,
+      color: "black",
+    },
+    box: {
+      justifyContent: "flex-end",
+    },
+  })
+);
 
-export default Footer; 
+const Footer = () => {
+  const classes = useStyles();
+  return (
+    <AppBar className={classes.footer}>
+      <Toolbar className={classes.box}>
+        <IconButton size="small" href="/login">
+          <TelegramIcon className={classes.icon} />
+        </IconButton>
+        <IconButton size="small" href="/login">
+          <FacebookIcon className={classes.icon} />
+        </IconButton>
+        <IconButton size="small" href="/login">
+          <YouTubeIcon className={classes.icon} />
+        </IconButton>
+        <IconButton size="small" href="/login">
+          <TwitterIcon className={classes.icon} />
+        </IconButton>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+export default Footer;
