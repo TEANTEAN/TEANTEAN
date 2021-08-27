@@ -4,20 +4,23 @@ import Head from "next/head";
 import { GeneralButton } from "components/Buttons";
 import Header from "components/Header";
 import Footer from "components/Footer";
-import Image from "next/image";
 
 const Home: NextPage = () => (
   <div>
-    <Header/>
     <Head>
       <title>Create Next App</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <h1>genyus Rountable</h1>
+    <Header />
+    <h1>genyus Rountable (Admin)</h1>
     <GeneralButton href="/buttons">Button Library</GeneralButton>
     <GeneralButton href="/form">Form example</GeneralButton>
     <GeneralButton href="/login">Login</GeneralButton>
-    <Footer/>
+    <GeneralButton href="/enquiry">Enquiry</GeneralButton>
+    <GeneralButton href="/createaccount">Create Account</GeneralButton>
+    <GeneralButton href="/createseries">Create Series</GeneralButton>
+    <GeneralButton href="/landing">Landing</GeneralButton>
+    <Footer />
   </div>
 );
 

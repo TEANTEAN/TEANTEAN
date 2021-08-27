@@ -1,14 +1,15 @@
 name: Frontend Pipeline
+
 on:
-  workflow_run:
-    workflows: ["Run Tests"]
-    branches: [main]
-    types: 
-      - completed
+  push:
+    branches:
+      - main
+    paths:
+      - "next/**"
+      - ".github/workflows/front.yml"
 
 jobs:
   git-sync:
-    needs: run-tests
     runs-on: ubuntu-latest
     steps:
       - name: Sync next to genyusnetwork.devops private repo
