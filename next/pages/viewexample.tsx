@@ -2,7 +2,7 @@ import { google, drive_v3, Common } from "googleapis";
 import { NextPage, GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps = async (context) =>  {
-    
+
     const auth = new google.auth.GoogleAuth({
         keyFile: 'server-credentials.json',
         scopes: ['https://www.googleapis.com/auth/drive.metadata.readonly']
@@ -17,6 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (context) =>  {
         q: "mimeType='video/mp4'",
         pageSize: 10,
         fields: 'nextPageToken, files(id, name, webViewLink)',
+        // fields: 'nextPageToken, files(id, name)',
     });
 
     console.log(0);
@@ -45,7 +46,7 @@ function ViewPage({ files }) {
         return (<text> 'No files found' </text>)
     }
 
-    var url = files[0].webViewLink.replace('/view', '/preview')
+    var url = files[0].webViewLink.replace('/view?usp=drivesdk', '/preview')
     console.log(url)
     return (
         <iframe 

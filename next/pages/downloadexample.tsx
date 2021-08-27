@@ -13,6 +13,31 @@ export async function getServerSideProps(context) {
         auth,
     });
 
+    /***
+     * The following script handles error,
+     * but getServerSideProps will never return the res / files
+     * Basically the callback funtcion gets ignored?
+     * Same reason applies to other examples that are related to Google Drive
+     */
+    // await drive.files.list({
+    //     q: "mimeType='video/mp4'",
+    //     pageSize: 10,
+    //     fields: 'nextPageToken, files(id, name, webContentLink)',
+    // }), function (err, res) {
+    //     if (err) {
+    //         return {
+    //             props: {}
+    //         }
+    //     } else {
+    //         var files = res.data.files;
+    //         return {
+    //             redirect: {
+    //                 destination: files[0].webContentLink
+    //             }
+    //         }
+    //     }
+    // }
+
     const res = await drive.files.list({
         q: "mimeType='video/mp4'",
         pageSize: 10,
