@@ -2,7 +2,8 @@ import React from "react";
 import { NextPage } from "next";
 import Head from "next/head";
 import { GeneralButton } from "components/Buttons";
-import Image from "next/image";
+import Header from "components/Header";
+import Footer from "components/Footer";
 
 const Home: NextPage = () => (
   <div>
@@ -10,6 +11,7 @@ const Home: NextPage = () => (
       <title>Create Next App</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
+    <Header />
     <h1>genyus Rountable (Admin)</h1>
     <GeneralButton href="/buttons">Button Library</GeneralButton>
     <GeneralButton href="/form">Form example</GeneralButton>
@@ -18,6 +20,7 @@ const Home: NextPage = () => (
     <GeneralButton href="/createaccount">Create Account</GeneralButton>
     <GeneralButton href="/createseries">Create Series</GeneralButton>
     <GeneralButton href="/landing">Landing</GeneralButton>
+    <Footer />
   </div>
 );
 
