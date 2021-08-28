@@ -1,25 +1,45 @@
 import React from "react";
-import { NextPage } from "next";
-import Head from "next/head";
+import { Grid } from "@material-ui/core";
+import ReactPlayer from "react-player/youtube";
+import TextBox, { textData } from "components/TextBox";
 import { GeneralButton } from "components/Buttons";
+import SubHeader from "components/SubHeader";
 
-const Home: NextPage = () => (
-  <div>
-    <Head>
-      <title>Create Next App</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
-    <h1>genyus Rountable (Admin)</h1>
-    <GeneralButton href="/test/buttons">Button Library</GeneralButton>
-    <GeneralButton href="/test/form">Form example</GeneralButton>
-    <GeneralButton href="/login">Login</GeneralButton>
-    <GeneralButton href="/series/613488a555e59a59f4b9eac7">Secret link to booking</GeneralButton>
-    <GeneralButton href="/enquiry">Enquiry</GeneralButton>
-    <GeneralButton href="/admin/createaccount">Create Account</GeneralButton>
-    <GeneralButton href="/admin/resetPassword">Reset Password</GeneralButton>
-    <GeneralButton href="/admin/createseries">Create Series</GeneralButton>
-    <GeneralButton href="/landing">Landing</GeneralButton>
-  </div>
-);
+const testData1: textData = {
+  textTitle: "An online peer-led focus group for unrivalled research",
+  textContent:
+    "Roundtable is an opportunity for people with shared commonalities to connect and discuss topics directly involving their broader peer groups.",
+};
 
-export default Home;
+const testData2: textData = {
+  textTitle: "More about RoundTable",
+  textContent:
+    "1.genyus Roundtable is an opportunity for people with shared commonalities to connect and discuss research which directly involves their broader peer groups. \n 2.These bespoke focus groups can discuss questions which are co-designed by (but not guided by) reputable research groups, to enhance the lived experience of the focus group and their peers.\n 3.genyus Roundtable is hosted by a Peer with Lived Expertise.\n 4.Peer Groups (people with shared commonalities) benefit from participating by building confidence and interpersonal connections plus enhancing self-advocacy skills. \n 5.Research and Health Organisations who are looking to better support their constituents1 also benefit from the process of conducting a Roundtable by collecting non biased research.",
+};
+
+function Booking(): JSX.Element {
+  return (
+    <Grid container xs={12}>
+      <SubHeader />
+      <Grid item xs={12} md={7} style={{ padding: "24px" }}>
+        <ReactPlayer
+          controls
+          url="https://www.youtube.com/watch?v=ZCs3NeBXg2E&ab_channel=genyusnetwork"
+          width="100%"
+        />
+      </Grid>
+      <Grid container item md={5} xs={12}>
+        <Grid item xs={12} style={{ padding: "24px 24px 0 24px" }}>
+          <TextBox data={testData1}>
+            <GeneralButton href="/enquiry">Enquire</GeneralButton>
+          </TextBox>
+        </Grid>
+        <Grid item sm={12} style={{ padding: "24px 24px 24px 24px" }}>
+          <TextBox data={testData2} />
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+}
+
+export default Booking;

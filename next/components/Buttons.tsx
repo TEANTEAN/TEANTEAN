@@ -6,6 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import AddIcon from "@material-ui/icons/Add";
 
 // Current mui button props that we are accepting to build all of our buttons from.
 interface GeneralButtonProps {
@@ -106,7 +107,7 @@ interface LoneIconProps {
 
 // Props that are always required for a button with an icon
 interface IconProps {
-  type: "delete" | "download" | "upload";
+  type: "delete" | "download" | "upload" | "add";
   fontSize?: "inherit" | "default" | "small" | "large";
 }
 
@@ -118,6 +119,7 @@ const IconMaker: React.FC<IconProps> = ({ type, fontSize }) => {
     icon = <ArrowDownwardIcon fontSize={fontSize || "default"} />;
   if (type === "upload")
     icon = <CloudUploadIcon fontSize={fontSize || "default"} />;
+  if (type === "add") icon = <AddIcon fontSize={fontSize || "default"} />;
   return icon;
 };
 

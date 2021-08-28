@@ -18,8 +18,8 @@ import Form, {
   AutocompleteField,
   DatePickerField,
 } from "components/Form";
-import withAuth from "../../util/hooks/withAuth";
-import gnFetch from "../../util/gnAxiosClient";
+import withAuth from "../../../util/hooks/withAuth";
+import gnFetch from "../../../util/gnAxiosClient";
 
 interface FormValues {
   username: String;
@@ -93,9 +93,7 @@ const postNewUser = async (newUserData: FormValues) => {
     const allRoles = await gnFetch.get("users-permissions/roles");
     if (allRoles) {
       // Find the strapi id to the role that is to be assigned to user
-      const sRole = allRoles.data.roles.find(
-        (strapiRole) => strapiRole.name === data.role
-      );
+      const sRole = allRoles.data.roles.find((strapiRole) => strapiRole.name === data.role);
       if (sRole) {
         // New role value to assign to the user
         const newUserRole = { role: { _id: sRole._id } };
@@ -115,8 +113,7 @@ const CreateAccount: NextPage = () => {
     redirectTo: "/dashboard",
     permittedRole: "genyus admin",
   });
-  const [submittedValues, setSubmittedValues] =
-    React.useState<FormValues>(null);
+  const [submittedValues, setSubmittedValues] = React.useState<FormValues>(null);
   const methods = useForm<FormValues>();
   const onSubmit = async (data: FormValues) => {
     setPending(true);
@@ -211,12 +208,7 @@ const CreateAccount: NextPage = () => {
                 }}
               />
 
-              <TextField
-                control={methods.control}
-                name="phone"
-                label="Phone Number"
-                rules={{}}
-              />
+              <TextField control={methods.control} name="phone" label="Phone Number" rules={{}} />
 
               <AutocompleteField<Level>
                 control={methods.control}
@@ -265,21 +257,12 @@ const CreateAccount: NextPage = () => {
                   type="file"
                 />
                 <label htmlFor="icon-button-file">
-                  <IconButton
-                    color="primary"
-                    aria-label="upload picture"
-                    component="span"
-                  >
+                  <IconButton color="primary" aria-label="upload picture" component="span">
                     <PhotoCamera />
                   </IconButton>
                 </label>
               </div>
-              <LoadingButton
-                isloading={pending}
-                type="submit"
-                variant="contained"
-                color="primary"
-              >
+              <LoadingButton isloading={pending} type="submit" variant="contained" color="primary">
                 Submit
               </LoadingButton>
             </Form>
@@ -287,9 +270,7 @@ const CreateAccount: NextPage = () => {
         </Box>
 
         {submittedValues && (
-          <Typography variant="body1">
-            Submitted: {JSON.stringify(submittedValues)}
-          </Typography>
+          <Typography variant="body1">Submitted: {JSON.stringify(submittedValues)}</Typography>
         )}
       </>
     );
