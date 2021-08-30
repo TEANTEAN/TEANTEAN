@@ -15,18 +15,29 @@ jobs:
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-            PR Creator Checklist:
-            - [] Have you written tests (if applicable?)?
-            - [] Does your PR meet our coverage threshold (your PR will fail if not)? 
-            - [] Have you used only Material UI components (eg <Box> instead of <div>)?
-            - [] Are your components named appropriately?
-            - [] Are your components located in the correct directory? (Policy [here](https://confluence.cis.unimelb.edu.au:8443/display/SWEN900132021GN/JIRA+-+Issue+Tracking))
-            - [] Have you used the `gnAxiosClient` from `/util` for any fetch requests?
-            - [] Are your styles declared the correct way? (Policy [here](https://confluence.cis.unimelb.edu.au:8443/display/SWEN900132021GN/JIRA+-+Issue+Tracking))
+            ✏️ PR Creator Checklist ✏️
+            - [ ] Have you written tests (if applicable?)?
+            - [ ] Have you used only Material UI components (eg `Box` instead of `div`)?
+            - [ ] Are your components named appropriately? (Do they make sense?)
+            - [ ] Are your components located in the correct directory? (Policy [here](https://confluence.cis.unimelb.edu.au:8443/display/SWEN900132021GN/Frontend+Component+Directory+Structure))
+            - [ ] Have you used the package "react-query" AND `gnAxiosClient` from `/util` for any fetch requests?
+            - [ ] Are your styles declared the correct way? (Policy [here](https://confluence.cis.unimelb.edu.au:8443/display/SWEN900132021GN/Component+Styles))
+            - [ ] Have you tried to follow the component guide where possible? (Located [here](https://confluence.cis.unimelb.edu.au:8443/display/SWEN900132021GN/Basic+Component+Guide))
 
             To finalise:
-            - [] Have you run `yarn precommit` to lint and prettify your code? And fixed any linting issues?
-            - [] Have you run `yarn build` to make sure the frontend can build?
+            - [ ] Have you run `yarn build` to make sure the frontend can build?
+
+
+
+            👓 PR Reviewer Checklist 👓 
+            - [ ] Have they written tests (if applicable?)?
+            - [ ] Have they used only Material UI components (eg `Box` instead of `div`)?
+            - [ ] Are their components named appropriately? (Do they make sense?)
+            - [ ] Are their components located in the correct directory? (Policy [here](https://confluence.cis.unimelb.edu.au:8443/display/SWEN900132021GN/Frontend+Component+Directory+Structure))
+            - [ ] Have they used the package "react-query" AND `gnAxiosClient` from `/util` for any fetch requests?
+            - [ ] Are your styles declared the correct way? (Policy [here](https://confluence.cis.unimelb.edu.au:8443/display/SWEN900132021GN/Component+Styles))
+            - [ ] Have they tried to follow the component guide where possible? (Located [here](https://confluence.cis.unimelb.edu.au:8443/display/SWEN900132021GN/Basic+Component+Guide))
+
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           repo-token-user-login: "github-actions[bot]" # The user.login for temporary GitHub tokens
           allow-repeats: false # This is the default
