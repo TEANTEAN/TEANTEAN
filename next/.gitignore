@@ -35,3 +35,6 @@ yarn-error.log*
 # nyc
 /.nyc_output
 
+# credentials
+.env.local
+server-credentials-json
