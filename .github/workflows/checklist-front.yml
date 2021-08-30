@@ -1,0 +1,32 @@
+name: Frontend PR Checklist
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "next/**"
+
+jobs:
+  git-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add Frontend PR Checklist
+        uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            PR Creator Checklist:
+            - [] Have you written tests (if applicable?)?
+            - [] Does your PR meet our coverage threshold (your PR will fail if not)? 
+            - [] Have you used only Material UI components (eg <Box> instead of <div>)?
+            - [] Are your components named appropriately?
+            - [] Are your components located in the correct directory? (Policy [here](https://confluence.cis.unimelb.edu.au:8443/display/SWEN900132021GN/JIRA+-+Issue+Tracking))
+            - [] Have you used the `gnAxiosClient` from `/util` for any fetch requests?
+            - [] Are your styles declared the correct way? (Policy [here](https://confluence.cis.unimelb.edu.au:8443/display/SWEN900132021GN/JIRA+-+Issue+Tracking))
+
+            To finalise:
+            - [] Have you run `yarn precommit` to lint and prettify your code? And fixed any linting issues?
+            - [] Have you run `yarn build` to make sure the frontend can build?
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token-user-login: "github-actions[bot]" # The user.login for temporary GitHub tokens
+          allow-repeats: false # This is the default
