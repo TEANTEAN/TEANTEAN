@@ -1,4 +1,4 @@
-name: Deploy
+name: Backend Pipeline
 
 on:
   push:
@@ -22,4 +22,3 @@ jobs:
         env:
           HD_DATABASE_URI: ${{secrets.DATABASE_URI}}
           HD_DATABASE_NAME: ${{secrets.DATABASE_NAME}}
-   
