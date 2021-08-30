@@ -10,8 +10,48 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { Provider } from "next-auth/client";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { useRouter } from "next/router";
+import useHasMounted from "util/hooks/useHasMounted";
+import AdminNavigation from "components/AdminNavigation";
+import withAuth from "util/hooks/withAuth";
 
 const queryClient = new QueryClient();
+
+const AdminWrapper = ({ Component, pageProps }) => {
+  const { session, haveAuthenticated } = withAuth({
+    redirectTo: "/login",
+  });
+
+  if (session && haveAuthenticated()) {
+    return (
+      <AdminNavigation>
+        <Component {...pageProps} />
+      </AdminNavigation>
+    );
+  }
+
+  // Don't show admin portal while authenticating
+  return null;
+};
+
+const AppWrapper = ({ Component, pageProps }) => {
+  const hasMounted = useHasMounted();
+  const router = useRouter();
+
+  // Our application hasn't mounted yet so we don't know who's trying to access what pages
+  // Safest is to render nothing
+  if (!hasMounted) {
+    return null;
+  }
+
+  // If user is logged in and the route includes /admin, render the admin navigation skeleton and page
+  if (router.pathname.includes("/admin")) {
+    return <AdminWrapper Component={Component} pageProps={pageProps} />;
+  }
+
+  // No login is required, so render the page as normal without the admin skeleton
+  return <Component {...pageProps} key={router.asPath} />;
+};
 
 const App = ({ Component, pageProps }: AppProps) => (
   <QueryClientProvider client={queryClient}>
@@ -26,7 +66,7 @@ const App = ({ Component, pageProps }: AppProps) => (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Component {...pageProps} />
+          <AppWrapper Component={Component} pageProps={pageProps} />
         </ThemeProvider>
       </MuiPickersUtilsProvider>
     </Provider>
