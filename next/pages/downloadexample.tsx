@@ -21,7 +21,7 @@ export async function getServerSideProps(context) {
      * scopes are the level of authentication.
      */
     const auth = new google.auth.GoogleAuth({
-        keyFile: 'server-credentials.json',
+        keyFile: 'server-credential.json',
         scopes: ['https://www.googleapis.com/auth/drive.metadata.readonly']
     })
     
