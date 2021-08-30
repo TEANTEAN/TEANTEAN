@@ -61,122 +61,85 @@ The project solution will encompass all current processes involved in the genyus
 
 <br />
 
-## Using the lifesaver script
-- Lifesaver script provides some common operations 
-- USAGE: ./lifesaver.sh <args>
-		up - brings up docker container
-		down - brings down containers
-		destroy - clean docker slate including removing volumes
-		save front - save changes to frontend
-		save back - save changes to backend
+## Troubleshooting
+If at any point a weird error is preventing you from running any node application after pulling or merging a new branch, you may need to reinstall your dependencies. Navigate to the relevant directory (`/next` or `/strapi/app`) and run the following:
+```shell
+npx rimraf -r node_modules
+yarn install
+```
+This removes and reinstalls your dependencies.
 
-## Setup Instructions
+## Setup instructions
 - Pull this project to your local machine with 
 ```shell
 git clone https://github.com/SWEN90013-2021-GN/GN.git
 ``` 
 If you don't have Git installed, do this now. If you're working on Windows, make sure you install Git Bash as part of the Git installation. 
-- Navigate to the root project directory, you should see the file `livesaver.sh`. This is a script that automates some of the more complex docker commands. 
-- Ensure docker and docker-compose are installed correctly <https://docs.docker.com/compose/install/>
 
-##### Extra Steps For Windows Users
+##### Extra steps for windows users
 - Make sure either Git Bash is installed (this is generally an option when you first install git) or you have a different method of running bash scripts
 - If you want to run scripts in powershell or windows terminal, add our project's root directory to your PATH and restart your computer (https://helpdeskgeek.com/windows-10/add-windows-path-environment-variable/)
 
-##### Linux + Windows
-- Install the Docker VSCode plugin (ms-azuretools.vscode-docker). This gives VSCode the ability to see and manage docker containers and images.
-- Click on the Docker whale icon on the left, you should see something like this:
-
-![docker vscode extension](./images/docker-vscode-plugin.png)
-
-- Download the necessary docker images and start all of our containers using
+## Front-end development setup
+- Navigate to the `/next` directory
 ```shell
-./lifesaver.sh up
+cd next
 ```
+- Make sure you have the necessary environment files, these can be found [here in the #frontend channel on slack](https://gn-yl2021.slack.com/archives/C01U8KE0P1D/p1630295829001800) 
 
-- Once the containers are up and running, you should be able to see them inside the docker plugin
-- Right click the `strapi/strapi` container to see what's happening inside
-![docker vscode view container](./images/docker-view-container.png)
-
-- A terminal will open in vscode. You'll have to wait for strapi to download dependencies. This may take a while:
-![strapi dep install](./images/strapi-deps.png)
-
-- Once this is complete, all of your services should be up and running. Check that the urls below each return something.
-
-| Service | Port Connected To Docker Container | URL |
-| - | - | - |
-| NextJS | 3000 | http://localhost:3000 |
-| Mongo | 27017 | http://localhost:27017 |
-| Strapi | 1337 | http://localhost:1337 |
-
-## Adding a feature to the frontend
-- Make sure no containers are running either through the docker vscode plugin, or with
-```shell
-./lifesaver.sh down
-```
-- Bring up the backend to interact with
-```shell
-./lifesaver.sh up-backend
-```
-	
-- Navigate to the next directory and 1) install packages 2) start next in development mode
+- Install our project dependencies (only once at setup)
 ```shell
 yarn install
+```
+- Run the project in development mode
+```shell
 yarn dev
 ```
+- Access the app at  http://localhost:3000 
 
-- You can now make changes and next will hot-reload
+## Back-end development setup 
+- Navigate to the `/strapi/app` directory
+```shell
+cd strapi/app
+```
+- Make sure you have the necessary environment files, these can be found [here in the #backend channel on slack](https://gn-yl2021.slack.com/archives/C02CX3M1ZCL/p1630296065009400) 
+
+- Install our project dependencies (only once at setup)
+```shell
+yarn install
+```
+- Run the project in development mode
+```shell
+yarn develop
+```
+- Access the app at  http://localhost:1337
+- Login to the Strapi admin panel using credentials found [here on Confluence](https://confluence.cis.unimelb.edu.au:8443/display/SWEN900132021GN/Project+Credentials)
+
+## Adding a feature to the frontend
+- Start the front end server using the instructions in **Front-end development setup**.
+- If developing features that use the backend, also run the backend using instructions in **Back-end development setup**
+
 - Ensure that your changes also run in a production environment by running
 ```shell
 yarn build
 yarn start
 ```
 
-- Once finished, save the frontend with
-```shell
-./lifesaver.sh save front
-```
-
+- Please note any type errors will prevent the application from building
 - You can now commit and push your changes
 
 ## Adding a feature to the backend
-- Make sure no containers are running either through the docker vscode plugin, or with
-```shell
-./lifesaver.sh down
-```
-- Bring up the backend with
-```shell
-./lifesaver.sh up-backend
-```
-- You can now modify strapi from inside the UI (model changes) or from a code editor (middleware/controller/logic overrides)
+Start the backend server in development mode using the instructions in **Back-end development setup**
 
-- After making your changes to strapi and **before commiting the final changes to git**, run the backend save script to backup and rebuild the backend containers with your changes
-
+- Make any changes you want
+- Ensure strapi builds
 ```shell
-./lifesaver.sh save back
+yarn build
+yarn start
 ```
+
+***(Temporary until we have migration scripts setup)** <br>
+If making changes to the database models, please ensure you note down these changes in your pull request in detail. They will need to be replicated in production immediately before merging your PR to main.*
+<br />
 
 - You can now commit and push your changes
-
-## (WIP) Running strapi locally - not working yet for Windows users
-TODO: node_modules installed on linux (docker environment) can't be used on windows
-
-- Running Strapi locally for development will allow you to make changes and test them without having to rebuild a new container, however Strapi still needs a connection to the database
-- Run the following lifesaver script to start just the mongo container
-```shell
-./lifesaver.sh up-db
-```
-- Navigate to the `strapi/app/` directory and start strapi in development mode
-```shell
-cd strapi
-cd app 
-yarn develop
-```
-
-- You can now modify strapi from inside the UI (model changes) or from a code editor (middleware/controller/logic overrides)
-
-- After making your changes to strapi and **before commiting the changes to git**, run the backend save script to rebuild the backend containers with your changes
-
-```shell
-./lifesaver.sh save back
-```
