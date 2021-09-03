@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "05/13/2021 5:21:44 PM"
+    "x-generation-date": "09/04/2021 12:36:22 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -5183,16 +5183,13 @@
       },
       "Roundtable-series": {
         "required": [
-          "id"
+          "id",
+          "videoLink",
+          "seriesURI",
+          "title"
         ],
         "properties": {
           "id": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "description": {
             "type": "string"
           },
           "researchPartner": {
@@ -5249,6 +5246,12 @@
           "videoLink": {
             "type": "string"
           },
+          "seriesURI": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -5256,17 +5259,22 @@
         }
       },
       "NewRoundtable-series": {
+        "required": [
+          "videoLink",
+          "seriesURI",
+          "title"
+        ],
         "properties": {
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
           "researchPartner": {
             "type": "string"
           },
           "videoLink": {
+            "type": "string"
+          },
+          "seriesURI": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "published_at": {
@@ -5304,22 +5312,25 @@
           },
           "series": {
             "required": [
-              "id"
+              "id",
+              "videoLink",
+              "seriesURI",
+              "title"
             ],
             "properties": {
               "id": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
                 "type": "string"
               },
               "researchPartner": {
                 "type": "string"
               },
               "videoLink": {
+                "type": "string"
+              },
+              "seriesURI": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "published_at": {
@@ -5691,22 +5702,25 @@
             "type": "array",
             "items": {
               "required": [
-                "id"
+                "id",
+                "videoLink",
+                "seriesURI",
+                "title"
               ],
               "properties": {
                 "id": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "description": {
                   "type": "string"
                 },
                 "researchPartner": {
                   "type": "string"
                 },
                 "videoLink": {
+                  "type": "string"
+                },
+                "seriesURI": {
+                  "type": "string"
+                },
+                "title": {
                   "type": "string"
                 },
                 "published_at": {
