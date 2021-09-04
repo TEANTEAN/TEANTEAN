@@ -21,7 +21,6 @@ const Home: NextPage = () => (
     <GeneralButton href="/createaccount">Create Account</GeneralButton>
     <GeneralButton href="/createseries">Create Series</GeneralButton>
     <GeneralButton href="/landing">Landing</GeneralButton>
-    <GeneralButton href="/participants">Participants</GeneralButton>
     <Footer />
   </div>
 );
