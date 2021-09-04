@@ -40,7 +40,7 @@
       description: resource.description_plain,
       videoLink: series.videoLink,
       researchPartner: series.researchPartner.username,
-      scheduling_url: resource.scheduling_url
+      schedulingUrl: resource.scheduling_url
     }
 
     return finalRes;

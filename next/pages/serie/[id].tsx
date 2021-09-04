@@ -34,7 +34,7 @@ const Serie = ({ serie }) => (
           {/* Calendly inline widget begin */}
           <div
             className="calendly-inline-widget"
-            data-url="https://calendly.com/msu2/gn-team-meeting"
+            data-url={serie.schedulingUrl}
             style={{ minWidth: "320px", height: "630px" }}
           />
           <script
