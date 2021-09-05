@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     // "noErrorTruncation": true,
@@ -21,14 +17,12 @@
     "baseUrl": ".",
     "sourceMap": true
   },
-  "exclude": [
-    "node_modules",
-    ".eslintrc.js"
-  ],
+  "exclude": ["node_modules", ".eslintrc.js"],
   "include": [
     "next.config.js",
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"  
+    "**/*.tsx",
+    "util/DriveController.ts"
   ]
 }
