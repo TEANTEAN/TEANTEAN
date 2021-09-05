@@ -94,7 +94,7 @@ const postNewUser = async (newUserData: FormValues) => {
     if (allRoles) {
       // Find the strapi id to the role that is to be assigned to user
       const sRole = allRoles.data.roles.find(
-        (strapiRole) => strapiRole.name === data.role,
+        (strapiRole) => strapiRole.name === data.role
       );
       if (sRole) {
         // New role value to assign to the user
