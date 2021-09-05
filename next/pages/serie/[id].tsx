@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function SubHeader({ children }): React.ReactNode {
+function SubHeader({ children }): JSX.Element {
   const classes = useStyles();
   return (
     <Grid item xs={12} className={classes.subheader}>
@@ -62,7 +62,7 @@ function SubHeader({ children }): React.ReactNode {
   );
 }
 
-function YouTubeSection({ serie }): React.ReactNode {
+function YouTubeSection({ serie }): JSX.Element {
   const classes = useStyles();
   return (
     <Box className={classes.section}>
@@ -78,7 +78,7 @@ function YouTubeSection({ serie }): React.ReactNode {
   );
 }
 
-function DetailsSection({ serie }): React.ReactNode {
+function DetailsSection({ serie }): JSX.Element {
   const classes = useStyles();
   return (
     <Grid container className={classes.section}>
@@ -97,7 +97,7 @@ function DetailsSection({ serie }): React.ReactNode {
         <Typography variant="h6">
           <strong>Description</strong>
         </Typography>
-        <Typography variant="Body1">
+        <Typography variant="body1">
           by The Florey Institute of Neuroscience and Mental Health
         </Typography>
       </Grid>
@@ -105,7 +105,7 @@ function DetailsSection({ serie }): React.ReactNode {
   );
 }
 
-function CalendlySection({ serie }): React.ReactNode {
+function CalendlySection({ serie }): JSX.Element {
   const classes = useStyles();
   return (
     <Grid container className={classes.section}>
@@ -119,7 +119,7 @@ function CalendlySection({ serie }): React.ReactNode {
   );
 }
 
-function Serie({ serie }): React.ReactNode {
+function Serie({ serie }): JSX.Element {
   return (
     <>
       <Header />
