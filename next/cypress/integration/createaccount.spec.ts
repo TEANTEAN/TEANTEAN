@@ -2,8 +2,8 @@
 
 context("Create Account", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/createaccount");
+    cy.visit("http://localhost:3000/admin/createaccount");
   });
 
-  it("Test stub", () => { });
+  it("Test stub", () => {});
 });

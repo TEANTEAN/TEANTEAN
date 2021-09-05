@@ -1,15 +1,15 @@
 /// <reference types="cypress" />
 
-context('Buttons', () => {
-    beforeEach(() => {
-        cy.visit('http://localhost:3000/buttons');
-    });
+context("Buttons", () => {
+  beforeEach(() => {
+    cy.visit("http://localhost:3000/test/buttons");
+  });
 
-    it('Click basic button', () => {
-        cy.contains('Basic Button').click();
-    });
+  it("Click basic button", () => {
+    cy.contains("Basic Button").click();
+  });
 
-    it('Click download button', () => {
-        cy.contains('Download').click();
-    });
+  it("Click download button", () => {
+    cy.contains("Download").click();
+  });
 });
