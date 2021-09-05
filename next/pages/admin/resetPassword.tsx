@@ -15,8 +15,8 @@ import Form, {
   TextField,
   PasswordField,
 } from "components/Form";
-import withAuth from "../util/hooks/withAuth";
-import gnFetch from "../util/gnAxiosClient";
+import withAuth from "../../util/hooks/withAuth";
+import gnFetch from "../../util/gnAxiosClient";
 
 interface FormValues {
     username: String;
