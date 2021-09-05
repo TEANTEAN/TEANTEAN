@@ -13,8 +13,8 @@ const Home: NextPage = () => (
     </Head>
     <Header />
     <h1>genyus Rountable (Admin)</h1>
-    <GeneralButton href="/buttons">Button Library</GeneralButton>
-    <GeneralButton href="/form">Form example</GeneralButton>
+    <GeneralButton href="/test/buttons">Button Library</GeneralButton>
+    <GeneralButton href="/test/form">Form example</GeneralButton>
     <GeneralButton href="/login">Login</GeneralButton>
     <GeneralButton href="/booking">Booking</GeneralButton>
     <GeneralButton href="/enquiry">Enquiry</GeneralButton>
