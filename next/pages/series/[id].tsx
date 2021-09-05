@@ -62,14 +62,14 @@ function SubHeader({ children }): JSX.Element {
   );
 }
 
-function YouTubeSection({ serie }): JSX.Element {
+function YouTubeSection({ series }): JSX.Element {
   const classes = useStyles();
   return (
     <Box className={classes.section}>
       <Box className={classes.playerWrapper}>
         <ReactPlayer
           controls
-          url={serie.videoLink}
+          url={series.videoLink}
           className={classes.video}
           width="100%"
         />
@@ -78,17 +78,15 @@ function YouTubeSection({ serie }): JSX.Element {
   );
 }
 
-function DetailsSection({ serie }): JSX.Element {
+function DetailsSection({ series }): JSX.Element {
   const classes = useStyles();
   return (
     <Grid container className={classes.section}>
       <Grid item xs={12} className={classes.title}>
         <Typography variant="h5">
-          <strong>Young Stroke Survivors</strong>
+          <strong>{series.title}</strong>
         </Typography>
-        <Typography variant="h6">
-          by The Florey Institute of Neuroscience and Mental Health
-        </Typography>
+        <Typography variant="h6">by {series.researchPartner}</Typography>
       </Grid>
       <Grid item className={classes.image}>
         <Image src="/florey-logo.png" alt="logo" width="200px" height="100px" />
@@ -97,20 +95,18 @@ function DetailsSection({ serie }): JSX.Element {
         <Typography variant="h6">
           <strong>Description</strong>
         </Typography>
-        <Typography variant="body1">
-          by The Florey Institute of Neuroscience and Mental Health
-        </Typography>
+        <Typography variant="body1">{series.description}</Typography>
       </Grid>
     </Grid>
   );
 }
 
-function CalendlySection({ serie }): JSX.Element {
+function CalendlySection({ series }): JSX.Element {
   const classes = useStyles();
   return (
     <Grid container className={classes.section}>
       <iframe
-        src={serie.schedulingUrl}
+        src={series.schedulingUrl}
         title="booking"
         className={classes.calendar}
         frameBorder="0"
@@ -119,15 +115,15 @@ function CalendlySection({ serie }): JSX.Element {
   );
 }
 
-function Serie({ serie }): JSX.Element {
+function Series({ series }): JSX.Element {
   return (
     <>
       <Header />
       <SubHeader> Details </SubHeader>
-      <DetailsSection serie={serie} />
-      <YouTubeSection serie={serie} />
+      <DetailsSection series={series} />
+      <YouTubeSection series={series} />
       <SubHeader> Register for a Roundtable </SubHeader>
-      <CalendlySection serie={serie} />
+      <CalendlySection series={series} />
       <Footer />
     </>
   );
@@ -137,10 +133,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/roundtable-series/${params.id}`
   );
-  const serie = await res.json();
+  const series = await res.json();
 
   return {
-    props: { serie },
+    props: { series },
   };
 };
 
@@ -157,4 +153,4 @@ export async function getStaticPaths() {
   return { paths, fallback: false };
 }
 
-export default Serie;
+export default Series;
