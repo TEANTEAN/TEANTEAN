@@ -1,12 +1,6 @@
 import React from "react";
 import { GetStaticProps } from "next";
-import {
-  Grid,
-  Typography,
-  makeStyles,
-  createStyles,
-  Box,
-} from "@material-ui/core";
+import { Grid, Typography, makeStyles, createStyles, Box } from "@material-ui/core";
 import ReactPlayer from "react-player/youtube";
 import Header from "components/Header";
 import Footer from "components/Footer";
@@ -49,12 +43,7 @@ function YouTubeSection({ series }): JSX.Element {
   return (
     <Box className={classes.section}>
       <Box className={classes.playerWrapper}>
-        <ReactPlayer
-          controls
-          url={series.videoLink}
-          className={classes.video}
-          width="100%"
-        />
+        <ReactPlayer controls url={series.videoLink} className={classes.video} width="100%" />
       </Box>
     </Box>
   );
@@ -76,9 +65,7 @@ function DetailsSection({ series }): JSX.Element {
         <Typography variant="h5">
           <strong>{series.title}</strong>
         </Typography>
-        <Typography variant="h6">
-          by The Florey Institute of Neuroscience
-        </Typography>
+        <Typography variant="h6">by The Florey Institute of Neuroscience</Typography>
       </Grid>
       <Grid item className={classes.image}>
         <Image src="/florey-logo.png" alt="logo" width="200px" height="100px" />
@@ -110,21 +97,17 @@ function CalendlySection({ series }): JSX.Element {
 function Series({ series }): JSX.Element {
   return (
     <>
-      <Header />
       <SubHeader> Details </SubHeader>
       <DetailsSection series={series} />
       <YouTubeSection series={series} />
       <SubHeader> Register for a Roundtable </SubHeader>
       <CalendlySection series={series} />
-      <Footer />
     </>
   );
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/roundtable-series/${params.id}`
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/roundtable-series/${params.id}`);
   const series = await res.json();
 
   return {
@@ -133,9 +116,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export async function getStaticPaths() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/roundtable-series/`
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/roundtable-series/`);
   const series = await res.json();
 
   const paths = series.map((serie) => ({
