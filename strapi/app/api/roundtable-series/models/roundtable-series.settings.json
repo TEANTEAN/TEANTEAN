@@ -12,19 +12,22 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
-      "type": "string"
-    },
-    "description": {
-      "type": "text"
-    },
     "researchPartner": {
       "plugin": "users-permissions",
       "model": "user",
       "via": "roundtableSeries"
     },
     "videoLink": {
-      "type": "string"
+      "type": "string",
+      "required": true
+    },
+    "seriesURI": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
     }
   }
 }

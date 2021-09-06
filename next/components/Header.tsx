@@ -15,6 +15,7 @@ const useStyles = makeStyles(() =>
       top: "0",
       position: "relative",
       backgroundColor: "transparent",
+      boxShadow: "none",
     },
     logo: {
       height: 80,
@@ -35,7 +36,7 @@ const Header = () => {
     <AppBar className={classes.header}>
       <Toolbar className={classes.box}>
         <IconButton size="small" href="/login">
-          <img src="/gn-logo.png" alt="Genyus Logo" className={classes.logo} />
+          <img src="/gn-logo.png" alt="genyus Logo" className={classes.logo} />
         </IconButton>
         <Box className={classes.login}>
           <GeneralButton href="/login" size="large">
