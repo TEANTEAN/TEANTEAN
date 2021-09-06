@@ -17,5 +17,7 @@ module.exports = {
     "react/require-default-props": "off",
     "react/prop-types": "off",
     "react/destructuring-assignment": "off",
+    "no-multi-str": "off",
+    "max-len": 100,
   },
 };

@@ -12,6 +12,7 @@
   "devDependencies": {},
   "dependencies": {
     "googleapis": "^85.0.0",
+    "axios": "^0.21.1",
     "strapi": "3.6.2",
     "strapi-admin": "3.6.2",
     "strapi-connector-mongoose": "^3.6.2",

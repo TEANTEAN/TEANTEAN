@@ -529,16 +529,13 @@
     "schemas": {
       "Roundtable-series": {
         "required": [
-          "id"
+          "id",
+          "videoLink",
+          "seriesURI",
+          "title"
         ],
         "properties": {
           "id": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "description": {
             "type": "string"
           },
           "researchPartner": {
@@ -598,6 +595,12 @@
           "videoLink": {
             "type": "string"
           },
+          "seriesURI": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -605,17 +608,22 @@
         }
       },
       "NewRoundtable-series": {
+        "required": [
+          "videoLink",
+          "seriesURI",
+          "title"
+        ],
         "properties": {
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
           "researchPartner": {
             "type": "string"
           },
           "videoLink": {
+            "type": "string"
+          },
+          "seriesURI": {
+            "type": "string"
+          },
+          "title": {
             "type": "string"
           },
           "published_at": {

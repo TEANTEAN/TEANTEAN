@@ -1,15 +1,15 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from "react";
 // import { makeStyles } from '@material-ui/core/styles';
-import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { NextPage } from "next";
+
 import Form, {
   TextField,
   AutocompleteField,
@@ -23,11 +23,6 @@ interface FormValues {
   photo: File;
   vedio: File;
   date: Date;
-}
-
-interface Level {
-  id: number;
-  level: string;
 }
 
 interface Org {
