@@ -18,8 +18,8 @@ FROM node:alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
-ENV NEXT_PUBLIC_BACKEND_URL="https://genyus-backend-strapi.herokuapp.com"
-ENV NEXTAUTH_URL="https://gn-frontend.vercel.app"
+ENV NEXT_PUBLIC_BACKEND_URL "https://genyus-backend-strapi.herokuapp.com"
+ENV NEXTAUTH_URL "https://gn-frontend.vercel.app"
 
 # You only need to copy next.config.js if you are NOT using the default configuration
 # COPY --from=builder /app/next.config.js ./
