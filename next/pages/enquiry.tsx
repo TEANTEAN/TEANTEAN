@@ -4,6 +4,8 @@ import { Box, Button, Grid, Paper, Typography } from "@material-ui/core";
 import { Help } from "@material-ui/icons";
 import Form, { TextField } from "components/Form";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useRouter } from 'next/router';
 
 interface FormData {
   fullname: string;
@@ -14,9 +16,12 @@ interface FormData {
 
 const Enquiry: NextPage = () => {
   const methods = useForm<FormData>();
-
+  const router = useRouter();
   const enquirySubmit = async (data: FormData) => {
-    console.log(data);
+    router.push("/");
+    router.push("mailto:caleb@genyusnetwork.com?subject=Customer Enquiry&body=Name: "+data.fullname+"%0D%0APhone: "+data.phone+"%0D%0AEnquiry: "+data.message);
+
+
   };
 
   return (
@@ -55,6 +60,7 @@ const Enquiry: NextPage = () => {
                     name="fullname"
                     required
                     rules={{
+                      pattern: RegExp(".* .*"),
                       required: {
                         value: true,
                         message: "Please enter your full name",
@@ -65,23 +71,16 @@ const Enquiry: NextPage = () => {
                 <Grid item xs={12}>
                   <TextField
                     control={methods.control}
-                    label="Email"
-                    name="email"
+                    label="Phone"
+                    name="phone"
+                    type="tel"
                     required
                     rules={{
                       required: {
                         value: true,
-                        message: "Please enter your Email",
+                        message: "Please enter phone number",
                       },
                     }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    control={methods.control}
-                    label="Phone"
-                    name="phone"
-                    type="tel"
                   />
                 </Grid>
               </Grid>
