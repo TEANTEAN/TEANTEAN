@@ -1,12 +1,13 @@
 import React from "react";
 import { NextPage } from "next";
-import { Box, Button, Grid, Paper, Typography } from "@material-ui/core";
-import { Help } from "@material-ui/icons";
+import { Box, Grid, Paper, Typography, makeStyles, createStyles, Button } from "@material-ui/core";
+import { GeneralButton } from "components/Buttons";
 import Form, { TextField } from "components/Form";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import Header from "components/Header";
 import Footer from "components/Footer";
+import SubHeader from "components/SubHeader";
 
 interface FormData {
   fullname: string;
@@ -15,7 +16,16 @@ interface FormData {
   message: string;
 }
 
+const useStyle = makeStyles(() =>
+  createStyles({
+    subheader: {
+      padding: "0 0 0 10px",
+    },
+  })
+);
+
 const Enquiry: NextPage = () => {
+  const classes = useStyle();
   const methods = useForm<FormData>();
   const router = useRouter();
   const enquirySubmit = async (data: FormData) => {
@@ -30,40 +40,28 @@ const Enquiry: NextPage = () => {
   return (
     <>
       <Header />
+      <SubHeader />
       <Box padding={3}>
-        <Typography variant="h2" gutterBottom>
-          Make an Enquiry
-        </Typography>
-        <Typography variant="subtitle2" gutterBottom>
-          <i>
-            Do you want to become a research partner? Is there something else
-            that you want to know about?
-          </i>
-        </Typography>
-        <Box paddingY={2}>
-          <Grid container spacing={1} alignItems="center">
-            <Grid item>
-              <Help fontSize="large" color="primary" />
-            </Grid>
-            <Grid item>
-              <Typography variant="body1" gutterBottom>
-                Tell us, how can we help?
-              </Typography>
-            </Grid>
+        <Grid container>
+          <Grid item xs={10}>
+            <Typography variant="h2" gutterBottom>
+              Make an Enquiry
+            </Typography>
           </Grid>
-        </Box>
+          <Grid item xs={2}>
+            <GeneralButton varient="contained" href="/">
+              Back
+            </GeneralButton>
+          </Grid>
+        </Grid>
         <Paper>
           <Box padding={3}>
             <Form<FormData> methods={methods} onSubmit={enquirySubmit}>
-              <Grid container direction="row" spacing={3}>
-                <Grid
-                  container
-                  item
-                  xs={6}
-                  spacing={3}
-                  alignContent="flex-start"
-                >
-                  <Typography variant="h6">Information</Typography>
+              <Grid container direction="row" spacing={5}>
+                <Grid container item xs={12} md={3} alignContent="flex-start" spacing={3}>
+                  <Grid item xs={12} className={classes.subheader}>
+                    <Typography variant="h6">Contact Detail</Typography>
+                  </Grid>
                   <Grid item xs={12}>
                     <TextField
                       control={methods.control}
@@ -94,14 +92,10 @@ const Enquiry: NextPage = () => {
                     />
                   </Grid>
                 </Grid>
-                <Grid
-                  container
-                  item
-                  xs={6}
-                  spacing={3}
-                  alignContent="flex-start"
-                >
-                  <Typography variant="h6">Enquiry</Typography>
+                <Grid container item xs={12} md={9} alignContent="flex-start" spacing={3}>
+                  <Typography variant="h6" className={classes.subheader}>
+                    Enquiry
+                  </Typography>
                   <Grid item xs={12}>
                     <TextField
                       control={methods.control}
