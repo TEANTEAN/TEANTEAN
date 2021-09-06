@@ -6,6 +6,10 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install
 
+ENV NODE_ENV production
+ENV NEXT_PUBLIC_BACKEND_URL "https://genyus-backend-strapi.herokuapp.com"
+ENV NEXTAUTH_URL "https://gn-frontend.vercel.app"
+
 # Rebuild the source code only when needed
 FROM node:alpine AS builder
 WORKDIR /app
@@ -16,10 +20,6 @@ RUN yarn build
 # Production image, copy all the files and run next
 FROM node:alpine AS runner
 WORKDIR /app
-
-ENV NODE_ENV production
-ENV NEXT_PUBLIC_BACKEND_URL "https://genyus-backend-strapi.herokuapp.com"
-ENV NEXTAUTH_URL "https://gn-frontend.vercel.app"
 
 # You only need to copy next.config.js if you are NOT using the default configuration
 # COPY --from=builder /app/next.config.js ./
