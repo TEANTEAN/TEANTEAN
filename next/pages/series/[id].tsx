@@ -5,24 +5,16 @@ import {
   Typography,
   makeStyles,
   createStyles,
-  Theme,
   Box,
 } from "@material-ui/core";
 import ReactPlayer from "react-player/youtube";
 import Header from "components/Header";
 import Footer from "components/Footer";
+import SubHeader from "components/SubHeader";
 import Image from "next/image";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
-    subheader: {
-      backgroundColor: theme.palette.primary.main,
-      boxShadow: "0px 6px 15px 1px gray",
-      paddingLeft: "40px",
-      paddingTop: "10px",
-      color: "white",
-      width: "100%",
-    },
     section: {
       padding: "10px 40px 10px 40px",
       marginTop: "40px",
@@ -51,17 +43,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
-function SubHeader({ children }): JSX.Element {
-  const classes = useStyles();
-  return (
-    <Grid item xs={12} className={classes.subheader}>
-      <Typography variant="h5" component="h2">
-        {children}
-      </Typography>
-    </Grid>
-  );
-}
 
 function YouTubeSection({ series }): JSX.Element {
   const classes = useStyles();
