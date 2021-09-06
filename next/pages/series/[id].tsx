@@ -84,9 +84,9 @@ function DetailsSection({ series }): JSX.Element {
   const description =
     "\
   This research aims to help the Florey Institute understand the support needed by young stroke survivors. \
-  Currently, majority of the literature focuses on the elderly. \
-  Information such as medical history, healthcare experience, and post stroke sympotoms will be collected. \
-  These information will help to create policies and direct fundings to resources more suitable and accessable for young stroke survivors. \
+  Currently, the majority of the literature focuses on the elderly. \
+  Information such as medical history, healthcare experience, and post stroke symptoms will be collected. \
+  This information will help to create policies and direct funding to resources more suitable and accessible for young stroke survivors. \
   Organized as a friendly roundtable discussion, each meeting allows participants to meet their peers who are also young stroke survivors. Participants have the opportunity to get their voice heard while speaking to their peers. \
   ";
   return (
