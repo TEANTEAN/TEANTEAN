@@ -11,6 +11,7 @@
   },
   "devDependencies": {},
   "dependencies": {
+    "googleapis": "^85.0.0",
     "strapi": "3.6.2",
     "strapi-admin": "3.6.2",
     "strapi-connector-mongoose": "^3.6.2",
@@ -21,7 +22,9 @@
     "strapi-plugin-i18n": "3.6.2",
     "strapi-plugin-upload": "3.6.2",
     "strapi-plugin-users-permissions": "3.6.2",
-    "strapi-utils": "3.6.2"
+    "strapi-utils": "3.6.2",
+    "strapi-provider-upload-googledrive": "file:providers/strapi-provider-upload-googledrive"
+
   },
   "author": {
     "name": "A Strapi developer"
