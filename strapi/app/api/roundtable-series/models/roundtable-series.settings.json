@@ -19,9 +19,9 @@
       "type": "text"
     },
     "researchPartner": {
+      "via": "roundtableSeries",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "roundtableSeries"
+      "model": "user"
     },
     "videoLink": {
       "type": "string"
