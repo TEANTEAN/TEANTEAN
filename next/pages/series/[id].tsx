@@ -28,11 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "40px",
       marginBottom: "40px",
     },
-    video: {
-      position: "absolute",
-      top: 0,
-      left: 0,
-    },
     title: {
       paddingBottom: "40px",
     },
@@ -47,6 +42,12 @@ const useStyles = makeStyles((theme: Theme) =>
     playerWrapper: {
       position: "relative",
       maxWidth: "600px",
+      height: "350px",
+    },
+    video: {
+      position: "absolute",
+      top: 0,
+      left: 0,
     },
   })
 );
@@ -80,22 +81,32 @@ function YouTubeSection({ series }): JSX.Element {
 
 function DetailsSection({ series }): JSX.Element {
   const classes = useStyles();
+  const description =
+    "\
+  This research aims to help the Florey Institute understand the support needed by young stroke survivors. \
+  Currently, majority of the literature focuses on the elderly. \
+  Information such as medical history, healthcare experience, and post stroke sympotoms will be collected. \
+  These information will help to create policies and direct fundings to resources more suitable and accessable for young stroke survivors. \
+  Organized as a friendly roundtable discussion, each meeting allows participants to meet their peers who are also young stroke survivors. Participants have the opportunity to get their voice heard while speaking to their peers. \
+  ";
   return (
     <Grid container className={classes.section}>
       <Grid item xs={12} className={classes.title}>
         <Typography variant="h5">
           <strong>{series.title}</strong>
         </Typography>
-        <Typography variant="h6">by {series.researchPartner}</Typography>
+        <Typography variant="h6">
+          by The Florey Institute of Neuroscience
+        </Typography>
       </Grid>
       <Grid item className={classes.image}>
         <Image src="/florey-logo.png" alt="logo" width="200px" height="100px" />
       </Grid>
-      <Grid item xs={9}>
+      <Grid item xs={12} sm={9}>
         <Typography variant="h6">
           <strong>Description</strong>
         </Typography>
-        <Typography variant="body1">{series.description}</Typography>
+        <Typography variant="body1">{description}</Typography>
       </Grid>
     </Grid>
   );
