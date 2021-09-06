@@ -23,6 +23,6 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "util/DriveController.ts"
+    "util/DriveController.js"
   ]
 }

@@ -9,3 +9,11 @@ interface Roundtable {
   updatedAt: Date;
   participants: any[];
 }
+
+interface DriveFile {
+  kind: string;
+  id: string;
+  name: string;
+  mimeType: string;
+  url: string;
+}

@@ -1,8 +1,21 @@
-import { google, drive_v3, Common } from "googleapis";
-import fs from "fs";
+import { google } from "googleapis";
+import streams from "memory-streams";
+
+const credentials = {
+  type: process.env.GDRIVE_TYPE,
+  project_id: process.env.GDRIVE_PROJECT_ID,
+  private_key_id: process.env.GDRIVE_PRIVATE_KEY_ID,
+  private_key: process.env.GDRIVE_PRIVATE_KEY,
+  client_email: process.env.GDRIVE_CLIENT_EMAIL,
+  client_id: process.env.GDRIVE_CLIENT_ID,
+  auth_uri: process.env.GDRIVE_AUTH_URI,
+  token_uri: process.env.GDRIVE_TOKEN_URI,
+  auth_provider_x509_cert_url: process.env.GDRIVE_AUTH_PROVIDER_X509_CERT_URL,
+  client_x509_cert_url: process.env.GDRIVE_CLIENT_X509_CERT_URL,
+};
 
 const auth = new google.auth.GoogleAuth({
-  keyFile: "server-credential.json",
+  credentials,
   scopes: ["https://www.googleapis.com/auth/drive"],
 });
 
@@ -11,55 +24,44 @@ const drive = google.drive({
   auth,
 });
 
-const getAllFiles = () => drive.files.list();
+/**
+ * ONLY use this function server-side (i.e in getStaticProps or getServerSideProps)
+ * See usage in pages/example/static-drive-fetch
+ * @param id the file id
+ * @returns a base64 string representation of the image file
+ */
+const getDriveImageAsString = async (id: string) => {
+  const writableStream = new streams.WritableStream();
 
-const makeFolder = () => {
-  const fileMetadata = {
-    name: "Invoices",
-    mimeType: "application/vnd.google-apps.folder",
-  };
-  drive.files.create(
-    {
-      resource: fileMetadata,
-      fields: "id",
-    },
-    (err, file) => {
-      if (err) {
-        // Handle error
-        console.error(err);
-      } else {
-        console.log("Folder Id: ", file.id);
-      }
-    }
-  );
+  return new Promise((resolve, reject) => {
+    drive.files
+      .get(
+        {
+          fileId: id,
+          alt: "media",
+        },
+        { responseType: "stream" }
+      )
+      .then((res) => {
+        res.data
+          .on("end", () => {
+            try {
+              const buffer = writableStream.toBuffer();
+              const base64 = buffer.toString("base64");
+
+              resolve(base64);
+            } catch (err) {
+              reject(err);
+            }
+          })
+          .on("error", (err) => {
+            console.log("Error during download", err);
+            reject(err);
+          })
+          .pipe(writableStream);
+      });
+  });
 };
 
-// function to upload the file
-const uploadFile = () => {
-  const folderId = "1V7uKUWVA5HyLGx96x2bQLoqpAHAiu2V9";
-  const fileMetadata = {
-    name: "photo.png",
-    parents: [folderId],
-  };
-  const media = {
-    mimeType: "image/png",
-    body: fs.createReadStream("./util/gn-logo.png"),
-  };
-  drive.files.create(
-    {
-      resource: fileMetadata,
-      media,
-      fields: "id",
-    },
-    (err, file) => {
-      if (err) {
-        // Handle error
-        console.error(err);
-      } else {
-        console.log("Folder Id: ", file.id);
-      }
-    }
-  );
-};
-
-export { getAllFiles, makeFolder, uploadFile };
+// eslint-disable-next-line import/prefer-default-export
+export { getDriveImageAsString };
