@@ -18,8 +18,8 @@ import Form, {
   AutocompleteField,
   DatePickerField,
 } from "components/Form";
-import withAuth from "../components/withAuth";
-import gnFetch from "../util/gnAxiosClient";
+import withAuth from "../../util/hooks/withAuth";
+import gnFetch from "../../util/gnAxiosClient";
 
 interface FormValues {
   username: String;
