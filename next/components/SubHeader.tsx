@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Typography,
-  Grid,
-  Theme,
-  makeStyles,
-  createStyles,
-} from "@material-ui/core";
+import { Typography, Grid, Theme, makeStyles, createStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,7 +14,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function SubHeader({ children }): JSX.Element {
+export type SubHeaderProps = {
+  children?: React.ReactNode;
+};
+
+export default function SubHeader({ children = null }: SubHeaderProps): JSX.Element {
   const classes = useStyles();
   return (
     <Grid item xs={12} className={classes.subheader}>

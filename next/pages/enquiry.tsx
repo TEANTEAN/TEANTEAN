@@ -49,7 +49,7 @@ const Enquiry: NextPage = () => {
             </Typography>
           </Grid>
           <Grid item xs={2}>
-            <GeneralButton varient="contained" href="/">
+            <GeneralButton variant="contained" href="/">
               Back
             </GeneralButton>
           </Grid>
