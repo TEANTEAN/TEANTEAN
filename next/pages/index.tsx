@@ -2,8 +2,6 @@ import React from "react";
 import { NextPage } from "next";
 import Head from "next/head";
 import { GeneralButton } from "components/Buttons";
-import Header from "components/Header";
-import Footer from "components/Footer";
 
 const Home: NextPage = () => (
   <div>

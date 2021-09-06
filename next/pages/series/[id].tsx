@@ -2,8 +2,6 @@ import React from "react";
 import { GetStaticProps } from "next";
 import { Grid, Typography, makeStyles, createStyles, Box } from "@material-ui/core";
 import ReactPlayer from "react-player/youtube";
-import Header from "components/Header";
-import Footer from "components/Footer";
 import SubHeader from "components/SubHeader";
 import Image from "next/image";
 
