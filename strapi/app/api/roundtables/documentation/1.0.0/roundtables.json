@@ -537,22 +537,25 @@
           },
           "series": {
             "required": [
-              "id"
+              "id",
+              "videoLink",
+              "seriesURI",
+              "title"
             ],
             "properties": {
               "id": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
                 "type": "string"
               },
               "researchPartner": {
                 "type": "string"
               },
               "videoLink": {
+                "type": "string"
+              },
+              "seriesURI": {
+                "type": "string"
+              },
+              "title": {
                 "type": "string"
               },
               "published_at": {

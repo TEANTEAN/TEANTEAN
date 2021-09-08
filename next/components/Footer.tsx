@@ -17,7 +17,7 @@ const useStyles = makeStyles(() =>
       backgroundColor: "primary",
       top: "auto",
       bottom: 0,
-      position: "fixed",
+      position: "relative",
     },
     icon: {
       fontSize: 40,
