@@ -16,6 +16,7 @@ const Home: NextPage = () => (
     <GeneralButton href="/series/613488a555e59a59f4b9eac7">Secret link to booking</GeneralButton>
     <GeneralButton href="/enquiry">Enquiry</GeneralButton>
     <GeneralButton href="/admin/createaccount">Create Account</GeneralButton>
+    <GeneralButton href="/admin/resetPassword">Reset Password</GeneralButton>
     <GeneralButton href="/admin/createseries">Create Series</GeneralButton>
     <GeneralButton href="/landing">Landing</GeneralButton>
   </div>

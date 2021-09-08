@@ -1,0 +1,23 @@
+name: mongodump-mongorestore
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: mongodump
+      run: mongodump --uri "${{ secrets.DEV_DATABASE_URI }}" --archive=test.archive
+    - name: 'Upload Artifact'
+      uses: actions/upload-artifact@v2
+      with:
+        name: mongo
+        path: test.archive
+    
+    - name: mongorestore
+      run: mongorestore --drop --uri "${{ secrets.DATABASE_URI }}" --archive=test.archive
