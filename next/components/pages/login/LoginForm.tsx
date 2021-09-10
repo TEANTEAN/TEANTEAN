@@ -79,7 +79,7 @@ const LoginForm: React.FC = () => {
         redirect: false,
         username: data.username,
         password: data.password,
-        callbackUrl: "http://localhost:3000/admin/dashboard",
+        callbackUrl: "http://localhost:3000/admin/",
       });
       if (res?.error) throw new Error(res.error);
       // Login was successful
