@@ -11,10 +11,12 @@ jobs:
           GDRIVE_PRIVATE_KEY: ${{ secrets.GDRIVE_PRIVATE_KEY }}
         run: |
           echo "$GDRIVE_PRIVATE_KEY_ID"
-          cd $GITHUB_WORKSPACE
+          cd $GITHUB_WORKSPACE/next
           docker build --build-arg GDRIVE_PRIVATE_KEY_ID=$GDRIVE_PRIVATE_KEY_ID --build-arg GDRIVE_PRIVATE_KEY=$GDRIVE_PRIVATE_KEY nextjs
       - name: Start Docker Stack
-        run: docker-compose up -d --no-recreate
+        run: |
+          cd $GITHUB_WORKSPACE
+          docker-compose up -d --no-recreate
       - name: Install Cypress
         run: |
           cd $GITHUB_WORKSPACE/next
