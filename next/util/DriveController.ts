@@ -2,16 +2,17 @@ import { google } from "googleapis";
 import streams from "memory-streams";
 
 const credentials = {
-  type: process.env.GDRIVE_TYPE,
-  project_id: process.env.GDRIVE_PROJECT_ID,
+  type: "service_account",
+  project_id: "gn-test-324202",
   private_key_id: process.env.GDRIVE_PRIVATE_KEY_ID,
   private_key: process.env.GDRIVE_PRIVATE_KEY,
-  client_email: process.env.GDRIVE_CLIENT_EMAIL,
-  client_id: process.env.GDRIVE_CLIENT_ID,
-  auth_uri: process.env.GDRIVE_AUTH_URI,
-  token_uri: process.env.GDRIVE_TOKEN_URI,
-  auth_provider_x509_cert_url: process.env.GDRIVE_AUTH_PROVIDER_X509_CERT_URL,
-  client_x509_cert_url: process.env.GDRIVE_CLIENT_X509_CERT_URL,
+  client_email: "gn-test@gn-test-324202.iam.gserviceaccount.com",
+  client_id: "115160740289539111977",
+  auth_uri: "https://accounts.google.com/o/oauth2/auth",
+  token_uri: "https://oauth2.googleapis.com/token",
+  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+  client_x509_cert_url:
+    "https://www.googleapis.com/robot/v1/metadata/x509/gn-test%40gn-test-324202.iam.gserviceaccount.com",
 };
 
 const auth = new google.auth.GoogleAuth({

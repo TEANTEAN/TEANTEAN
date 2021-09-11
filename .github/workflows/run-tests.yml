@@ -6,7 +6,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build Docker Stack
-        run: docker-compose up -d
+        # env:
+        #   GDRIVE_PRIVATE_KEY_ID: ${{ secrets.GDRIVE_PRIVATE_KEY_ID }}
+        #   GDRIVE_PRIVATE_KEY: ${{ secrets.GDRIVE_PRIVATE_KEY }}
+        run: docker-compose build --build-arg GDRIVE_PRIVATE_KEY_ID="${{ secrets.GDRIVE_PRIVATE_KEY_ID }}" --build-arg GDRIVE_PRIVATE_KEY="${{ secrets.GDRIVE_PRIVATE_KEY }}"
+      - name: Start Docker Stack
+        run: docker-compose start -d
       - name: Install Cypress
         run: |
           cd $GITHUB_WORKSPACE/next
