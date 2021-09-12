@@ -12,8 +12,6 @@
 | Sprint 2b tag | <https://github.com/SWEN90013-2021-GN/GN/releases/tag/2b> |
 | Sprint 3a tag | TBA |
 | Sprint 3b tag | TBA |
-| Sprint 4a tag | TBA |
-| Sprint 4b tag | TBA |
 
 ## Project Summary
 
