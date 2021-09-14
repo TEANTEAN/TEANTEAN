@@ -9,7 +9,7 @@ jobs:
         env:
           GDRIVE_PRIVATE_KEY_ID: ${{ secrets.GDRIVE_PRIVATE_KEY_ID }}
           GDRIVE_PRIVATE_KEY: ${{ secrets.GDRIVE_PRIVATE_KEY }}
-        run: |
+        run: | 
           docker-compose build --build-arg GDRIVE_PRIVATE_KEY_ID="$GDRIVE_PRIVATE_KEY_ID" --build-arg GDRIVE_PRIVATE_KEY="$GDRIVE_PRIVATE_KEY" nextjs
       - name: Start Docker Stack
         run: |
