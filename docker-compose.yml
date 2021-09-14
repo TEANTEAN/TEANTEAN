@@ -37,9 +37,9 @@ services:
       - "27017:27017"
 
   nextjs:
-  environment:
-    - GDRIVE_PRIVATE_KEY_ID
-    - GDRIVE_PRIVATE_KEY
+    environment:
+      - GDRIVE_PRIVATE_KEY_ID
+      - GDRIVE_PRIVATE_KEY
     ports:
       - 3000:3000
     build:
