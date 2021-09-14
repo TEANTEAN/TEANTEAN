@@ -1,13 +1,12 @@
 import { google } from "googleapis";
 import streams from "memory-streams";
 
-const privateKey = process.env.GDRIVE_PRIVATE_KEY;
 
 const credentials = {
   type: "service_account",
   project_id: "gn-test-324202",
   private_key_id: process.env.GDRIVE_PRIVATE_KEY_ID,
-  private_key: privateKey,
+  private_key: process.env.GDRIVE_PRIVATE_KEY,
   client_email: "gn-test@gn-test-324202.iam.gserviceaccount.com",
   client_id: "115160740289539111977",
   auth_uri: "https://accounts.google.com/o/oauth2/auth",
@@ -17,6 +16,7 @@ const credentials = {
     "https://www.googleapis.com/robot/v1/metadata/x509/gn-test%40gn-test-324202.iam.gserviceaccount.com",
 };
 
+console.log("Google private key id: ", credentials.private_key_id);
 console.log("Google private key: ", credentials.private_key);
 
 const auth = new google.auth.GoogleAuth({
