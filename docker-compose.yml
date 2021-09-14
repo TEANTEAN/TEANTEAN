@@ -42,9 +42,9 @@ services:
     build:
       context: next
       dockerfile: Dockerfile
-      args:
-        GDRIVE_PRIVATE_KEY_ID: ${GDRIVE_PRIVATE_KEY_ID}
-        GDRIVE_PRIVATE_KEY: ${GDRIVE_PRIVATE_KEY}
+      environment:
+        - GDRIVE_PRIVATE_KEY_ID
+        - GDRIVE_PRIVATE_KEY
 
 networks:
   strapi-app-network:

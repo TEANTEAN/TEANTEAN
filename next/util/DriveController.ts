@@ -1,7 +1,7 @@
 import { google } from "googleapis";
 import streams from "memory-streams";
 
-const privateKey = process.env.GDRIVE_PRIVATE_KEY_ID.replace(" ", "\n");
+const privateKey = process.env.GDRIVE_PRIVATE_KEY;
 
 const credentials = {
   type: "service_account",
