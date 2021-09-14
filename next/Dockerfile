@@ -11,8 +11,8 @@ FROM node:alpine AS builder
 WORKDIR /app
 ARG GDRIVE_PRIVATE_KEY_ID_TEMP
 ARG GDRIVE_PRIVATE_KEY_TEMP
-RUN echo GDRIVE_PRIVATE_KEY_ID = ${GDRIVE_PRIVATE_KEY_ID_TEMP} >> ./env.local 
-RUN echo GDRIVE_PRIVATE_KEY = ${GDRIVE_PRIVATE_KEY_TEMP} >> ./env.local 
+RUN echo GDRIVE_PRIVATE_KEY_ID = ${GDRIVE_PRIVATE_KEY_ID_TEMP} >> ./.env.local 
+RUN echo GDRIVE_PRIVATE_KEY = ${GDRIVE_PRIVATE_KEY_TEMP} >> ./.env.local 
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
 ENV NODE_ENV production
