@@ -14,6 +14,7 @@ COPY --from=deps /app/node_modules ./node_modules
 ENV NODE_ENV production
 ENV NEXT_PUBLIC_BACKEND_URL "https://genyus-backend-strapi.herokuapp.com"
 ENV NEXTAUTH_URL "https://gn-frontend.vercel.app"
+
 RUN yarn build
 
 # Production image, copy all the files and run next
