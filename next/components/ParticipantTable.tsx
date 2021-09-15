@@ -18,6 +18,8 @@ export type ParticipantTableData = {
     email:  string,
     datePaid: Date,
     dateCertified: Date,
+    children1?: React.ReactNode,
+
 }
 export type ParticipantTableProps = {
     data: ParticipantTableData[]
@@ -42,6 +44,7 @@ function ParticipantTable({data}: ParticipantTableProps): JSX.Element {
             <TableCell align="right">Email</TableCell>
             <TableCell align="right">DatePaid</TableCell>
             <TableCell align="right">DateCertified</TableCell>
+            <TableCell align="right">Details</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -52,6 +55,7 @@ function ParticipantTable({data}: ParticipantTableProps): JSX.Element {
               <TableCell align="right">{row.email}</TableCell>
               <TableCell align="right">{row.datePaid.toString()}</TableCell>
               <TableCell align="right">{row.dateCertified.toString()}</TableCell>
+              <TableCell align="right">{row.children1}</TableCell>
             </TableRow>
           ))}
         </TableBody>

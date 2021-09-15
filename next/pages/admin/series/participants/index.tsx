@@ -18,11 +18,34 @@ import {
   LoneIconButton,
 } from "components/Buttons";
 
+const buttonToParticipantsDetails = <GeneralButton href="/admin/series/participants/details">Detail</GeneralButton>;
 
 const testData3:ParticipantTableData[] = [
-   {participantName: "Any Body", contact: "9111111", email:"9111111@gmail.com", datePaid: new Date("2021-02-11T10:00"), dateCertified: new Date("2021-02-11T10:00")},
-   {participantName: "Any Body2", contact: "9111111", email:"9111111@gmail.com", datePaid: new Date("2021-02-11T10:00"), dateCertified: new Date("2021-02-11T10:00")},
-   {participantName: "Any Body3", contact: "9111111", email:"9111111@gmail.com", datePaid: new Date("2021-02-11T10:00"), dateCertified: new Date("2021-02-11T10:00")},
+   {
+    participantName: "Any Body",
+    contact: "9111111",
+    email:"9111111@gmail.com",
+    datePaid: new Date("2021-02-11T10:00"),
+    dateCertified: new Date("2021-02-11T10:00"),
+    children1: buttonToParticipantsDetails,
+   },
+
+   {
+    participantName: "Any Body2",
+    contact: "9111111",
+    email:"9111111@gmail.com",
+    datePaid: new Date("2021-02-11T10:00"),
+    dateCertified: new Date("2021-02-11T10:00"),
+    children1: buttonToParticipantsDetails,
+   },
+   {
+   participantName: "Any Body3",
+   contact: "9111111",
+   email:"9111111@gmail.com",
+   datePaid: new Date("2021-02-11T10:00"),
+   dateCertified: new Date("2021-02-11T10:00"),
+   children1: buttonToParticipantsDetails,
+   },
 ]
 
 function ParticipantPage(): JSX.Element {
@@ -32,7 +55,7 @@ function ParticipantPage(): JSX.Element {
             <Grid container xs={12} >
                  <Grid item xs={6} style={{padding: "24px"}}>
                    <Typography variant="h4" >
-                      PPE and Me
+                     PPE and Me
                    </Typography>
                    <Typography variant="h5" >
                       RoundTable1
@@ -44,12 +67,12 @@ function ParticipantPage(): JSX.Element {
                  </Grid>
 
                  <Grid item xs={6} style={{padding: "24px"}}>
-                   <GeneralButton> BACK </GeneralButton>
+                   <GeneralButton href="/admin/series/"> BACK </GeneralButton>
                  </Grid>
             </Grid>
 
-            <Grid container item md={8} xs={12} >
-               <Grid item xs={12} style={{padding: "24px 24px 0 24px"}}>
+            <Grid container item md={10} xs={12} >
+               <Grid item xs={12} style={{padding: "24 24px 0 24px"}}>
                   <ParticipantTable data={testData3} />
                </Grid>
             </Grid>
