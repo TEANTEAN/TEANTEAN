@@ -2,6 +2,7 @@ name: Frontend PR Checklist
 
 on:
   pull_request:
+    types: [opened]
     branches:
       - main
     paths:
