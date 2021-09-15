@@ -62,6 +62,18 @@
     "roundtableSeries": {
       "via": "researchPartner",
       "collection": "roundtable-series"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "organisation": {
+      "model": "organisation"
+    },
+    "phone": {
+      "type": "string"
     }
   }
 }

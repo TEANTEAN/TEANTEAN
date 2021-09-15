@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "organisations",
+  "info": {
+    "name": "Organisation"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

@@ -9,3 +9,44 @@ interface Roundtable {
   updatedAt: Date;
   participants: any[];
 }
+
+interface Role {
+  _id: string;
+  name: string;
+  description: string;
+  type: string;
+  __v: int;
+  id: string;
+}
+
+interface User {
+  confirmed: boolean;
+  blocked: boolean;
+  _id: string;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  provider: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: int;
+  role: Role;
+  roundtableSeries: RoundtableSeries;
+  id: string;
+  organisation: Organisation;
+}
+
+interface Organisation {
+  name: string;
+  id: string;
+}
+
+interface RoundtableSeries {
+  title: string;
+  description: string;
+  researchPartner: User;
+  videoLink: string;
+  organisation: Organisation;
+}

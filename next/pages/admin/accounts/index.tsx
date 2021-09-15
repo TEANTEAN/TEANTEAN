@@ -1,6 +1,7 @@
+/* eslint-disable no-underscore-dangle */
 import {
+  Dialog,
   Grid,
-  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -8,34 +9,60 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core";
+
 import { IconLabelButton } from "components/Buttons";
-import React, { useEffect, useState } from "react";
-import gnFetch from "util/gnAxiosClient";
-import CreateAccount from "./create";
+import React, { useState } from "react";
+import { useQuery } from "react-query";
+import gnFetch from "../../../util/gnAxiosClient";
+import AccountForm from "./create";
+
+// Strapi sends role data as a named array for some reason.
+interface RoleData {
+  roles: Role[];
+}
 
 const AccountManagement = () => {
-  const [state, setState] = useState({
-    users: null,
-    hideCreationPanel: true,
-  });
+  const [hideForm, setHideForm] = useState(true);
+  const [creationMode, setCreationMode] = useState(false);
+  const [editUser, setEditUser] = useState(null);
 
-  useEffect(() => {
-    gnFetch.get("/users").then((res) => {
-      setState({
-        ...state,
-        users: res.data,
-      });
-    });
-  }, []);
+  const allUserData = useQuery<User[]>(
+    "get-all-users-account-data",
+    async () => (await gnFetch.get("/users/")).data
+  );
+
+  const allRoles = useQuery<RoleData>(
+    "get-all-genyus-roles",
+    async () => (await gnFetch.get("/users-permissions/roles")).data
+  );
+
+  const allOrgs = useQuery<Organisation[]>(
+    "get-all-organisations",
+    async () => (await gnFetch.get("/organisations")).data
+  );
+
+  const onRowClick = (user) => {
+    console.log(`Editing ${user.id}`);
+    setEditUser(user);
+    setCreationMode(false);
+    setHideForm(false);
+  };
+
+  const onCreateNewClick = () => {
+    console.log("Called");
+    setEditUser(null);
+    setCreationMode(true);
+    setHideForm(false);
+  };
 
   const accountRows = [];
-  if (state.users) {
-    state.users.forEach((user) =>
+  if (allUserData.isSuccess) {
+    allUserData.data.forEach((user) =>
       accountRows.push(
-        <TableRow>
+        <TableRow key={user.id} onClick={() => onRowClick(user)}>
           <TableCell>{user.username}</TableCell>
           <TableCell>{user.role.name}</TableCell>
-          <TableCell>{user.confirmed ? "Yes" : "No"}</TableCell>
+          <TableCell>{user.blocked ? "No" : "Yes"}</TableCell>
         </TableRow>
       )
     );
@@ -46,7 +73,7 @@ const AccountManagement = () => {
       <IconLabelButton
         type="add"
         iconPosition="start"
-        onClick={() => setState({ ...state, hideCreationPanel: false })}
+        onClick={onCreateNewClick}
       >
         CREATE NEW
       </IconLabelButton>
@@ -59,31 +86,28 @@ const AccountManagement = () => {
                   <TableCell>Username</TableCell>
                   <TableCell>Access Level</TableCell>
                   <TableCell>Active</TableCell>
+                  <TableCell />
                 </TableRow>
               </TableHead>
               <TableBody>{accountRows}</TableBody>
             </Table>
           </TableContainer>
         </Grid>
-        <Grid item hidden={state.hideCreationPanel}>
-          <CreateAccount />
-        </Grid>
       </Grid>
+      <Dialog open={!hideForm} onClose={() => setHideForm(true)}>
+        <AccountForm
+          isCreateUser={creationMode}
+          userUnderEdit={editUser}
+          roles={allRoles.isSuccess ? allRoles.data.roles : []}
+          organisations={allOrgs.isSuccess ? allOrgs.data : []}
+          handleClose={() => setHideForm(true)}
+          onSubmitSettled={() =>
+            allUserData.refetch().then(() => setHideForm(true))
+          }
+        />
+      </Dialog>
     </>
   );
 };
-
-// Can't do server side as it is not authenticated.
-
-// export async function getStaticProps() {
-//   const res = await gnFetch.get("/users");
-//   const users = res.data;
-
-//   return {
-//     props: {
-//       users,
-//     },
-//   };
-// }
 
 export default AccountManagement;

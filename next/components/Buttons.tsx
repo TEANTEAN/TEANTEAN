@@ -7,6 +7,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import AddIcon from "@material-ui/icons/Add";
+import CloseIcon from '@material-ui/icons/Close';
 
 // Current mui button props that we are accepting to build all of our buttons from.
 interface GeneralButtonProps {
@@ -103,11 +104,12 @@ export const TextButton: React.FC<SimpleButtonProps> = ({
 interface LoneIconProps {
   size?: "small" | "medium";
   onClick?: () => void;
+  className?: string;
 }
 
 // Props that are always required for a button with an icon
 interface IconProps {
-  type: "delete" | "download" | "upload" | "add";
+  type: "delete" | "download" | "upload" | "add" | "close";
   fontSize?: "inherit" | "default" | "small" | "large";
 }
 
@@ -120,6 +122,7 @@ const IconMaker: React.FC<IconProps> = ({ type, fontSize }) => {
   if (type === "upload")
     icon = <CloudUploadIcon fontSize={fontSize || "default"} />;
   if (type === "add") icon = <AddIcon fontSize={fontSize || "default"} />;
+  if (type === "close") icon = <CloseIcon fontSize={fontSize || "default"} />;
   return icon;
 };
 
@@ -128,12 +131,14 @@ export const LoneIconButton: React.FC<IconProps & LoneIconProps> = ({
   fontSize,
   size,
   type,
+  className,
   onClick,
 }) => (
   <IconButton
     aria-label="delete"
     size={size || "medium"}
     onClick={onClick || undefined}
+    className={className}
   >
     <IconMaker fontSize={fontSize || "default"} type={type} />
   </IconButton>

@@ -13,9 +13,9 @@
   "pluginOptions": {},
   "attributes": {
     "researchPartner": {
+      "via": "roundtableSeries",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "roundtableSeries"
+      "model": "user"
     },
     "videoLink": {
       "type": "string",
@@ -28,6 +28,9 @@
     "title": {
       "type": "string",
       "required": true
+    },
+    "organisation": {
+      "model": "organisation"
     }
   }
 }

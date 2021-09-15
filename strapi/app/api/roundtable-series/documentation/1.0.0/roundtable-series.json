@@ -51,9 +51,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Roundtable-series"
-        ],
+        "tags": ["Roundtable-series"],
         "parameters": [
           {
             "name": "_limit",
@@ -243,9 +241,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Roundtable-series"
-        ],
+        "tags": ["Roundtable-series"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -310,9 +306,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Roundtable-series"
-        ],
+        "tags": ["Roundtable-series"],
         "parameters": []
       }
     },
@@ -367,9 +361,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Roundtable-series"
-        ],
+        "tags": ["Roundtable-series"],
         "parameters": [
           {
             "name": "id",
@@ -433,9 +425,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Roundtable-series"
-        ],
+        "tags": ["Roundtable-series"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -507,9 +497,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Roundtable-series"
-        ],
+        "tags": ["Roundtable-series"],
         "parameters": [
           {
             "name": "id",
@@ -528,22 +516,13 @@
   "components": {
     "schemas": {
       "Roundtable-series": {
-        "required": [
-          "id",
-          "videoLink",
-          "seriesURI",
-          "title"
-        ],
+        "required": ["id", "videoLink", "seriesURI", "title"],
         "properties": {
           "id": {
             "type": "string"
           },
           "researchPartner": {
-            "required": [
-              "id",
-              "username",
-              "email"
-            ],
+            "required": ["id", "username", "email"],
             "properties": {
               "id": {
                 "type": "string"
@@ -581,6 +560,18 @@
                   "type": "string"
                 }
               },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "organisation": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -598,6 +589,26 @@
           "title": {
             "type": "string"
           },
+          "organisation": {
+            "required": ["id"],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -605,11 +616,7 @@
         }
       },
       "NewRoundtable-series": {
-        "required": [
-          "videoLink",
-          "seriesURI",
-          "title"
-        ],
+        "required": ["videoLink", "seriesURI", "title"],
         "properties": {
           "researchPartner": {
             "type": "string"
@@ -621,6 +628,12 @@
             "type": "string"
           },
           "title": {
+            "type": "string"
+          },
+          "organisation": {
+            "type": "string"
+          },
+          "organisation": {
             "type": "string"
           },
           "published_at": {

@@ -558,6 +558,12 @@
               "title": {
                 "type": "string"
               },
+              "organisation": {
+                "type": "string"
+              },
+              "organisation": {
+                "type": "string"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -611,6 +617,18 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "organisation": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
