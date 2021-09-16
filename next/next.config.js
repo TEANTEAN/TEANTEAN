@@ -5,6 +5,9 @@ module.exports = (phase) => {
     case PHASE_DEVELOPMENT_SERVER:
       // environment variables for local development
       return {
+        future: {
+          webpack5: true
+        },
         serverRuntimeConfig: {},
         publicRuntimeConfig: {},
         env: {
@@ -18,6 +21,9 @@ module.exports = (phase) => {
 
     default:
       return {
+        future: {
+          webpack5: true
+        },
         serverRuntimeConfig: {},
         publicRuntimeConfig: {},
         env: {
