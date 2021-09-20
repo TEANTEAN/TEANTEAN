@@ -134,7 +134,7 @@ const AccountForm: React.FC<AccountFormProps> = ({
 
   const onSubmit = async (data: FormValues) => {
     setPending(true);
-    setErrorMessage(null);
+    setErrorMessage("");
     try {
       if (!isCreateUser) {
         await updateUser(data, userUnderEdit.id);
