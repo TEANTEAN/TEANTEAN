@@ -11,11 +11,9 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { NextPage } from "next";
-import Form, {
-  TextField,
-  AutocompleteField,
-  DatePickerField,
-} from "components/Form";
+import { useQuery } from "react-query";
+import clyAxiosClient from "util/clyAxiosClient";
+import Form, { TextField, AutocompleteField } from "components/Form";
 
 interface FormValues {
   title: String;
@@ -63,7 +61,12 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "100%",
   },
 }));
-
+const fetchCalendlyData = async () => {
+  const res = await clyAxiosClient.get(
+    `${process.env.CALENDLY_API_URL}/event_types?user=${process.env.CALENDLY_USER_ID}&count=100`
+  );
+  return res.data;
+};
 const CreateSeries: NextPage = () => {
   const classes = useStyles();
   const [submittedValues, setSubmittedValues] =
@@ -72,9 +75,22 @@ const CreateSeries: NextPage = () => {
   const onSubmit = (data: FormValues) => {
     setSubmittedValues(data);
   };
-
+  const [fetchCalendlyEvents, setFetchCalendlyEvents] = React.useState(false);
+  const calendlyEvents = useQuery("get-calendly-events", fetchCalendlyData, {
+    enabled: fetchCalendlyEvents,
+  });
+  React.useEffect(() => {
+    setFetchCalendlyEvents(true);
+  }, []);
+  console.log(calendlyEvents);
   return (
     <>
+      {calendlyEvents.isSuccess &&
+        calendlyEvents.data.collection.map((cEvent) => (
+          <div
+            key={cEvent.uri}
+          >{`${cEvent.name} : ${cEvent.scheduling_url}`}</div>
+        ))}
       <div className={classes.root}>
         <Paper className={classes.paper}>
           <Typography gutterBottom variant="subtitle1">
@@ -157,13 +173,6 @@ const CreateSeries: NextPage = () => {
             <Typography gutterBottom variant="subtitle2">
               Roundtable Management (Calendly)
             </Typography>
-
-            <DatePickerField
-              control={methods.control}
-              name="date"
-              label="Date Roundtable"
-              defaultValue={new Date()}
-            />
           </Form>
         </Paper>
       </div>

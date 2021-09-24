@@ -6,7 +6,7 @@ module.exports = (phase) => {
       // environment variables for local development
       return {
         future: {
-          webpack5: true
+          webpack5: true,
         },
         serverRuntimeConfig: {},
         publicRuntimeConfig: {},
@@ -16,13 +16,16 @@ module.exports = (phase) => {
           BUILD_HOST: process.env.NEXT_PUBLIC_HOST,
           NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
           NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+          CALENDLY_USER_ID: process.env.CALENDLY_USER_ID,
+          CALENDLY_TOKEN: process.env.CALENDLY_TOKEN,
+          CALENDLY_API_URL: process.env.CALENDLY_API_URL,
         },
       };
 
     default:
       return {
         future: {
-          webpack5: true
+          webpack5: true,
         },
         serverRuntimeConfig: {},
         publicRuntimeConfig: {},
@@ -32,6 +35,9 @@ module.exports = (phase) => {
           BUILD_HOST: process.env.NEXT_PUBLIC_HOST,
           NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
           NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+          CALENDLY_USER_ID: process.env.CALENDLY_USER_ID,
+          CALENDLY_TOKEN: process.env.CALENDLY_TOKEN,
+          CALENDLY_API_URL: process.env.CALENDLY_API_URL,
         },
       };
   }
