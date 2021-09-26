@@ -80,39 +80,51 @@ const fetchCalendlyData = async () => {
   );
   return res.data;
 };
+
+// Our TextField component is wrapped with controls, so cannot set values directly by using the value prop
+// Hence create a template component then populate with the state value before returning the component
 const displayCalendlyDetails: React.FunctionComponent = (
   calendlyEventObject,
   methods
-) =>
-  calendlyEventObject ? (
+) => {
+  const display = calendlyEventObject ? (
     <>
       <TextField
         disabled
         control={methods.control}
-        name="seriesName"
+        name="calendlyEventSeriesName"
         label="Series Name"
-        defaultValue={calendlyEventObject?.name || "No Name"}
+        defaultValue="No Name"
       />
       <TextField
         disabled
         control={methods.control}
-        name="topic"
+        name="calendlyEventTopic"
         label="Topic"
-        defaultValue={calendlyEventObject?.name || "No Topic"}
+        defaultValue="No Topic"
       />
       <TextField
         disabled
         control={methods.control}
-        name="details"
+        name="calendlyEventDetails"
         label="Details"
-        defaultValue={
-          calendlyEventObject?.description_plain || "No Description"
-        }
+        multiline
+        defaultValue="No Description"
       />
     </>
   ) : (
     <p>Please Select a Calendly Event</p>
   );
+  if (calendlyEventObject) {
+    methods.setValue("calendlyEventSeriesName", calendlyEventObject.name);
+    methods.setValue("calendlyEventTopic", calendlyEventObject.name);
+    methods.setValue(
+      "calendlyEventDetails",
+      calendlyEventObject.description_plain
+    );
+  }
+  return display;
+};
 const CreateSeries: NextPage = () => {
   const classes = useStyles();
   const [submittedValues, setSubmittedValues] =
@@ -128,6 +140,7 @@ const CreateSeries: NextPage = () => {
     enabled: fetchCalendlyEvents,
     onSuccess: (fetchedEvents) => {
       setEventOptions([...fetchedEvents.collection]);
+      console.log("create.tsx - reactQuery - onSuccess:", fetchedEvents);
     },
   });
   React.useEffect(() => {
@@ -140,6 +153,10 @@ const CreateSeries: NextPage = () => {
   React.useEffect(() => {
     const selectedCalendly = methods.watch("calendlyMeeting");
     setSelectedEvent(selectedCalendly);
+    console.log(
+      "create.tsx - useEffect - watch CalendlyMeeting:",
+      selectedCalendly
+    );
   }, [methods.watch("calendlyMeeting")]);
   return (
     <>
@@ -168,6 +185,7 @@ const CreateSeries: NextPage = () => {
               options={eventOptions}
               getOptionLabel={(cEvent) => cEvent.name}
             />
+            {console.log("before render", selectedEvent)}
             {displayCalendlyDetails(selectedEvent, methods)}
 
             <AutocompleteField<Org>
