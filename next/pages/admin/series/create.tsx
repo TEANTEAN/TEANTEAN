@@ -140,7 +140,6 @@ const CreateSeries: NextPage = () => {
     enabled: fetchCalendlyEvents,
     onSuccess: (fetchedEvents) => {
       setEventOptions([...fetchedEvents.collection]);
-      console.log("create.tsx - reactQuery - onSuccess:", fetchedEvents);
     },
   });
   React.useEffect(() => {
@@ -153,10 +152,6 @@ const CreateSeries: NextPage = () => {
   React.useEffect(() => {
     const selectedCalendly = methods.watch("calendlyMeeting");
     setSelectedEvent(selectedCalendly);
-    console.log(
-      "create.tsx - useEffect - watch CalendlyMeeting:",
-      selectedCalendly
-    );
   }, [methods.watch("calendlyMeeting")]);
   return (
     <>
@@ -185,7 +180,6 @@ const CreateSeries: NextPage = () => {
               options={eventOptions}
               getOptionLabel={(cEvent) => cEvent.name}
             />
-            {console.log("before render", selectedEvent)}
             {displayCalendlyDetails(selectedEvent, methods)}
 
             <AutocompleteField<Org>
