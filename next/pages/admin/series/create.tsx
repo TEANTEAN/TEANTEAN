@@ -15,6 +15,8 @@ import { useQuery } from "react-query";
 import clyAxiosClient from "util/clyAxiosClient";
 import Form, { TextField, AutocompleteField } from "components/Form";
 import Box from "@material-ui/core/Box";
+import LoadingButton from "components/LoadingButton";
+import gnFetch from "../../../util/gnAxiosClient";
 
 interface FormValues {
   title: String;
@@ -81,6 +83,21 @@ const fetchCalendlyData = async () => {
   return res.data;
 };
 
+// TODO change these to react queries?
+// Need to pass in the research partners and Organisations from index
+const postNewSeries = async (newSeriesData) => {
+  const data = {
+    videoLink: newSeriesData?.videoLink || "NO LINK",
+    seriesURI: newSeriesData.calendlyMeeting.uri,
+    title: newSeriesData.calendlyEventSeriesName || "No Title",
+  };
+  try {
+    await gnFetch.post("roundtable-series", data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 // Our TextField component is wrapped with controls, so cannot set values directly by using the value prop
 // Hence create a template component then populate with the state value before returning the component
 const displayCalendlyDetails: React.FunctionComponent = (
@@ -113,26 +130,23 @@ const displayCalendlyDetails: React.FunctionComponent = (
       />
     </>
   ) : (
-    <p>Please Select a Calendly Event</p>
+    <Typography variant="subtitle2">Please Select a Calendly Event</Typography>
   );
-  // Setting the field values
-  if (calendlyEventObject) {
-    methods.setValue("calendlyEventSeriesName", calendlyEventObject.name);
-    methods.setValue("calendlyEventTopic", calendlyEventObject.name);
-    methods.setValue(
-      "calendlyEventDetails",
-      calendlyEventObject.description_plain
-    );
-  }
   return displayTemplate;
 };
 const CreateSeries: NextPage = () => {
   const classes = useStyles();
-  const [submittedValues, setSubmittedValues] =
-    React.useState<FormValues>(null);
+  const [pending, setPending] = React.useState(false);
   const methods = useForm<FormValues>();
-  const onSubmit = (data: FormValues) => {
-    setSubmittedValues(data);
+  const onSubmit = async (data) => {
+    setPending(true);
+    try {
+      await postNewSeries(data);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setPending(false);
+    }
   };
   const [fetchCalendlyEvents, setFetchCalendlyEvents] = React.useState(false);
   const [eventOptions, setEventOptions] = React.useState([]);
@@ -154,6 +168,13 @@ const CreateSeries: NextPage = () => {
     const selectedCalendly = methods.watch("calendlyMeeting");
     setSelectedEvent(selectedCalendly);
   }, [methods.watch("calendlyMeeting")]);
+  React.useEffect(() => {
+    if (selectedEvent) {
+      methods.setValue("calendlyEventSeriesName", selectedEvent.name);
+      methods.setValue("calendlyEventTopic", selectedEvent.name);
+      methods.setValue("calendlyEventDetails", selectedEvent.description_plain);
+    }
+  }, [selectedEvent]);
   return (
     <>
       <div className={classes.root}>
@@ -228,15 +249,17 @@ const CreateSeries: NextPage = () => {
             <Typography gutterBottom variant="subtitle2">
               Roundtable Management (Calendly)
             </Typography>
+            <LoadingButton
+              isloading={pending}
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              Done
+            </LoadingButton>
           </Form>
         </Paper>
       </div>
-
-      {submittedValues && (
-        <Typography variant="body1">
-          Submitted: {JSON.stringify(submittedValues)}
-        </Typography>
-      )}
     </>
   );
 };
