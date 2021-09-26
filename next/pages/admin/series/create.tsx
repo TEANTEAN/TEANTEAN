@@ -25,6 +25,10 @@ interface FormValues {
   photo: File;
   vedio: File;
   date: Date;
+  calendlyMeeting: string;
+  calendlyEventSeriesName: string;
+  calendlyEventTopic: string;
+  calendlyEventDetails: string;
 }
 
 interface Level {
