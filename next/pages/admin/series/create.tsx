@@ -87,7 +87,7 @@ const displayCalendlyDetails: React.FunctionComponent = (
   calendlyEventObject,
   methods
 ) => {
-  const display = calendlyEventObject ? (
+  const displayTemplate = calendlyEventObject ? (
     <>
       <TextField
         disabled
@@ -115,6 +115,7 @@ const displayCalendlyDetails: React.FunctionComponent = (
   ) : (
     <p>Please Select a Calendly Event</p>
   );
+  // Setting the field values
   if (calendlyEventObject) {
     methods.setValue("calendlyEventSeriesName", calendlyEventObject.name);
     methods.setValue("calendlyEventTopic", calendlyEventObject.name);
@@ -123,7 +124,7 @@ const displayCalendlyDetails: React.FunctionComponent = (
       calendlyEventObject.description_plain
     );
   }
-  return display;
+  return displayTemplate;
 };
 const CreateSeries: NextPage = () => {
   const classes = useStyles();
