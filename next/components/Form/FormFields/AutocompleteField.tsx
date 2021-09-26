@@ -16,6 +16,7 @@ interface CustomAutoCompleteFieldProps<OptionType> {
   defaultValue?: OptionType;
   fullWidth?: boolean;
   rules?: FormFieldRules;
+  loading?: boolean;
 }
 
 function CustomAutoCompleteField<OptionType>(
@@ -57,6 +58,7 @@ function CustomAutoCompleteField<OptionType>(
           onChange={(event, newValue: OptionType | null) =>
             field.onChange(newValue)
           }
+          loading={props.loading}
         />
       )}
       rules={props.rules}

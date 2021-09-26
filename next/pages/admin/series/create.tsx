@@ -14,6 +14,7 @@ import { NextPage } from "next";
 import { useQuery } from "react-query";
 import clyAxiosClient from "util/clyAxiosClient";
 import Form, { TextField, AutocompleteField } from "components/Form";
+import Box from "@material-ui/core/Box";
 
 interface FormValues {
   title: String;
@@ -43,8 +44,20 @@ const orgs: Org[] = [
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    "& .MuiInputBase-root.Mui-disabled": {
+      color: "rgba(23,23,23,0.7)",
+      backgroundColor: "rgba(200,200,200,0.4)",
+    },
   },
-
+  titleBox: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  smallRound: {
+    borderRadius: 50,
+    fontWeight: 600,
+    letterSpacing: "3px",
+  },
   paper: {
     padding: theme.spacing(2),
     margin: "auto",
@@ -67,6 +80,39 @@ const fetchCalendlyData = async () => {
   );
   return res.data;
 };
+const displayCalendlyDetails: React.FunctionComponent = (
+  calendlyEventObject,
+  methods
+) =>
+  calendlyEventObject ? (
+    <>
+      <TextField
+        disabled
+        control={methods.control}
+        name="seriesName"
+        label="Series Name"
+        defaultValue={calendlyEventObject?.name || "No Name"}
+      />
+      <TextField
+        disabled
+        control={methods.control}
+        name="topic"
+        label="Topic"
+        defaultValue={calendlyEventObject?.name || "No Topic"}
+      />
+      <TextField
+        disabled
+        control={methods.control}
+        name="details"
+        label="Details"
+        defaultValue={
+          calendlyEventObject?.description_plain || "No Description"
+        }
+      />
+    </>
+  ) : (
+    <p>Please Select a Calendly Event</p>
+  );
 const CreateSeries: NextPage = () => {
   const classes = useStyles();
   const [submittedValues, setSubmittedValues] =
@@ -76,57 +122,53 @@ const CreateSeries: NextPage = () => {
     setSubmittedValues(data);
   };
   const [fetchCalendlyEvents, setFetchCalendlyEvents] = React.useState(false);
+  const [eventOptions, setEventOptions] = React.useState([]);
+  const [selectedEvent, setSelectedEvent] = React.useState(null);
   const calendlyEvents = useQuery("get-calendly-events", fetchCalendlyData, {
     enabled: fetchCalendlyEvents,
+    onSuccess: (fetchedEvents) => {
+      setEventOptions([...fetchedEvents.collection]);
+    },
   });
   React.useEffect(() => {
     setFetchCalendlyEvents(true);
   }, []);
-  console.log(calendlyEvents);
+
+  // Our Autocomplete component is wrapped with the form control stuff,
+  // Cannot use onChange directly hence this is a workaround to use the
+  // wrapping functionalities to get the value for selected event
+  React.useEffect(() => {
+    const selectedCalendly = methods.watch("calendlyMeeting");
+    setSelectedEvent(selectedCalendly);
+  }, [methods.watch("calendlyMeeting")]);
   return (
     <>
-      {calendlyEvents.isSuccess &&
-        calendlyEvents.data.collection.map((cEvent) => (
-          <div
-            key={cEvent.uri}
-          >{`${cEvent.name} : ${cEvent.scheduling_url}`}</div>
-        ))}
       <div className={classes.root}>
         <Paper className={classes.paper}>
-          <Typography gutterBottom variant="subtitle1">
-            Series Management
-          </Typography>
-
-          <Form<FormValues> methods={methods} onSubmit={onSubmit}>
-            <Typography gutterBottom variant="subtitle2">
-              Series Information
+          <Box className={classes.titleBox}>
+            <Typography gutterBottom variant="h6">
+              Creating a New Series
             </Typography>
-
-            <TextField
+            <Button
+              className={classes.smallRound}
+              variant="contained"
+              color="primary"
+              component="span"
+              size="small"
+            >
+              Cancel
+            </Button>
+          </Box>
+          <Form<FormValues> methods={methods} onSubmit={onSubmit}>
+            <AutocompleteField
               control={methods.control}
-              name="title"
-              label="Series Name"
-              rules={{
-                required: {
-                  value: true,
-                  message: "This field is required",
-                },
-              }}
+              name="calendlyMeeting"
+              label="Calendly Meeting"
+              loading={calendlyEvents.isLoading}
+              options={eventOptions}
+              getOptionLabel={(cEvent) => cEvent.name}
             />
-
-            <TextField
-              control={methods.control}
-              name="title"
-              label="Series Description"
-              //  multiline
-              //   rows={4}
-              rules={{
-                required: {
-                  value: true,
-                  message: "This field is required",
-                },
-              }}
-            />
+            {displayCalendlyDetails(selectedEvent, methods)}
 
             <AutocompleteField<Org>
               control={methods.control}
