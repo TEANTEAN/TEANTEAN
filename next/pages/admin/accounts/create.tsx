@@ -143,12 +143,13 @@ const AccountForm: React.FC<AccountFormProps> = ({
       }
       setSubmitSuccessful(true);
     } catch (e) {
-      if (e.response.status === 400) {
-        const message =
+      let { message } = e;
+      if (e?.response?.status === 400) {
+        message =
           e.response.data?.data[0]?.messages[0]?.message ||
           "Something has gone wrong!";
-        setErrorMessage(message);
       }
+      setErrorMessage(message);
     } finally {
       setPending(false);
     }
