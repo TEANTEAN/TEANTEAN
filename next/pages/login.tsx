@@ -5,13 +5,15 @@ import Grid from "@material-ui/core/Grid";
 import Image from "next/image";
 import LoginCard from "components/pages/login/LoginCard";
 import LoginForm from "components/pages/login/LoginForm";
-import withAuth from "util/hooks/withAuth";
+import { useSession } from "next-auth/client";
+import { useRouter } from "next/router";
 
 const LoginPage: NextPage = () => {
-  withAuth({
-    redirectTo: "/admin",
-    redirectIfFound: true,
-  });
+  const router = useRouter();
+  const [session, status] = useSession();
+  if (session && status) {
+    router.replace("/admin");
+  }
   return (
     <Box>
       <Image
