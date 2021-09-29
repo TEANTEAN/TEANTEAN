@@ -10,9 +10,8 @@ import Form, { PasswordField, TextField } from "components/Form";
 import { useForm } from "react-hook-form";
 import LoadingButton from "components/LoadingButton";
 import Fade from "@material-ui/core/Fade";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
 import { useRouter } from "next/router";
+import withSnackbar from "components/HOCSnackbar";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -43,11 +42,9 @@ interface FormData {
   password: string;
 }
 
-const LoginForm: React.FC = () => {
+const LoginForm: React.FC = (props: any) => {
   const [pending, setPending] = React.useState(false);
   const [isTakingAWhile, setIsTakingAWhile] = React.useState(false);
-  const [showErrorSnackbar, setShowErrorSnackbar] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState("");
 
   const methods = useForm<FormData>();
   const classes = useStyles();
@@ -55,8 +52,12 @@ const LoginForm: React.FC = () => {
 
   const handleError = (message: string) => {
     console.log(message);
-    setErrorMessage(message);
-    setShowErrorSnackbar(true);
+    props.snackbarShowMessage({
+      message,
+      position: "BOTTOM-CENTER",
+      duration: 6000,
+      severity: "error",
+    });
     setPending(false);
     setIsTakingAWhile(false);
   };
@@ -89,13 +90,6 @@ const LoginForm: React.FC = () => {
     } catch (err) {
       handleError(err.toString());
     }
-  };
-
-  const handleAlertClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setShowErrorSnackbar(false);
   };
 
   return (
@@ -146,13 +140,8 @@ const LoginForm: React.FC = () => {
           </Fade>
         </Grid>
       </Form>
-      <Snackbar open={showErrorSnackbar} autoHideDuration={6000} onClose={handleAlertClose}>
-        <Alert onClose={handleAlertClose} severity="error">
-          {errorMessage}
-        </Alert>
-      </Snackbar>
     </Box>
   );
 };
 
-export default LoginForm;
+export default withSnackbar(LoginForm);
