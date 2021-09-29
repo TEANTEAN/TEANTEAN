@@ -63,9 +63,7 @@ const SideNav: React.FC<SideNavProps> = (props) => {
         text="Logout"
         icon={<ExitToAppIcon />}
         onClick={() => {
-          signOut({
-            redirect: false,
-          });
+          signOut({redirect: false});
           router.push("/login");
         }}
       />,
