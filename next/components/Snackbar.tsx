@@ -1,23 +1,15 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 // https://v4.mui.com/components/snackbars/
+// https://stackblitz.com/edit/snackbar-hoc?file=src%2FSnackbarHOC.js
 import React from "react";
 import Snackbar, { SnackbarOrigin } from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
+import Alert, { Color as AlertColorType } from "@material-ui/lab/Alert";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 
 export interface State extends SnackbarOrigin {
   open: boolean;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
-    },
-  },
-}));
-
-type SeverityType = "error" | "warning" | "info" | "success";
 type PositionType =
   | "TOP-CENTER"
   | "TOP-RIGHT"
@@ -25,14 +17,15 @@ type PositionType =
   | "BOTTOM-CENTER"
   | "BOTTOM-LEFT"
   | "TOP-LEFT";
-interface SnackbarProps {
-  severity: SeverityType;
+export interface SnackbarProps {
+  severity: AlertColorType;
   message: string;
   position?: PositionType;
+  duration?: number;
 }
 
-type VerticalType = "top" | "bottom";
-type HoriztonalType = "left" | "right" | "center";
+type VerticalType = SnackbarOrigin["vertical"];
+type HoriztonalType = SnackbarOrigin["horizontal"];
 const extractPositions = (
   position: PositionType
 ): { vertical: VerticalType; horizontal: HoriztonalType } => ({
@@ -44,39 +37,72 @@ const extractPositions = (
     ? "right"
     : "center",
 });
+interface IPosition_ {
+  vertical: SnackbarOrigin["vertical"];
+  horizontal: SnackbarOrigin["horizontal"];
+}
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
 
-export default function CustomizedSnackbars({
-  severity,
-  message,
-  position = "BOTTOM-CENTER",
-}: SnackbarProps) {
-  const classes = useStyles();
-  const { vertical: vert, horizontal: hori } = extractPositions(position);
-  const [state, setState] = React.useState<State>({
-    open: !!message,
-    vertical: vert,
-    horizontal: hori,
+const withSnackbar = (WrappedComponent) => (props) => {
+  const [open_, setOpen] = React.useState(false);
+  const [message_, setMessage] = React.useState("");
+  const [duration_, setDuration] = React.useState(2000);
+  const [severity_, setSeverity] = React.useState<AlertColorType | undefined>(
+    "success"
+  );
+  const [position_, setPosition] = React.useState<IPosition_ | undefined>({
+    vertical: "bottom",
+    horizontal: "center",
   });
-  const { vertical, horizontal, open } = state;
 
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+  const classes = useStyles();
+
+  const showMessage = ({
+    message,
+    severity = "success",
+    duration = 2000,
+    position = "BOTTOM-CENTER",
+  }: SnackbarProps) => {
+    setMessage(message);
+    setSeverity(severity);
+    setDuration(duration);
+    setOpen(true);
+    setPosition(extractPositions(position));
+  };
+
+  const handleClose = (reason) => {
     if (reason === "clickaway") {
       return;
     }
-    setState({ ...state, open: false });
+    setOpen(false);
   };
   return (
-    <div className={classes.root}>
-      <Snackbar
-        open={open}
-        anchorOrigin={{ vertical, horizontal }}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity={severity}>
-          {message}
-        </Alert>
-      </Snackbar>
-    </div>
+    <>
+      <WrappedComponent {...props} snackbarShowMessage={showMessage} />
+      <div className={classes.root}>
+        <Snackbar
+          open={open_}
+          anchorOrigin={{
+            vertical: position_.vertical,
+            horizontal: position_.horizontal,
+          }}
+          autoHideDuration={duration_}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity={severity_}>
+            {message_}
+          </Alert>
+        </Snackbar>
+      </div>
+    </>
   );
-}
+};
+
+export default withSnackbar;

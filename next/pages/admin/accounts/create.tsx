@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import LoadingButton from "components/LoadingButton";
-import Snackbar from "components/Snackbar";
+import withSnackbar, { SnackbarProps } from "components/Snackbar";
 
 import Form, {
   TextField,
@@ -116,6 +116,7 @@ interface AccountFormProps {
   handleClose: () => void;
   roles: Role[];
   organisations: Organisation[];
+  snackbarShowMessage: (snack: SnackbarProps) => void;
 }
 
 const AccountForm: React.FC<AccountFormProps> = ({
@@ -125,16 +126,15 @@ const AccountForm: React.FC<AccountFormProps> = ({
   handleClose,
   roles,
   organisations,
+  snackbarShowMessage,
 }) => {
   const classes = useStyles();
   const [pending, setPending] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState("");
   const [submitSuccessful, setSubmitSuccessful] = React.useState(false);
   const methods = useForm<FormValues>();
 
   const onSubmit = async (data: FormValues) => {
     setPending(true);
-    setErrorMessage("");
     try {
       if (!isCreateUser) {
         await updateUser(data, userUnderEdit.id);
@@ -149,7 +149,12 @@ const AccountForm: React.FC<AccountFormProps> = ({
           e.response.data?.data[0]?.messages[0]?.message ||
           "Something has gone wrong!";
       }
-      setErrorMessage(message);
+      snackbarShowMessage({
+        message,
+        severity: "error",
+        duration: 6000,
+        position: "TOP-RIGHT",
+      });
     } finally {
       setPending(false);
     }
@@ -162,13 +167,6 @@ const AccountForm: React.FC<AccountFormProps> = ({
   // TODO center modal and add cross to close out of modal
   return (
     <>
-      {errorMessage && (
-        <Snackbar
-          severity="error"
-          message={errorMessage}
-          position="TOP-RIGHT"
-        />
-      )}
       <Box className={classes.root}>
         <Typography gutterBottom variant="subtitle1">
           {isCreateUser ? "Account Creation" : "Account Management"}
@@ -353,4 +351,4 @@ const AccountForm: React.FC<AccountFormProps> = ({
   );
 };
 
-export default AccountForm;
+export default withSnackbar(AccountForm);
