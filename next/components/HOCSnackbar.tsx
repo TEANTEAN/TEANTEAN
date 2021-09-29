@@ -5,6 +5,7 @@ import React from "react";
 import Snackbar, { SnackbarOrigin } from "@material-ui/core/Snackbar";
 import Alert, { Color as AlertColorType } from "@material-ui/lab/Alert";
 import { makeStyles, Theme } from "@material-ui/core/styles";
+import { Box } from "@material-ui/core";
 
 export interface State extends SnackbarOrigin {
   open: boolean;
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     "& > * + *": {
       marginTop: theme.spacing(2),
     },
+    zIndex: 2,
   },
 }));
 
@@ -86,7 +88,7 @@ const withSnackbar = (WrappedComponent) => (props) => {
   return (
     <>
       <WrappedComponent {...props} snackbarShowMessage={showMessage} />
-      <div className={classes.root}>
+      <Box className={classes.root}>
         <Snackbar
           open={open_}
           anchorOrigin={{
@@ -100,7 +102,7 @@ const withSnackbar = (WrappedComponent) => (props) => {
             {message_}
           </Alert>
         </Snackbar>
-      </div>
+      </Box>
     </>
   );
 };

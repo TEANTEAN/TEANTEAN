@@ -12,6 +12,7 @@ const useStyles = makeStyles(() =>
       top: "auto",
       bottom: 0,
       position: "relative",
+      zIndex: 1,
     },
     icon: {
       fontSize: 40,

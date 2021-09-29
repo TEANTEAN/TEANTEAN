@@ -1,5 +1,5 @@
 import React from "react";
-import withSnackbar from "components/Snackbar";
+import withSnackbar from "components/HOCSnackbar";
 import LoadingButton from "components/LoadingButton";
 import { NextPage } from "next";
 
