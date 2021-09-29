@@ -1279,9 +1279,6 @@
                 "organisation": {
                   "type": "string"
                 },
-                "organisation": {
-                  "type": "string"
-                },
                 "published_at": {
                   "type": "string"
                 },
@@ -1323,6 +1320,9 @@
             }
           },
           "phone": {
+            "type": "string"
+          },
+          "logoURL": {
             "type": "string"
           }
         }
@@ -1382,6 +1382,9 @@
             "type": "string"
           },
           "phone": {
+            "type": "string"
+          },
+          "logoURL": {
             "type": "string"
           },
           "created_by": {

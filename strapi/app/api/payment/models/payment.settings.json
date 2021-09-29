@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "payments",
   "info": {
-    "name": "Payment"
+    "name": "Payment",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -25,8 +26,19 @@
       "type": "datetime"
     },
     "participant": {
-      "model": "participants",
-      "via": "payment"
+      "via": "payments",
+      "model": "participants"
+    },
+    "paymentStatus": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "transmitted",
+        "confirmed"
+      ]
+    },
+    "paymentFilesLink": {
+      "type": "string"
     }
   }
 }
