@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import LoadingButton from "components/LoadingButton";
-import withSnackbar, { SnackbarProps } from "components/Snackbar";
+import withSnackbar, { SnackbarProps } from "components/HOCSnackbar";
 
 import Form, {
   TextField,
