@@ -16,9 +16,6 @@ const credentials = {
     "https://www.googleapis.com/robot/v1/metadata/x509/gn-test%40gn-test-324202.iam.gserviceaccount.com",
 };
 
-console.log("Google private key id: ", credentials.private_key_id);
-console.log("Google private key: ", credentials.private_key);
-
 const auth = new google.auth.GoogleAuth({
   credentials,
   scopes: ["https://www.googleapis.com/auth/drive"],
