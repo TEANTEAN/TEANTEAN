@@ -558,6 +558,9 @@
               "title": {
                 "type": "string"
               },
+              "organisation": {
+                "type": "string"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -612,7 +615,19 @@
                   "type": "string"
                 }
               },
-              "image": {
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "organisation": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "logoURL": {
                 "type": "string"
               },
               "created_by": {
@@ -645,10 +660,19 @@
                 "roundtable": {
                   "type": "string"
                 },
-                "payment": {
-                  "type": "string"
+                "payments": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
-                "certificate": {
+                "certificates": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "note": {
                   "type": "string"
                 },
                 "published_at": {

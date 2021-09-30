@@ -577,68 +577,89 @@
               }
             }
           },
-          "payment": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "currency": {
-                "type": "string",
-                "enum": [
-                  "AUD",
-                  "USD"
-                ]
-              },
-              "amount": {
-                "type": "number"
-              },
-              "datePaid": {
-                "type": "string"
-              },
-              "participant": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
+          "payments": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "currency": {
+                  "type": "string",
+                  "enum": [
+                    "AUD",
+                    "USD"
+                  ]
+                },
+                "amount": {
+                  "type": "number"
+                },
+                "datePaid": {
+                  "type": "string"
+                },
+                "participant": {
+                  "type": "string"
+                },
+                "paymentStatus": {
+                  "type": "string",
+                  "enum": [
+                    "pending",
+                    "transmitted",
+                    "confirmed"
+                  ]
+                },
+                "paymentFilesLink": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           },
-          "certificate": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "dateSent": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "participant": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
+          "certificates": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "dateSent": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "participant": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 600
           },
           "published_at": {
             "type": "string",
@@ -660,11 +681,21 @@
           "roundtable": {
             "type": "string"
           },
-          "payment": {
-            "type": "string"
+          "payments": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
-          "certificate": {
-            "type": "string"
+          "certificates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 600
           },
           "published_at": {
             "type": "string",

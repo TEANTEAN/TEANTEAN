@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import useHasMounted from "util/hooks/useHasMounted";
 import AdminNavigation from "components/AdminNavigation";
 import withAuth from "util/hooks/withAuth";
+import PublicNavigation from "components/PublicNavigation";
 
 const queryClient = new QueryClient();
 
@@ -50,7 +51,11 @@ const AppWrapper = ({ Component, pageProps }) => {
   }
 
   // No login is required, so render the page as normal without the admin skeleton
-  return <Component {...pageProps} key={router.asPath} />;
+  return (
+    <PublicNavigation>
+      <Component {...pageProps} key={router.asPath} />
+    </PublicNavigation>
+  );
 };
 
 const App = ({ Component, pageProps }: AppProps) => (

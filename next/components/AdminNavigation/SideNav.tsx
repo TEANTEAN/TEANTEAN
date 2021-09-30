@@ -7,12 +7,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Hidden from "@material-ui/core/Hidden";
 import List from "@material-ui/core/List";
 import Box from "@material-ui/core/Box";
-import {
-  makeStyles,
-  useTheme,
-  Theme,
-  createStyles,
-} from "@material-ui/core/styles";
+import { makeStyles, useTheme, Theme, createStyles } from "@material-ui/core/styles";
 import { signOut } from "next-auth/client";
 import SideNavItem from "./SideNavItem";
 import router, { useRouter } from "next/router";
@@ -55,34 +50,12 @@ const SideNav: React.FC<SideNavProps> = (props) => {
 
   const adminNavItemsTop = React.useMemo(
     () => [
-      <SideNavItem
-        text="Accounts1"
-        icon={<PeopleIcon />}
-        link="/admin/accounts"
-      />,
-      <SideNavItem
-        text="Accounts2"
-        icon={<PeopleIcon />}
-        link="/admin/accounts"
-      />,
+      <SideNavItem text="Accounts" icon={<PeopleIcon />} link="/admin/accounts" />,
+      <SideNavItem text="Series" icon={<PeopleIcon />} link="/admin/series" />,
     ],
     []
   );
-  const adminNavItemsMiddle = React.useMemo(
-    () => [
-      <SideNavItem
-        text="Accounts3"
-        icon={<PeopleIcon />}
-        link="/admin/accounts"
-      />,
-      <SideNavItem
-        text="Accounts4"
-        icon={<PeopleIcon />}
-        link="/admin/accounts"
-      />,
-    ],
-    []
-  );
+  const adminNavItemsMiddle = React.useMemo(() => [], []);
 
   const adminNavItemsBottom = React.useMemo(
     () => [
@@ -90,9 +63,7 @@ const SideNav: React.FC<SideNavProps> = (props) => {
         text="Logout"
         icon={<ExitToAppIcon />}
         onClick={() => {
-          signOut({
-            redirect: false,
-          });
+          signOut({redirect: false});
           router.push("/login");
         }}
       />,

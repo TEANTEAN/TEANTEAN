@@ -28,6 +28,9 @@
     "title": {
       "type": "string",
       "required": true
+    },
+    "organisation": {
+      "model": "organisation"
     }
   }
 }

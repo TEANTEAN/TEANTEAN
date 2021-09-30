@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "participants",
   "info": {
-    "name": "Participants"
+    "name": "Participants",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -24,13 +25,17 @@
       "via": "participants",
       "model": "roundtables"
     },
-    "payment": {
+    "payments": {
       "via": "participant",
-      "model": "payment"
+      "collection": "payment"
     },
-    "certificate": {
+    "certificates": {
       "via": "participant",
-      "model": "certificate"
+      "collection": "certificate"
+    },
+    "note": {
+      "type": "text",
+      "maxLength": 600
     }
   }
 }

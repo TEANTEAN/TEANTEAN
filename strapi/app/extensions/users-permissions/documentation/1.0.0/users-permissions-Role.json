@@ -567,7 +567,19 @@
                     "type": "string"
                   }
                 },
-                "image": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "organisation": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "logoURL": {
                   "type": "string"
                 },
                 "created_by": {

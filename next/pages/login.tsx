@@ -2,26 +2,20 @@ import React from "react";
 import { NextPage } from "next";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-import { createStyles, makeStyles } from "@material-ui/core";
 import Image from "next/image";
 import LoginCard from "components/pages/login/LoginCard";
 import LoginForm from "components/pages/login/LoginForm";
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    fullScreen: {
-      minWidth: "100vw",
-      minHeight: "100vh",
-      display: "flex",
-    },
-  })
-);
+import { useSession } from "next-auth/client";
+import { useRouter } from "next/router";
 
 const LoginPage: NextPage = () => {
-  const classes = useStyles();
-
+  const router = useRouter();
+  const [session, status] = useSession();
+  if (session && status) {
+    router.replace("/admin");
+  }
   return (
-    <Box className={classes.fullScreen}>
+    <Box>
       <Image
         src="/Cal-2-WP-crazy-massive-banner.png"
         objectFit="cover"

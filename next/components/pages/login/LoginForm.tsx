@@ -79,7 +79,7 @@ const LoginForm: React.FC = () => {
         redirect: false,
         username: data.username,
         password: data.password,
-        callbackUrl: "http://localhost:3000/",
+        callbackUrl: `${process.env.NEXTAUTH_URL}/admin`,
       });
       if (res?.error) throw new Error(res.error);
       // Login was successful
@@ -146,11 +146,7 @@ const LoginForm: React.FC = () => {
           </Fade>
         </Grid>
       </Form>
-      <Snackbar
-        open={showErrorSnackbar}
-        autoHideDuration={6000}
-        onClose={handleAlertClose}
-      >
+      <Snackbar open={showErrorSnackbar} autoHideDuration={6000} onClose={handleAlertClose}>
         <Alert onClose={handleAlertClose} severity="error">
           {errorMessage}
         </Alert>

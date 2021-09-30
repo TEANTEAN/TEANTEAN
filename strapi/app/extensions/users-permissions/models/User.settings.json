@@ -63,17 +63,20 @@
       "via": "researchPartner",
       "collection": "roundtable-series"
     },
-    "image": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ],
-      "plugin": "upload",
-      "required": false,
-      "pluginOptions": {}
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "organisation": {
+      "model": "organisation"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "logoURL": {
+      "type": "string"
     }
   }
 }

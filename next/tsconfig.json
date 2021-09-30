@@ -15,14 +15,17 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": ".",
-    "sourceMap": true
+    "sourceMap": true,
+    "types": [
+      "cypress",
+      "@cypress/react"
+    ]
   },
   "exclude": ["node_modules", ".eslintrc.js"],
   "include": [
     "next.config.js",
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx",
-    "util/DriveController.js"
+    "**/*.tsx"
   ]
 }
