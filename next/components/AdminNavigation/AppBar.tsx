@@ -6,9 +6,9 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { useSession } from "next-auth/client";
+import Link from "next/link";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,6 +26,24 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         display: "none",
       },
+    },
+    logo: {
+      color: "white",
+      height: "60px",
+      textTransform: "none",
+      "& .MuiTypography-root": {
+        fontSize: "20px",
+      },
+    },
+    bold: {
+      fontWeight: 700,
+    },
+    boldYellow: {
+      fontWeight: 700,
+      color: theme.palette.secondary.main,
+    },
+    roundtableText: {
+      marginLeft: "8px",
     },
   })
 );
@@ -53,18 +71,17 @@ export default function SideNav(props: AppBarProps) {
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" noWrap>
-          Genyus Network
-        </Typography>
+        <Link href="/admin/series" passHref>
+          <Button className={classes.logo}>
+            <Typography className={classes.bold}>gen</Typography>
+            <Typography className={classes.boldYellow}>y</Typography>
+            <Typography className={classes.bold}>us</Typography>
+            <Typography className={classes.roundtableText}>
+              Roundtable
+            </Typography>
+          </Button>
+        </Link>
         <Box flexGrow={1} />
-        <IconButton
-          aria-label="open profile menu"
-          edge="start"
-          onClick={() => console.log("User profile clicked")}
-          className={classes.accountButton}
-        >
-          <AccountCircleIcon />
-        </IconButton>
       </Toolbar>
     </AppBar>
   );
