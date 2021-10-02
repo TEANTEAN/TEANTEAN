@@ -1,0 +1,13 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/drive",
+      "handler": "drive.find",
+      "config": {
+        "policies": []
+      }
+    }
+  
+  ]
+}

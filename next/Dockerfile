@@ -9,11 +9,16 @@ RUN yarn install
 # Rebuild the source code only when needed
 FROM node:alpine AS builder
 WORKDIR /app
+ARG GDRIVE_PRIVATE_KEY_ID_TEMP
+ARG GDRIVE_PRIVATE_KEY_TEMP
+RUN echo GDRIVE_PRIVATE_KEY_ID = ${GDRIVE_PRIVATE_KEY_ID_TEMP} >> ./.env.local 
+RUN echo GDRIVE_PRIVATE_KEY = ${GDRIVE_PRIVATE_KEY_TEMP} >> ./.env.local 
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
 ENV NODE_ENV production
 ENV NEXT_PUBLIC_BACKEND_URL "https://genyus-backend-strapi.herokuapp.com"
 ENV NEXTAUTH_URL "https://gn-frontend.vercel.app"
+
 RUN yarn build
 
 # Production image, copy all the files and run next
@@ -21,7 +26,7 @@ FROM node:alpine AS runner
 WORKDIR /app
 
 # You only need to copy next.config.js if you are NOT using the default configuration
-# COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
