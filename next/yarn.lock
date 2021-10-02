@@ -312,11 +312,7 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.15.6.tgz#043b9aa3c303c0722e5377fef9197f4cf1796549"
   integrity sha512-S/TSCcsRuCkmpUuoWijua0Snt+f3ewU/8spLo+4AXJCZfT0bVCzLD5MuOKdrx0mlAptbKzn5AdgEIIKXxXkz9Q==
 
-<<<<<<< HEAD
-"@babel/parser@^7.14.5":
-=======
 "@babel/parser@^7.14.5", "@babel/parser@^7.3.1":
->>>>>>> main
   version "7.15.7"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.15.7.tgz#0c3ed4a2eb07b165dfa85b3cc45c727334c4edae"
   integrity sha512-rycZXvQ+xS9QyIcJ9HXeDWf1uxqlbVFAUq0Rq0dbc50Zb/+wUe/ehyfzGfm9KZZF0kBejYgxltBXocP+gKdL2g==
@@ -10989,7 +10985,6 @@ normalize-url@^6.0.1:
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-6.1.0.tgz#40d0885b535deffe3f3147bec877d05fe4c5668a"
   integrity sha512-DlL+XwOy3NxAQ8xuC0okPgK46iuVNAK01YN7RueYBqqFeGsBjV9XmCAzAdgt+667bCl5kPh9EqKKDwnaPG1I7A==
 
-<<<<<<< HEAD
 notistack@^1.0.10:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/notistack/-/notistack-1.0.10.tgz#8db90830034383467a04184f1fa8ff77f4fc58a5"
@@ -10997,7 +10992,7 @@ notistack@^1.0.10:
   dependencies:
     clsx "^1.1.0"
     hoist-non-react-statics "^3.3.0"
-=======
+
 npm-check@^5.9.2:
   version "5.9.2"
   resolved "https://registry.npm.taobao.org/npm-check/download/npm-check-5.9.2.tgz#3b8a6230a3f8c11db113a9735b19b1ceac157dbb"
@@ -11036,7 +11031,6 @@ npm-run-path@^1.0.0:
   integrity sha1-9cMr9ZX+ga6Sfa7FLoL4sACsPI8=
   dependencies:
     path-key "^1.0.0"
->>>>>>> main
 
 npm-run-path@^2.0.0:
   version "2.0.2"

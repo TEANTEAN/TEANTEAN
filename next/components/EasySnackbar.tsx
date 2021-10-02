@@ -1,6 +1,6 @@
 // This components just provide some default setting applied to the notistack Snackbar
 // for further customization just use the notistack hook directly instead of this
-// Checkout the two being used in test/test-snackbar
+// Checkout the two being used in example/test-snackbar
 
 import React from "react";
 import { useSnackbar, VariantType, SnackbarOrigin } from "notistack";
