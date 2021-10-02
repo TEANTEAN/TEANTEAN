@@ -15,6 +15,7 @@ import useHasMounted from "util/hooks/useHasMounted";
 import AdminNavigation from "components/AdminNavigation";
 import withAuth from "util/hooks/withAuth";
 import PublicNavigation from "components/PublicNavigation";
+import { SnackbarProvider } from "notistack";
 
 const queryClient = new QueryClient();
 
@@ -70,8 +71,10 @@ const App = ({ Component, pageProps }: AppProps) => (
       </Head>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <AppWrapper Component={Component} pageProps={pageProps} />
+          <SnackbarProvider maxSnack={3}>
+            <CssBaseline />
+            <AppWrapper Component={Component} pageProps={pageProps} />
+          </SnackbarProvider>
         </ThemeProvider>
       </MuiPickersUtilsProvider>
     </Provider>
