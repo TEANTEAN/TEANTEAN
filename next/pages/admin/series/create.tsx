@@ -11,6 +11,7 @@ import clyAxiosClient from "util/clyAxiosClient";
 import Form, { TextField, AutocompleteField } from "components/Form";
 import Box from "@material-ui/core/Box";
 import LoadingButton from "components/LoadingButton";
+import Link from "next/link";
 import gnFetch from "../../../util/gnAxiosClient";
 
 type Tresearcher = { username: string; id: string };
@@ -71,6 +72,11 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     maxWidth: "100%",
     maxHeight: "100%",
+  },
+  goLink: {
+    textDecoration: "none",
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(2),
   },
 }));
 const fetchCalendlyData = async () => {
@@ -214,15 +220,37 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
             options={calendlyEvents.isSuccess ? calendlyEvents.data : []}
             loading={calendlyEvents.isLoading}
             getOptionLabel={(cEvent) => cEvent.name}
+            rules={{
+              required: {
+                value: true,
+                message: "Calendly event is required",
+              },
+            }}
           />
           {displayCalendlyDetails(selectedEvent, methods)}
-
+          <Link href="https://calendly.com/">
+            <Button
+              className={classes.goLink}
+              variant="contained"
+              component="span"
+              size="small"
+              color="secondary"
+            >
+              Go to Calendly
+            </Button>
+          </Link>
           <AutocompleteField<Organisation>
             control={methods.control}
             name="organisation"
             label="Organisation"
             options={organisations}
             getOptionLabel={(org) => org.name}
+            rules={{
+              required: {
+                value: true,
+                message: "This field is required",
+              },
+            }}
           />
 
           <AutocompleteField
@@ -232,8 +260,13 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
             options={allResearcherData.isSuccess ? allResearcherData.data : []}
             loading={!allResearcherData.isSuccess}
             getOptionLabel={(rp) => rp.username}
+            rules={{
+              required: {
+                value: true,
+                message: "Calendly event is required",
+              },
+            }}
           />
-
           <Typography gutterBottom variant="subtitle2">
             Preview Vedio & Photo Upload
           </Typography>
