@@ -51,16 +51,19 @@ export default function withAuth({
   useEffect(() => {
     // if no redirect or still loading just return (on page already)
     if (!redirectTo || loading) return;
-    // Shorcircuiting Redirection Scenarios (don't use redirectIfFound if possible)
     // 1. Redirect if not logged in
     // 2. Redirect only if found the user
     // 3. Redirect if not authorised
     // 4. Redirect only if authorised
     if (
-      (redirectTo && !redirectIfFound && !session) ||
-      (redirectIfFound && session && !permittedRole) ||
-      (permittedRole && !isAuthorised(session.user.role, permittedRole)) ||
-      (permittedRole &&
+      (!session && redirectTo && !redirectIfFound) ||
+      (session && redirectIfFound && !permittedRole) ||
+      (session &&
+        permittedRole &&
+        !redirectIfFound &&
+        !isAuthorised(session.user.role, permittedRole)) ||
+      (session &&
+        permittedRole &&
         redirectIfFound &&
         isAuthorised(session.user.role, permittedRole))
     ) {

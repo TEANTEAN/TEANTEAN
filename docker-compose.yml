@@ -1,47 +1,50 @@
-version : '3'
+version: "3"
 
 services:
-  # strapi:
-  #   image: strapi/strapi
-  #   container_name: strapi
-  #   restart: unless-stopped
-  #   #env_file: .env
-  #   environment:
-  #     DATABASE_AUTHENTICATION_DATABASE: admin
-  #     DATABASE_CLIENT: mongo
-  #     DATABASE_NAME: strapi
-  #     DATABASE_HOST: mongo
-  #     DATABASE_PORT: 27017
-  #     DATABASE_USERNAME: strapi
-  #     DATABASE_PASSWORD: password
-  #   networks:
-  #     - strapi-app-network
-  #   volumes:
-  #     - ./strapi/app:/srv/app
-  #   ports:
-  #     - "1337:1337"
+  strapi:
+    image: strapi/strapi
+    container_name: strapi
+    restart: unless-stopped
+    #env_file: .env
+    environment:
+      DATABASE_AUTHENTICATION_DATABASE: admin
+      DATABASE_CLIENT: mongo
+      DATABASE_NAME: strapi
+      DATABASE_HOST: mongo
+      DATABASE_PORT: 27017
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: password
+    networks:
+      - strapi-app-network
+    volumes:
+      - ./strapi/app:/srv/app
+    ports:
+      - "1337:1337"
 
-  # mongo:
-  #   image: mongo
-  #   container_name: mongo
-  #   restart: unless-stopped
-  #   #env_file: .env
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: strapi
-  #     MONGO_INITDB_ROOT_PASSWORD: password
-  #   networks:
-  #     - strapi-app-network
-  #   volumes:
-  #     - ./mongo/backup:/backup
-  #   ports:
-  #     - "27017:27017"
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: unless-stopped
+    #env_file: .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: strapi
+      MONGO_INITDB_ROOT_PASSWORD: password
+    networks:
+      - strapi-app-network
+    volumes:
+      - ./mongo/backup:/backup
+    ports:
+      - "27017:27017"
 
   nextjs:
     ports:
-      -  3000:3000
+      - 3000:3000
     build:
       context: next
       dockerfile: Dockerfile
+      args:
+        GDRIVE_PRIVATE_KEY_ID_TEMP: "$GDRIVE_PRIVATE_KEY_ID_TEMP"
+        GDRIVE_PRIVATE_KEY_TEMP: "$GDRIVE_PRIVATE_KEY_TEMP"
 
 networks:
   strapi-app-network:

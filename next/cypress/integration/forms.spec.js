@@ -2,7 +2,7 @@
 
 context("Forms", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/test/form");
+    cy.visit("http://localhost:3000/example/form");
   });
 
   it("Check submit button", () => {

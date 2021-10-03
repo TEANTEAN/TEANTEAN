@@ -10,6 +10,14 @@ interface Roundtable {
   participants: any[];
 }
 
+interface DriveFile {
+  kind: string;
+  id: string;
+  name: string;
+  mimeType: string;
+  url: string;
+}
+
 interface Role {
   _id: string;
   name: string;
