@@ -2,7 +2,7 @@
 
 context("Buttons", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/test/buttons");
+    cy.visit("http://localhost:3000/example/buttons");
   });
 
   it("Click basic button", () => {

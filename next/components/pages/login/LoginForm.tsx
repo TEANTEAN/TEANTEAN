@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import LoadingButton from "components/LoadingButton";
 import Fade from "@material-ui/core/Fade";
 import { useRouter } from "next/router";
-import withSnackbar from "components/HOCSnackbar";
+import easySnackbar from "components/EasySnackbar";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -42,18 +42,17 @@ interface FormData {
   password: string;
 }
 
-const LoginForm: React.FC = (props: any) => {
+const LoginForm: React.FC = () => {
   const [pending, setPending] = React.useState(false);
   const [isTakingAWhile, setIsTakingAWhile] = React.useState(false);
-
+  const { easyEnqueueSnackbar } = easySnackbar();
   const methods = useForm<FormData>();
   const classes = useStyles();
   const router = useRouter();
 
   const handleError = (message: string) => {
     console.log(message);
-    props.snackbarShowMessage({
-      message,
+    easyEnqueueSnackbar(message, {
       position: "BOTTOM-CENTER",
       duration: 6000,
       severity: "error",
@@ -144,4 +143,4 @@ const LoginForm: React.FC = (props: any) => {
   );
 };
 
-export default withSnackbar(LoginForm);
+export default LoginForm;
