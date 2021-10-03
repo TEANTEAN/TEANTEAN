@@ -190,7 +190,7 @@ module.exports = {
           }
         : {
             id: "Auth.form.error.email.taken",
-            message: "Email already taken HAHAHAHAHA",
+            message: "Username or Email is already taken.",
           };
 
       ctx.badRequest(null, formatError(adminError));
