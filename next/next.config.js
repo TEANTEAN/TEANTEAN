@@ -16,11 +16,9 @@ module.exports = (phase) => {
           BUILD_HOST: process.env.NEXT_PUBLIC_HOST,
           NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
           NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-<<<<<<< HEAD
           CALENDLY_USER_ID: process.env.CALENDLY_USER_ID,
           CALENDLY_TOKEN: process.env.CALENDLY_TOKEN,
           CALENDLY_API_URL: process.env.CALENDLY_API_URL,
-=======
           GDRIVE_TYPE: process.env.GDRIVE_TYPE,
           GDRIVE_PROJECT_ID: process.env.GDRIVE_PROJECT_ID,
           GDRIVE_PRIVATE_KEY_ID: process.env.GDRIVE_PRIVATE_KEY_ID,
@@ -32,7 +30,6 @@ module.exports = (phase) => {
           GDRIVE_AUTH_PROVIDER_X509_CERT_URL:
             process.env.GDRIVE_AUTH_PROVIDER_X509_CERT_URL,
           GDRIVE_CLIENT_X509_CERT_URL: process.env.GDRIVE_CLIENT_X509_CERT_URL,
->>>>>>> main
         },
       };
 
@@ -49,11 +46,9 @@ module.exports = (phase) => {
           BUILD_HOST: process.env.NEXT_PUBLIC_HOST,
           NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
           NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-<<<<<<< HEAD
           CALENDLY_USER_ID: process.env.CALENDLY_USER_ID,
           CALENDLY_TOKEN: process.env.CALENDLY_TOKEN,
           CALENDLY_API_URL: process.env.CALENDLY_API_URL,
-=======
           GDRIVE_TYPE: process.env.GDRIVE_TYPE,
           GDRIVE_PROJECT_ID: process.env.GDRIVE_PROJECT_ID,
           GDRIVE_PRIVATE_KEY_ID: process.env.GDRIVE_PRIVATE_KEY_ID,
@@ -65,7 +60,6 @@ module.exports = (phase) => {
           GDRIVE_AUTH_PROVIDER_X509_CERT_URL:
             process.env.GDRIVE_AUTH_PROVIDER_X509_CERT_URL,
           GDRIVE_CLIENT_X509_CERT_URL: process.env.GDRIVE_CLIENT_X509_CERT_URL,
->>>>>>> main
         },
       };
   }
