@@ -13,11 +13,12 @@ import Box from "@material-ui/core/Box";
 import LoadingButton from "components/LoadingButton";
 import gnFetch from "../../../util/gnAxiosClient";
 
+type Tresearcher = { username: string; id: string };
 interface FormValues {
   title: String;
   description: string;
   organisation: Organisation;
-  researcher: User;
+  researcher: Tresearcher;
   photo: File;
   vedio: File;
   date: Date;
@@ -90,7 +91,6 @@ const postNewSeries = async (newSeriesData) => {
     // eslint-disable-next-line no-underscore-dangle
     researchPartner: newSeriesData.researcher.id,
   };
-  console.log(newSeriesData);
   try {
     await gnFetch.post("roundtable-series", data);
   } catch (e) {
@@ -99,7 +99,8 @@ const postNewSeries = async (newSeriesData) => {
 };
 
 // Our TextField component is wrapped with controls, so cannot set values directly by using the value prop
-// Hence create a template component then populate with the state value before returning the component
+// Hence if calendlyEventObject exists show the template with the form control method,
+// the value is then populated via useEffects
 const displayCalendlyDetails: React.FunctionComponent = (
   calendlyEventObject,
   methods
