@@ -34,6 +34,16 @@ interface FormValues {
   // input: File;
 }
 
+interface Status {
+  name: string;
+  value: boolean;
+}
+
+const STATUSES: Status[] = [
+  { name: "Active", value: false },
+  { name: "Blocked", value: true },
+];
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex-container",
@@ -134,6 +144,12 @@ const AccountForm: React.FC<AccountFormProps> = ({
     setPending(true);
     try {
       if (!isCreateUser) {
+        console.log(data);
+        if (data.password === "") {
+          // eslint-disable-next-line no-param-reassign
+          delete data.password;
+          console.log(data);
+        }
         await updateUser(data, userUnderEdit.id);
       } else {
         await postNewUser(data);
@@ -148,7 +164,7 @@ const AccountForm: React.FC<AccountFormProps> = ({
 
   const onClose = () => handleClose();
 
-  // TODO center modal and add cross to close out of modal
+  console.log(userUnderEdit);
   return (
     <>
       <Box className={classes.root}>
@@ -285,6 +301,17 @@ const AccountForm: React.FC<AccountFormProps> = ({
             disabled={!!userUnderEdit?.createdAt}
             defaultValue={
               userUnderEdit ? new Date(userUnderEdit.createdAt) : new Date()
+            }
+          />
+
+          <AutocompleteField<Boolean>
+            control={methods.control}
+            name="blocked"
+            label="Status"
+            defaultValue={!!userUnderEdit?.blocked}
+            options={[true, false]}
+            getOptionLabel={(option) =>
+              option ? STATUSES[1].name : STATUSES[0].name
             }
           />
 

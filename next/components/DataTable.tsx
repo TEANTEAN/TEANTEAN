@@ -1,8 +1,8 @@
 import { Box } from "@material-ui/core";
-import { DataGrid, GridComponentProps } from "@mui/x-data-grid";
+import { DataGrid, DataGridProps } from "@mui/x-data-grid";
 import React from "react";
 
-const DataTable = (props) => {
+const DataTable = (props: DataGridProps) => {
   const [pageSize, setPageSize] = React.useState<number>(props.pageSize || 10);
 
   return (
