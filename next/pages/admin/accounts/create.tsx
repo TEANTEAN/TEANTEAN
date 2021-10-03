@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import LoadingButton from "components/LoadingButton";
-import withSnackbar, { SnackbarProps } from "components/HOCSnackbar";
+import easySnackbar from "components/EasySnackbar";
 
 import Form, {
   TextField,
@@ -116,7 +116,6 @@ interface AccountFormProps {
   handleClose: () => void;
   roles: Role[];
   organisations: Organisation[];
-  snackbarShowMessage: (snack: SnackbarProps) => void;
 }
 
 const AccountForm: React.FC<AccountFormProps> = ({
@@ -126,13 +125,12 @@ const AccountForm: React.FC<AccountFormProps> = ({
   handleClose,
   roles,
   organisations,
-  snackbarShowMessage,
 }) => {
   const classes = useStyles();
   const [pending, setPending] = React.useState(false);
   const [submitSuccessful, setSubmitSuccessful] = React.useState(false);
   const methods = useForm<FormValues>();
-
+  const { easyEnqueueSnackbar } = easySnackbar();
   const onSubmit = async (data: FormValues) => {
     setPending(true);
     try {
@@ -149,8 +147,7 @@ const AccountForm: React.FC<AccountFormProps> = ({
           e.response.data?.data[0]?.messages[0]?.message ||
           "Something has gone wrong!";
       }
-      snackbarShowMessage({
-        message,
+      easyEnqueueSnackbar(message, {
         severity: "error",
         duration: 6000,
         position: "TOP-RIGHT",
@@ -273,6 +270,12 @@ const AccountForm: React.FC<AccountFormProps> = ({
                 : null
             }
             options={roles}
+            rules={{
+              required: {
+                value: true,
+                message: "This field is required",
+              },
+            }}
             getOptionLabel={(role) => role.name}
           />
 
@@ -289,6 +292,12 @@ const AccountForm: React.FC<AccountFormProps> = ({
                   )
                 : null
             }
+            rules={{
+              required: {
+                value: true,
+                message: "This field is required",
+              },
+            }}
             getOptionLabel={(org) => org.name}
           />
 
@@ -351,4 +360,4 @@ const AccountForm: React.FC<AccountFormProps> = ({
   );
 };
 
-export default withSnackbar(AccountForm);
+export default AccountForm;
