@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import LoadingButton from "components/LoadingButton";
+import easySnackbar from "components/EasySnackbar";
 
 import Form, {
   TextField,
@@ -93,10 +94,10 @@ const postNewUser = async (newUserData: FormValues) => {
     organisation: newUserData.organisation,
   };
 
+  // eslint-disable-next-line no-useless-catch
   try {
     // Send New User data to strapi
     const createdUser = await gnFetch.post("auth/local/register", data);
-
     // Get the ID for the created User so that we can set their role
     const createdUserId = createdUser.data.user._id;
     // Update the user role
@@ -104,7 +105,7 @@ const postNewUser = async (newUserData: FormValues) => {
       role: { _id: data.role._id },
     });
   } catch (e) {
-    console.log(e);
+    throw e;
   }
 };
 
@@ -127,9 +128,9 @@ const AccountForm: React.FC<AccountFormProps> = ({
 }) => {
   const classes = useStyles();
   const [pending, setPending] = React.useState(false);
-
+  const [submitSuccessful, setSubmitSuccessful] = React.useState(false);
   const methods = useForm<FormValues>();
-
+  const { easyEnqueueSnackbar } = easySnackbar();
   const onSubmit = async (data: FormValues) => {
     setPending(true);
     try {
@@ -138,16 +139,28 @@ const AccountForm: React.FC<AccountFormProps> = ({
       } else {
         await postNewUser(data);
       }
+      setSubmitSuccessful(true);
     } catch (e) {
-      console.log(e);
+      let { message } = e;
+      if (e?.response?.status === 400) {
+        message =
+          e.response.data?.data[0]?.messages[0]?.message ||
+          "Something has gone wrong!";
+      }
+      easyEnqueueSnackbar(message, {
+        severity: "error",
+        duration: 6000,
+        position: "TOP-RIGHT",
+      });
     } finally {
       setPending(false);
-      onSubmitSettled();
     }
   };
 
   const onClose = () => handleClose();
-
+  // Moved 'onSubmitSettled' out of the finally block, it was
+  // executing before the states could update in try catch block
+  if (submitSuccessful) onSubmitSettled();
   // TODO center modal and add cross to close out of modal
   return (
     <>
@@ -257,6 +270,12 @@ const AccountForm: React.FC<AccountFormProps> = ({
                 : null
             }
             options={roles}
+            rules={{
+              required: {
+                value: true,
+                message: "This field is required",
+              },
+            }}
             getOptionLabel={(role) => role.name}
           />
 
@@ -273,6 +292,12 @@ const AccountForm: React.FC<AccountFormProps> = ({
                   )
                 : null
             }
+            rules={{
+              required: {
+                value: true,
+                message: "This field is required",
+              },
+            }}
             getOptionLabel={(org) => org.name}
           />
 
