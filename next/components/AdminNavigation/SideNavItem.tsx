@@ -10,14 +10,23 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     listItem: {
       "&$selected": {
-        borderLeft: "5px solid",
-        borderColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.main,
+        "&:hover": {
+          backgroundColor: theme.palette.primary.light,
+        },
+        "& .MuiListItemIcon-root": {
+          color: "white",
+        },
+        "& .MuiTypography-root": {
+          color: "white",
+        },
       },
     },
     selected: {},
     listItemIcon: {
       minWidth: "40px",
     },
+    list: {},
   })
 );
 

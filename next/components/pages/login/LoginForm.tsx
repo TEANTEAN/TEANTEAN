@@ -79,7 +79,7 @@ const LoginForm: React.FC = () => {
         redirect: false,
         username: data.username,
         password: data.password,
-        callbackUrl: `${process.env.NEXTAUTH_URL}/admin`,
+        callbackUrl: `${process.env.NEXTAUTH_URL}/admin/series`,
       });
       if (res?.error) throw new Error(res.error);
       // Login was successful
