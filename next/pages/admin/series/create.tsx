@@ -2,15 +2,10 @@
 import React from "react";
 // import { makeStyles } from '@material-ui/core/styles';
 
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Typography, Button, IconButton, Paper } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
-import { NextPage } from "next";
 import { useQuery } from "react-query";
 import clyAxiosClient from "util/clyAxiosClient";
 import Form, { TextField, AutocompleteField } from "components/Form";
@@ -21,7 +16,8 @@ import gnFetch from "../../../util/gnAxiosClient";
 interface FormValues {
   title: String;
   description: string;
-  org: Org;
+  organisation: Organisation;
+  researcher: User;
   photo: File;
   vedio: File;
   date: Date;
@@ -31,21 +27,11 @@ interface FormValues {
   calendlyEventDetails: string;
 }
 
-interface Level {
-  id: number;
-  level: string;
+interface SeriesFormProps {
+  onSubmitSettled: () => void;
+  handleClose: () => void;
+  organisations: Organisation[];
 }
-
-interface Org {
-  id: number;
-  org: string;
-}
-
-const orgs: Org[] = [
-  { id: 1, org: "The University of Melbourne" },
-  { id: 2, org: "Young Stroke Foundation" },
-  { id: 3, org: "Monash University" },
-];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,6 +40,11 @@ const useStyles = makeStyles((theme) => ({
       color: "rgba(23,23,23,0.7)",
       backgroundColor: "rgba(200,200,200,0.4)",
     },
+    display: "flex-container",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: theme.spacing(2),
+    margin: "auto",
   },
   titleBox: {
     display: "flex",
@@ -64,10 +55,11 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     letterSpacing: "3px",
   },
-  paper: {
-    padding: theme.spacing(2),
-    margin: "auto",
-    maxWidth: 500,
+  closeButton: {
+    position: "absolute",
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
   },
   image: {
     width: 128,
@@ -82,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const fetchCalendlyData = async () => {
   const res = await clyAxiosClient.get(
-    `${process.env.CALENDLY_API_URL}/event_types?user=${process.env.CALENDLY_USER_ID}&count=100`
+    `/event_types?user=${process.env.CALENDLY_USER_ID}&count=100`
   );
   return res.data;
 };
@@ -94,7 +86,11 @@ const postNewSeries = async (newSeriesData) => {
     videoLink: newSeriesData?.videoLink || "NO LINK",
     seriesURI: newSeriesData.calendlyMeeting.uri,
     title: newSeriesData.calendlyEventSeriesName || "No Title",
+    organisation: newSeriesData.organisation,
+    // eslint-disable-next-line no-underscore-dangle
+    researchPartner: newSeriesData.researcher.id,
   };
+  console.log(newSeriesData);
   try {
     await gnFetch.post("roundtable-series", data);
   } catch (e) {
@@ -138,33 +134,31 @@ const displayCalendlyDetails: React.FunctionComponent = (
   );
   return displayTemplate;
 };
-const CreateSeries: NextPage = () => {
+const CreateSeries: React.FC<SeriesFormProps> = ({
+  onSubmitSettled,
+  handleClose,
+  organisations,
+}) => {
   const classes = useStyles();
   const [pending, setPending] = React.useState(false);
   const methods = useForm<FormValues>();
-  const onSubmit = async (data) => {
-    setPending(true);
-    try {
-      await postNewSeries(data);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setPending(false);
-    }
-  };
-  const [fetchCalendlyEvents, setFetchCalendlyEvents] = React.useState(false);
-  const [eventOptions, setEventOptions] = React.useState([]);
+
   const [selectedEvent, setSelectedEvent] = React.useState(null);
   const calendlyEvents = useQuery("get-calendly-events", fetchCalendlyData, {
-    enabled: fetchCalendlyEvents,
-    onSuccess: (fetchedEvents) => {
-      setEventOptions([...fetchedEvents.collection]);
-    },
+    select: (fetchedEvents) => [...fetchedEvents.collection],
   });
-  React.useEffect(() => {
-    setFetchCalendlyEvents(true);
-  }, []);
 
+  const allResearcherData = useQuery(
+    "get-all-users",
+    async () => (await gnFetch("/users/")).data,
+    {
+      select: (fetchedUsers) =>
+        [...fetchedUsers]
+          .filter((u) => u?.role?.name === "Research Partner")
+          // eslint-disable-next-line no-underscore-dangle
+          .map((e) => ({ id: e._id, username: e.username })),
+    }
+  );
   // Our Autocomplete component is wrapped with the form control stuff,
   // Cannot use onChange directly hence this is a workaround to use the
   // wrapping functionalities to get the value for selected event
@@ -179,91 +173,113 @@ const CreateSeries: NextPage = () => {
       methods.setValue("calendlyEventDetails", selectedEvent.description_plain);
     }
   }, [selectedEvent]);
+
+  const onSubmit = async (data) => {
+    setPending(true);
+    try {
+      await postNewSeries(data);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setPending(false);
+      onSubmitSettled();
+    }
+  };
+  const onClose = () => handleClose();
+
   return (
     <>
-      <div className={classes.root}>
-        <Paper className={classes.paper}>
-          <Box className={classes.titleBox}>
-            <Typography gutterBottom variant="h6">
-              Creating a New Series
-            </Typography>
-            <Button
-              className={classes.smallRound}
-              variant="contained"
-              color="primary"
-              component="span"
-              size="small"
-            >
-              Cancel
-            </Button>
-          </Box>
-          <Form<FormValues> methods={methods} onSubmit={onSubmit}>
-            <AutocompleteField
-              control={methods.control}
-              name="calendlyMeeting"
-              label="Calendly Meeting"
-              loading={calendlyEvents.isLoading}
-              options={eventOptions}
-              getOptionLabel={(cEvent) => cEvent.name}
+      <Paper className={classes.root}>
+        <Box className={classes.titleBox}>
+          <Typography gutterBottom variant="h6">
+            Creating a New Series
+          </Typography>
+          <Button
+            className={classes.smallRound}
+            variant="contained"
+            color="primary"
+            component="span"
+            size="small"
+            onClick={onClose}
+          >
+            Cancel
+          </Button>
+        </Box>
+        <Form<FormValues> methods={methods} onSubmit={onSubmit}>
+          <AutocompleteField
+            control={methods.control}
+            name="calendlyMeeting"
+            label="Calendly Meeting"
+            options={calendlyEvents.isSuccess ? calendlyEvents.data : []}
+            loading={calendlyEvents.isLoading}
+            getOptionLabel={(cEvent) => cEvent.name}
+          />
+          {displayCalendlyDetails(selectedEvent, methods)}
+
+          <AutocompleteField<Organisation>
+            control={methods.control}
+            name="organisation"
+            label="Organisation"
+            options={organisations}
+            getOptionLabel={(org) => org.name}
+          />
+
+          <AutocompleteField
+            control={methods.control}
+            name="researcher"
+            label="Researcher"
+            options={allResearcherData.isSuccess ? allResearcherData.data : []}
+            loading={!allResearcherData.isSuccess}
+            getOptionLabel={(rp) => rp.username}
+          />
+
+          <Typography gutterBottom variant="subtitle2">
+            Preview Vedio & Photo Upload
+          </Typography>
+
+          <div className={classes.root}>
+            <input
+              accept="image/*"
+              // className={classes.input}
+              id="contained-button-file"
+              multiple
+              type="file"
             />
-            {displayCalendlyDetails(selectedEvent, methods)}
-
-            <AutocompleteField<Org>
-              control={methods.control}
-              name="org"
-              label="Organisation"
-              options={orgs}
-              getOptionLabel={(org) => org.org}
+            <label htmlFor="contained-button-file">
+              <Button variant="contained" color="primary" component="span">
+                Upload
+              </Button>
+            </label>
+            <input
+              accept="image/*"
+              // className={classes.input}
+              id="icon-button-file"
+              type="file"
             />
+            <label htmlFor="icon-button-file">
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+              >
+                <PhotoCamera />
+              </IconButton>
+            </label>
+          </div>
 
-            <Typography gutterBottom variant="subtitle2">
-              Preview Vedio & Photo Upload
-            </Typography>
-
-            <div className={classes.root}>
-              <input
-                accept="image/*"
-                // className={classes.input}
-                id="contained-button-file"
-                multiple
-                type="file"
-              />
-              <label htmlFor="contained-button-file">
-                <Button variant="contained" color="primary" component="span">
-                  Upload
-                </Button>
-              </label>
-              <input
-                accept="image/*"
-                // className={classes.input}
-                id="icon-button-file"
-                type="file"
-              />
-              <label htmlFor="icon-button-file">
-                <IconButton
-                  color="primary"
-                  aria-label="upload picture"
-                  component="span"
-                >
-                  <PhotoCamera />
-                </IconButton>
-              </label>
-            </div>
-
-            <Typography gutterBottom variant="subtitle2">
-              Roundtable Management (Calendly)
-            </Typography>
-            <LoadingButton
-              isloading={pending}
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              Done
-            </LoadingButton>
-          </Form>
-        </Paper>
-      </div>
+          <Typography gutterBottom variant="subtitle2">
+            Roundtable Management (Calendly)
+          </Typography>
+          <LoadingButton
+            isloading={pending}
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+            Done
+          </LoadingButton>
+        </Form>
+      </Paper>
     </>
   );
 };

@@ -1,16 +1,19 @@
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { useForm } from "react-hook-form";
-import IconButton from "@material-ui/core/IconButton";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
-import { NextPage } from "next";
+/* eslint-disable react/react-in-jsx-scope */
+import React from "react";
+import { Dialog, Grid, Typography } from "@material-ui/core";
+
 import SeriesTable, { SeriesData } from "components/SeriesTable";
 import { GeneralButton } from "components/Buttons";
+import { useQuery } from "react-query";
+import gnFetch from "../../../util/gnAxiosClient";
+import CreateSeriesForm from "./create";
 
-const buttonToDrive = <GeneralButton href="/admin/series/drive">FILES</GeneralButton>;
-const buttonToParticipants = <GeneralButton href="/admin/series/participants">TRACK</GeneralButton>;
+const buttonToDrive = (
+  <GeneralButton href="/admin/series/drive">FILES</GeneralButton>
+);
+const buttonToParticipants = (
+  <GeneralButton href="/admin/series/participants">TRACK</GeneralButton>
+);
 const testData: SeriesData[] = [
   {
     seriesName: "PPE and Me",
@@ -38,25 +41,51 @@ const testData: SeriesData[] = [
   },
 ];
 
-function SeriesListPage(): JSX.Element {
-  return (
-    <Grid container xs={12}>
-      <Grid container xs={12}>
-        <Grid item xs={4} style={{ padding: "48px", marginLeft: "48px" }}>
-          <Typography variant="h4">SERIES</Typography>
-        </Grid>
+const SeriesListPage = () => {
+  const [hideForm, setHideForm] = React.useState(true);
 
-        <Grid item xs={6} style={{ padding: "24px" }}>
-          <GeneralButton> CREATE NEW </GeneralButton>
-        </Grid>
-      </Grid>
-
-      <Grid container item md={8} xs={12}>
-        <Grid item xs={12} style={{ padding: "24px 24px 0 24px" }}>
-          <SeriesTable data={testData} />
-        </Grid>
-      </Grid>
-    </Grid>
+  const allSeriesData = useQuery(
+    "get-all-series",
+    async () => (await gnFetch.get("/roundtable-series")).data
   );
-}
+
+  const allOrgs = useQuery(
+    "get-all-organisations",
+    async () => (await gnFetch.get("/organisations")).data
+  );
+  const onCreateNewClick = () => {
+    setHideForm(false);
+  };
+
+  return (
+    <>
+      <Grid container xs={12}>
+        <Grid container xs={12}>
+          <Grid item xs={4} style={{ padding: "48px", marginLeft: "48px" }}>
+            <Typography variant="h4">SERIES</Typography>
+          </Grid>
+
+          <Grid item xs={6} style={{ padding: "24px" }}>
+            <GeneralButton onClick={onCreateNewClick}>CREATE NEW</GeneralButton>
+          </Grid>
+        </Grid>
+
+        <Grid container item md={8} xs={12}>
+          <Grid item xs={12} style={{ padding: "24px 24px 0 24px" }}>
+            <SeriesTable data={testData} />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Dialog open={!hideForm} onClose={() => setHideForm(true)}>
+        <CreateSeriesForm
+          organisations={allOrgs.isSuccess ? allOrgs.data : []}
+          handleClose={() => setHideForm(true)}
+          onSubmitSettled={() =>
+            allSeriesData.refetch().then(() => setHideForm(true))
+          }
+        />
+      </Dialog>
+    </>
+  );
+};
 export default SeriesListPage;
