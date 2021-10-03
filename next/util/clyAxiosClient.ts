@@ -7,7 +7,7 @@ import axios, { AxiosResponse } from "axios";
  * An axios client that that attaches the jwt to each request
  */
 const clyAxiosClient = axios.create({
-  baseURL: process.env.CALENDLY_API_URL,
+  baseURL: process.env.CALENDLY_API_URL || "https://api.calendly.com",
   headers: {
     "Content-Type": "application/json",
   },
@@ -33,7 +33,9 @@ if (process.env.NEXT_PUBLIC_ENV_NAME === "development") {
 // Set the AUTH token for any outgoing request
 clyAxiosClient.interceptors.request.use(async (request) => {
   console.log(
-    `attaching bearer token: ${process.env.CALENDLY_API_URL} to requests`
+    `attaching bearer token: ${
+      process.env.CALENDLY_API_URL || "https://api.calendly.com"
+    } to requests`
   );
   request.headers.Authorization = `Bearer ${process.env.CALENDLY_TOKEN}`;
   return request;
