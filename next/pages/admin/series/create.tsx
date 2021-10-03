@@ -86,7 +86,6 @@ const fetchCalendlyData = async () => {
   return res.data;
 };
 
-// TODO change these to react queries?
 // Need to pass in the research partners and Organisations from index
 const postNewSeries = async (newSeriesData) => {
   const data = {
@@ -101,6 +100,7 @@ const postNewSeries = async (newSeriesData) => {
     await gnFetch.post("roundtable-series", data);
   } catch (e) {
     console.log(e);
+    throw e;
   }
 };
 
