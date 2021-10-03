@@ -1,16 +1,9 @@
 /* eslint-disable no-underscore-dangle */
-import {
-  Dialog,
-  Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@material-ui/core";
+import { Dialog, Grid } from "@material-ui/core";
+import { GridRowData } from "@mui/x-data-grid";
 
-import { IconLabelButton } from "components/Buttons";
+import { GeneralButton, IconLabelButton } from "components/Buttons";
+import DataTable from "components/DataTable";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import gnFetch from "../../../util/gnAxiosClient";
@@ -42,31 +35,44 @@ const AccountManagement = () => {
   );
 
   const onRowClick = (user) => {
-    console.log(`Editing ${user.id}`);
-    setEditUser(user);
+    setEditUser(user.row.actions);
     setCreationMode(false);
     setHideForm(false);
   };
 
   const onCreateNewClick = () => {
-    console.log("Called");
     setEditUser(null);
     setCreationMode(true);
     setHideForm(false);
   };
 
-  const accountRows = [];
+  const columns = [
+    { field: "username", headerName: "Username", flex: 1 },
+    { field: "accessLevel", headerName: "Access Level", flex: 1 },
+    { field: "active", headerName: "Active", flex: 1 },
+    {
+      field: "actions",
+      headerName: "Actions",
+      flex: 1,
+      renderCell: (params) => (
+        <GeneralButton onClick={() => onRowClick(params)}>Edit</GeneralButton>
+      ),
+    },
+  ];
+
+  const accountRows: GridRowData[] = [];
   if (allUserData.isSuccess) {
     allUserData.data.forEach((user) =>
-      accountRows.push(
-        <TableRow key={user.id} onClick={() => onRowClick(user)}>
-          <TableCell>{user.username}</TableCell>
-          <TableCell>{user.role.name}</TableCell>
-          <TableCell>{user.blocked ? "No" : "Yes"}</TableCell>
-        </TableRow>
-      )
+      accountRows.push({
+        id: user.id,
+        username: user.username,
+        accessLevel: user.role.name,
+        active: user.blocked ? "No" : "Yes",
+        actions: user,
+      })
     );
   }
+
   return (
     <>
       <h1>Acount Overview</h1>
@@ -77,21 +83,9 @@ const AccountManagement = () => {
       >
         CREATE NEW
       </IconLabelButton>
-      <Grid container spacing={8}>
-        <Grid item lg={4}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Username</TableCell>
-                  <TableCell>Access Level</TableCell>
-                  <TableCell>Active</TableCell>
-                  <TableCell />
-                </TableRow>
-              </TableHead>
-              <TableBody>{accountRows}</TableBody>
-            </Table>
-          </TableContainer>
+      <Grid container>
+        <Grid item lg={8}>
+          <DataTable rows={accountRows} columns={columns} />
         </Grid>
       </Grid>
       <Dialog open={!hideForm} onClose={() => setHideForm(true)}>
