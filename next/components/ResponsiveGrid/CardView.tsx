@@ -15,6 +15,8 @@ const useStyles = makeStyles({
     minWidth: 275,
     marginBottom: "32px",
   },
+  heading: { fontWeight: 600 },
+  body: { marginTop: -6, marginBottom: 15 },
 });
 
 interface SingleCardProps {
@@ -31,9 +33,9 @@ const convertToGridRenderCellParams = (
     id: index,
     field: column.field,
     value: row[column.field],
-    formattedValue: column.valueFormatter(row[column.field]),
     row,
   };
+
   // Sneaky cast to stop React complaining about using DataGrid methods in a card
   // @ts-ignore
   return params as GridRenderCellParams;
@@ -47,11 +49,11 @@ const SingleCard = (props: SingleCardProps) => {
       <CardContent>
         {props.columns.map((column, i) => (
           <>
-            <Typography color="textSecondary" gutterBottom>
+            <Typography className={classes.heading} variant="h5" gutterBottom>
               {column.headerName ?? column.field}
             </Typography>
             {!column.renderCell && (
-              <Typography variant="body2" component="p">
+              <Typography className={classes.body} variant="h5" component="p">
                 {props.row[column.field]}
               </Typography>
             )}

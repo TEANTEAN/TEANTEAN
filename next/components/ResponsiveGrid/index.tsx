@@ -8,12 +8,12 @@ import CustomDataGrid from "components/ResponsiveGrid/DataGrid";
 export interface ResponsiveDataGridProps {
   rows: GridRowData[];
   columns: GridColumns;
-  dataGridProps: DataGridProps;
+  dataGridProps?: DataGridProps;
 }
 
 const ResponsiveDataGrid = (props: ResponsiveDataGridProps) => {
   const theme = useTheme();
-  const useCards = useMediaQuery(theme.breakpoints.down("md"));
+  const useCards = useMediaQuery(theme.breakpoints.down("xs"));
 
   if (useCards) {
     return <CardView rows={props.rows} columns={props.columns} />;
