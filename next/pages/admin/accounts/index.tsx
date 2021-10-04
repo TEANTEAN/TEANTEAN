@@ -1,13 +1,28 @@
 /* eslint-disable no-underscore-dangle */
-import { Dialog, Grid } from "@material-ui/core";
-import { GridRowData } from "@mui/x-data-grid";
-
+import { Box, Dialog, Fab, useMediaQuery, useTheme } from "@material-ui/core";
+import { GridColumns, GridRowData } from "@mui/x-data-grid";
+import { makeStyles } from "@material-ui/core/styles";
+import AddIcon from "@material-ui/icons/Add";
 import { GeneralButton, IconLabelButton } from "components/Buttons";
-import CustomDataGrid from "components/ResponsiveGrid/DataGrid";
+import ResponsiveDataGrid from "components/ResponsiveGrid";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import gnFetch from "../../../util/gnAxiosClient";
+import gnFetch from "util/gnAxiosClient";
 import AccountForm from "./create";
+
+const useStyles = makeStyles({
+  createButton: {
+    marginBottom: 12,
+  },
+  fab: {
+    margin: "0px",
+    top: "auto",
+    right: "30px",
+    bottom: "30px",
+    left: "auto",
+    position: "fixed",
+  },
+});
 
 // Strapi sends role data as a named array for some reason.
 interface RoleData {
@@ -18,6 +33,10 @@ const AccountManagement = () => {
   const [hideForm, setHideForm] = useState(true);
   const [creationMode, setCreationMode] = useState(false);
   const [editUser, setEditUser] = useState(null);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const classes = useStyles();
 
   const allUserData = useQuery<User[]>(
     "get-all-users-account-data",
@@ -46,7 +65,7 @@ const AccountManagement = () => {
     setHideForm(false);
   };
 
-  const columns = [
+  const columns: GridColumns = [
     { field: "username", headerName: "Username", flex: 1 },
     { field: "accessLevel", headerName: "Access Level", flex: 1 },
     { field: "active", headerName: "Active", flex: 1 },
@@ -76,15 +95,24 @@ const AccountManagement = () => {
   return (
     <>
       <h1>Acount Overview</h1>
-      <IconLabelButton
-        type="add"
-        iconPosition="start"
-        onClick={onCreateNewClick}
-      >
-        CREATE NEW
-      </IconLabelButton>
+      {!isMobile && (
+        <Box className={classes.createButton}>
+          <IconLabelButton
+            type="add"
+            iconPosition="start"
+            onClick={onCreateNewClick}
+          >
+            CREATE NEW
+          </IconLabelButton>
+        </Box>
+      )}
+      {isMobile && (
+        <Fab className={classes.fab} color="primary" onClick={onCreateNewClick}>
+          <AddIcon />
+        </Fab>
+      )}
 
-      <CustomDataGrid rows={accountRows} columns={columns} />
+      <ResponsiveDataGrid rows={accountRows} columns={columns} />
       <Dialog open={!hideForm} onClose={() => setHideForm(true)}>
         <AccountForm
           isCreateUser={creationMode}
