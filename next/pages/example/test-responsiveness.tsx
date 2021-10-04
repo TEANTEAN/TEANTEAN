@@ -20,10 +20,10 @@
 // export default ResponsiveTest;
 
 import { NextPage } from "next";
-import ResponsiveTable from "components/ResponsiveTable";
+import ResponsiveGrid from "components/ResponsiveGrid";
 
 const ResponsiveTest: NextPage = () => {
-  return <ResponsiveTable />;
+  return <ResponsiveGrid />;
 };
 
 export default ResponsiveTest;

@@ -3,7 +3,7 @@ import { Dialog, Grid } from "@material-ui/core";
 import { GridRowData } from "@mui/x-data-grid";
 
 import { GeneralButton, IconLabelButton } from "components/Buttons";
-import DataTable from "components/DataTable";
+import CustomDataGrid from "components/ResponsiveGrid/DataGrid";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import gnFetch from "../../../util/gnAxiosClient";
@@ -83,11 +83,8 @@ const AccountManagement = () => {
       >
         CREATE NEW
       </IconLabelButton>
-      <Grid container>
-        <Grid item lg={8}>
-          <DataTable rows={accountRows} columns={columns} />
-        </Grid>
-      </Grid>
+
+      <CustomDataGrid rows={accountRows} columns={columns} />
       <Dialog open={!hideForm} onClose={() => setHideForm(true)}>
         <AccountForm
           isCreateUser={creationMode}
