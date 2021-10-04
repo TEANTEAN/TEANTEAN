@@ -1,0 +1,3 @@
+interface GetSeriesResponse {
+  collection: Series[];
+}

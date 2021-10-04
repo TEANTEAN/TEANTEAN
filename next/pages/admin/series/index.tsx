@@ -5,8 +5,8 @@ import { Dialog, Grid, Typography } from "@material-ui/core";
 import SeriesTable, { SeriesData } from "components/SeriesTable";
 import { GeneralButton } from "components/Buttons";
 import { useQuery } from "react-query";
-import gnFetch from "../../../util/gnAxiosClient";
-import CreateSeriesForm from "./create";
+import gnFetch from "util/gnAxiosClient";
+import CreateSeriesForm from "components/pages/admin/series/create";
 
 const buttonToDrive = (
   <GeneralButton href="/admin/series/drive">FILES</GeneralButton>
