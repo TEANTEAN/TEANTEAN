@@ -546,9 +546,6 @@
               "id": {
                 "type": "string"
               },
-              "researchPartner": {
-                "type": "string"
-              },
               "videoLink": {
                 "type": "string"
               },
@@ -608,12 +605,6 @@
               },
               "role": {
                 "type": "string"
-              },
-              "roundtableSeries": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "firstName": {
                 "type": "string"

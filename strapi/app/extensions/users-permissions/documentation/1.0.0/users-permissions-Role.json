@@ -561,12 +561,6 @@
                 "role": {
                   "type": "string"
                 },
-                "roundtableSeries": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "firstName": {
                   "type": "string"
                 },
