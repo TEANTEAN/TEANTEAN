@@ -12,30 +12,40 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "firstName": {
-      "type": "string"
-    },
-    "lastName": {
-      "type": "string"
-    },
-    "email": {
-      "type": "email"
-    },
     "roundtable": {
       "via": "participants",
       "model": "roundtables"
     },
-    "payments": {
-      "via": "participant",
-      "collection": "payment"
-    },
-    "certificates": {
-      "via": "participant",
-      "collection": "certificate"
-    },
     "note": {
       "type": "text",
       "maxLength": 600
+    },
+    "participantURI": {
+      "type": "string"
+    },
+    "certificate": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "receipt": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
     }
   }
 }
