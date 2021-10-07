@@ -12,20 +12,9 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "zoomLink": {
-      "type": "string"
-    },
-    "description": {
-      "type": "text"
-    },
-    "dateTime": {
-      "type": "datetime"
-    },
-    "capacity": {
-      "type": "integer"
-    },
     "series": {
-      "model": "roundtable-series"
+      "model": "roundtable-series",
+      "via": "roundtables"
     },
     "peerLeader": {
       "plugin": "users-permissions",
@@ -35,8 +24,8 @@
       "via": "roundtable",
       "collection": "participants"
     },
-    "image": {
-      "model": "file",
+    "files": {
+      "collection": "file",
       "via": "related",
       "allowedTypes": [
         "images",
@@ -46,6 +35,9 @@
       "plugin": "upload",
       "required": false,
       "pluginOptions": {}
+    },
+    "roundtableURI": {
+      "type": "string"
     }
   }
 }

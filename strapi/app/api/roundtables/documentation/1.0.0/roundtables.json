@@ -522,19 +522,6 @@
           "id": {
             "type": "string"
           },
-          "zoomLink": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "dateTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "capacity": {
-            "type": "integer"
-          },
           "series": {
             "required": [
               "id",
@@ -557,6 +544,21 @@
               },
               "organisation": {
                 "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "roundtables": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "published_at": {
                 "type": "string"
@@ -639,31 +641,19 @@
                 "id": {
                   "type": "string"
                 },
-                "firstName": {
-                  "type": "string"
-                },
-                "lastName": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
                 "roundtable": {
                   "type": "string"
                 },
-                "payments": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "certificates": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "note": {
+                  "type": "string"
+                },
+                "participantURI": {
+                  "type": "string"
+                },
+                "certificate": {
+                  "type": "string"
+                },
+                "receipt": {
                   "type": "string"
                 },
                 "published_at": {
@@ -678,76 +668,82 @@
               }
             }
           },
-          "image": {
-            "required": [
-              "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "driveFileId",
-              "provider"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "driveFileId": {
-                "type": "string"
-              },
-              "previewUrl": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
+          "files": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "name",
+                "hash",
+                "mime",
+                "size",
+                "url",
+                "driveFileId",
+                "provider"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "alternativeText": {
+                  "type": "string"
+                },
+                "caption": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "integer"
+                },
+                "height": {
+                  "type": "integer"
+                },
+                "formats": {
+                  "type": "object"
+                },
+                "hash": {
+                  "type": "string"
+                },
+                "ext": {
+                  "type": "string"
+                },
+                "mime": {
+                  "type": "string"
+                },
+                "size": {
+                  "type": "number"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "driveFileId": {
+                  "type": "string"
+                },
+                "previewUrl": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "string"
+                },
+                "provider_metadata": {
+                  "type": "object"
+                },
+                "related": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
+          },
+          "roundtableURI": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -757,19 +753,6 @@
       },
       "NewRoundtables": {
         "properties": {
-          "zoomLink": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "dateTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "capacity": {
-            "type": "integer"
-          },
           "series": {
             "type": "string"
           },
@@ -781,6 +764,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "roundtableURI": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",

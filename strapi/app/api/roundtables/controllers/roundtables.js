@@ -19,73 +19,84 @@ module.exports = {
    * @return {Array}
    */
   async find(ctx) {
-    // const entity = await strapi.query("roundtables").find({'series': });
+    const { uri } = ctx.params;
 
-    /***
-     * Get roundtable collections from Strapi
-     */
-    const entity = await strapi.services["roundtables"].find();
-    const roundtables = sanitizeEntity(entity, {
+    const entity = await strapi.services["roundtables"].findOne({
+      roundtableURI: uri,
+    });
+
+    var roundtable = sanitizeEntity(entity, {
       model: strapi.models["roundtables"],
     });
 
     /***
-     * Get All bookings from Calendly
+     * Get roundtable detail from Calendly
      */
-    const meURLresponse = await axios({
+    const roundtableURI =
+      "https://api.calendly.com/scheduled_events/" + roundtable.roundtableURI;
+    const roundtableURLresponse = await axios({
       method: "get",
-      url: "https://api.calendly.com/users/me",
+      url: roundtableURI,
       headers: {
         Authorization: `Bearer ${process.env.CALENDLY_TOKEN}`,
       },
     });
-
-    const user = meURLresponse.resource.uri;
-    const queryURL =
-      "https://api.calendly.com/scheduled_events?status=active&" +
-      meURLresponse.resource.uri +
-      "&sort=start_time:asc";
-
-    const bookingResponse = await axios({
-      method: "get",
-      url: queryURL,
-      headers: {
-        Authorization: `Bearer ${process.env.CALENDLY_TOKEN}`,
-      },
-    });
-
-    var bookings = bookingResponse.collection;
-
-    // continue to retrieve bookings if there is a next_page
-    var nextPageLink = bookingResponse.pagination.next_page;
-    while (nextPageLink !== "null") {
-      var nextResponse = await axios({
-        method: "get",
-        url: nextPageLink,
-        headers: {
-          Authorization: `Bearer ${process.env.CALENDLY_TOKEN}`,
-        },
-      });
-      bookings.concat(nextResponse.collection);
-      nextPageLink = nextResponse.pagination.next_page;
-    }
+    roundtable = roundtableURLresponse.resource;
 
     /***
-     * Merge results from Strapi and Calendly together
+     * Get All participants from Calendly
      */
-    var finalRes = [];
-    for (const roundtable of roundtables) {
-      const resource = response.data.resource;
-      const data = {
-        id: series.id,
-        title: series.title,
-        description: resource.description_plain,
-        videoLink: series.videoLink,
-        researchPartner: series.researchPartner.username,
-        schedulingUrl: resource.scheduling_url,
-      };
-      finalRes.push(data);
-    }
+    const inviteeURI =
+      "https://api.calendly.com/scheduled_events/" +
+      roundtables.roundtableURI +
+      "/invitees";
+    const inviteesURLresponse = await axios({
+      method: "get",
+      url: inviteeURI,
+      headers: {
+        Authorization: `Bearer ${process.env.CALENDLY_TOKEN}`,
+      },
+    });
+
+    const invitees = inviteesURLresponse.collection;
+
+    /***
+     * Get participants files from google drive
+     */
+
+    /***
+     * Merge MongoDB and Calendly by participants
+     */
+    var participants = [];
+    invitees.forEach(function (invitee) {
+      participants.push({
+        uri: invitee.uri,
+        name: invitee,
+        email: invitee,
+        payment: invitee,
+        certification: invitee,
+      });
+    });
+
+    /***
+     * Post invitees to Strapi
+     */
+
+    /***
+     * Get roundtable files from google drive
+     */
+
+    /***
+     * Merge results from Roundtable and Participants and MongoDB together
+     */
+    const finalRes = {
+      start: roundtable.start_time,
+      end: roundtable.end_time,
+      location: roundtable.location.location,
+      createdAt: roundtable.created_at,
+      participants: participants,
+      files: [],
+    };
 
     return finalRes;
   },
