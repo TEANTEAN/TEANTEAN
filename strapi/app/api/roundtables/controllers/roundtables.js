@@ -21,14 +21,6 @@ module.exports = {
   async find(ctx) {
     const { uri } = ctx.params;
 
-    const entity = await strapi.services["roundtables"].findOne({
-      roundtableURI: uri,
-    });
-
-    var roundtable = sanitizeEntity(entity, {
-      model: strapi.models["roundtables"],
-    });
-
     /***
      * Get roundtable detail from Calendly
      */
@@ -41,14 +33,14 @@ module.exports = {
         Authorization: `Bearer ${process.env.CALENDLY_TOKEN}`,
       },
     });
-    roundtable = roundtableURLresponse.resource;
+    const roundtableDetails = roundtableURLresponse.resource;
 
     /***
      * Get All participants from Calendly
      */
     const inviteeURI =
       "https://api.calendly.com/scheduled_events/" +
-      roundtables.roundtableURI +
+      roundtableDetails.roundtableURI +
       "/invitees";
     const inviteesURLresponse = await axios({
       method: "get",
@@ -61,20 +53,16 @@ module.exports = {
     const invitees = inviteesURLresponse.collection;
 
     /***
-     * Get participants files from google drive
-     */
-
-    /***
      * Merge MongoDB and Calendly by participants
      */
     var participants = [];
     invitees.forEach(function (invitee) {
       participants.push({
-        uri: invitee.uri,
-        name: invitee,
-        email: invitee,
-        payment: invitee,
-        certification: invitee,
+        uri: invitee.uri.split("/").at(-1),
+        name: invitee.name,
+        email: invitee.email,
+        payment: "",
+        certification: "",
       });
     });
 
@@ -85,17 +73,25 @@ module.exports = {
     /***
      * Get roundtable files from google drive
      */
+    const entity = await strapi.services["roundtables"].findOne({
+      roundtableURI: uri,
+    });
 
+    const roundtable = sanitizeEntity(entity, {
+      model: strapi.models["roundtables"],
+    });
+
+    
     /***
      * Merge results from Roundtable and Participants and MongoDB together
      */
     const finalRes = {
-      start: roundtable.start_time,
-      end: roundtable.end_time,
-      location: roundtable.location.location,
-      createdAt: roundtable.created_at,
+      start: roundtableDetails.start_time,
+      end: roundtableDetails.end_time,
+      location: roundtableDetails.location.location,
+      createdAt: roundtableDetails.created_at,
       participants: participants,
-      files: [],
+      files: roundtable.files,
     };
 
     return finalRes;
