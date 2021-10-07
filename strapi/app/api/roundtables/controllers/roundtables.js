@@ -4,7 +4,7 @@
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#core-controllers)
  * to customize this controller
  */
-const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
+const { sanitizeEntity } = require("strapi-utils");
 const axios = require("axios");
 
 /***
@@ -67,11 +67,7 @@ module.exports = {
     });
 
     /***
-     * Post invitees to Strapi
-     */
-
-    /***
-     * Get roundtable files from google drive
+     * Get roundtable files from Strapi
      */
     const entity = await strapi.services["roundtables"].findOne({
       roundtableURI: uri,
@@ -81,9 +77,29 @@ module.exports = {
       model: strapi.models["roundtables"],
     });
 
-    
+    var roundtableFiles = [];
+    roundtable.files.forEach(function (file) {
+      roundtableFiles.push(file.driveFileId);
+    });
+
     /***
-     * Merge results from Roundtable and Participants and MongoDB together
+     * Get participant files from Strapi
+     */
+    for (const participant of participants) {
+      for (const participantData of roundtable.participants) {
+        var participantEntity = await strapi.services["participants"].findOne({
+          participantURI: participantData.participantURI,
+        });
+
+        if (participant.uri === participantEntity.participantURI) {
+          participant.payment = participantEntity.receipt.driveFileId;
+          participant.certification = participantEntity.certificate.driveFileId;
+        }
+      }
+    }
+
+    /***
+     * Merge results from Roundtable and Participants together
      */
     const finalRes = {
       start: roundtableDetails.start_time,
@@ -91,7 +107,7 @@ module.exports = {
       location: roundtableDetails.location.location,
       createdAt: roundtableDetails.created_at,
       participants: participants,
-      files: roundtable.files,
+      files: roundtableFiles,
     };
 
     return finalRes;
