@@ -143,18 +143,25 @@ const AccountForm: React.FC<AccountFormProps> = ({
   const onSubmit = async (data: FormValues) => {
     setPending(true);
     try {
+      let message = "";
       if (!isCreateUser) {
-        console.log(data);
         if (data.password === "") {
           // eslint-disable-next-line no-param-reassign
           delete data.password;
           console.log(data);
         }
         await updateUser(data, userUnderEdit.id);
+        message = "User updated";
       } else {
         await postNewUser(data);
+        message = "User Created";
       }
       setSubmitSuccessful(true);
+      easyEnqueueSnackbar(message, {
+        severity: "success",
+        duration: 6000,
+        position: "TOP-RIGHT",
+      });
     } catch (e) {
       let { message } = e;
       if (e?.response?.status === 400) {
