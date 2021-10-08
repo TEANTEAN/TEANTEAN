@@ -10,9 +10,8 @@ import Form, { PasswordField, TextField } from "components/Form";
 import { useForm } from "react-hook-form";
 import LoadingButton from "components/LoadingButton";
 import Fade from "@material-ui/core/Fade";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
 import { useRouter } from "next/router";
+import easySnackbar from "components/EasySnackbar";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -46,17 +45,18 @@ interface FormData {
 const LoginForm: React.FC = () => {
   const [pending, setPending] = React.useState(false);
   const [isTakingAWhile, setIsTakingAWhile] = React.useState(false);
-  const [showErrorSnackbar, setShowErrorSnackbar] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState("");
-
+  const { easyEnqueueSnackbar } = easySnackbar();
   const methods = useForm<FormData>();
   const classes = useStyles();
   const router = useRouter();
 
   const handleError = (message: string) => {
     console.log(message);
-    setErrorMessage(message);
-    setShowErrorSnackbar(true);
+    easyEnqueueSnackbar(message, {
+      position: "BOTTOM-CENTER",
+      duration: 6000,
+      severity: "error",
+    });
     setPending(false);
     setIsTakingAWhile(false);
   };
@@ -79,7 +79,7 @@ const LoginForm: React.FC = () => {
         redirect: false,
         username: data.username,
         password: data.password,
-        callbackUrl: `${process.env.NEXTAUTH_URL}/admin`,
+        callbackUrl: `${process.env.NEXTAUTH_URL}/admin/series`,
       });
       if (res?.error) throw new Error(res.error);
       // Login was successful
@@ -89,13 +89,6 @@ const LoginForm: React.FC = () => {
     } catch (err) {
       handleError(err.toString());
     }
-  };
-
-  const handleAlertClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setShowErrorSnackbar(false);
   };
 
   return (
@@ -146,11 +139,6 @@ const LoginForm: React.FC = () => {
           </Fade>
         </Grid>
       </Form>
-      <Snackbar open={showErrorSnackbar} autoHideDuration={6000} onClose={handleAlertClose}>
-        <Alert onClose={handleAlertClose} severity="error">
-          {errorMessage}
-        </Alert>
-      </Snackbar>
     </Box>
   );
 };

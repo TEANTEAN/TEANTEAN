@@ -4,13 +4,19 @@ import Drawer from "@material-ui/core/Drawer";
 import Divider from "@material-ui/core/Divider";
 import PeopleIcon from "@material-ui/icons/People";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import Hidden from "@material-ui/core/Hidden";
 import List from "@material-ui/core/List";
 import Box from "@material-ui/core/Box";
-import { makeStyles, useTheme, Theme, createStyles } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  useTheme,
+  Theme,
+  createStyles,
+} from "@material-ui/core/styles";
 import { signOut } from "next-auth/client";
 import SideNavItem from "./SideNavItem";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 const drawerWidth = 200;
 
@@ -31,6 +37,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "column",
       height: "100%",
+      "& .MuiList-root": {
+        padding: 0,
+      },
     },
     drawerSpace: {
       flexGrow: 5,
@@ -50,8 +59,16 @@ const SideNav: React.FC<SideNavProps> = (props) => {
 
   const adminNavItemsTop = React.useMemo(
     () => [
-      <SideNavItem text="Accounts" icon={<PeopleIcon />} link="/admin/accounts" />,
-      <SideNavItem text="Series" icon={<PeopleIcon />} link="/admin/series" />,
+      <SideNavItem
+        text="Accounts"
+        icon={<PeopleIcon />}
+        link="/admin/accounts"
+      />,
+      <SideNavItem
+        text="Series"
+        icon={<AccessTimeIcon />}
+        link="/admin/series"
+      />,
     ],
     []
   );
@@ -63,7 +80,7 @@ const SideNav: React.FC<SideNavProps> = (props) => {
         text="Logout"
         icon={<ExitToAppIcon />}
         onClick={() => {
-          signOut({redirect: false});
+          signOut({ redirect: false });
           router.push("/login");
         }}
       />,

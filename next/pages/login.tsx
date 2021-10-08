@@ -12,7 +12,7 @@ const LoginPage: NextPage = () => {
   const router = useRouter();
   const [session, status] = useSession();
   if (session && status) {
-    router.replace("/admin");
+    router.replace("/admin/series");
   }
   return (
     <Box>

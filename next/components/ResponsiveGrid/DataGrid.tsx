@@ -2,7 +2,7 @@ import { Box } from "@material-ui/core";
 import { DataGrid, DataGridProps } from "@mui/x-data-grid";
 import React from "react";
 
-const DataTable = (props: DataGridProps) => {
+const CustomDataGrid = (props: DataGridProps) => {
   const [pageSize, setPageSize] = React.useState<number>(props.pageSize || 10);
 
   return (
@@ -19,4 +19,4 @@ const DataTable = (props: DataGridProps) => {
     </Box>
   );
 };
-export default DataTable;
+export default CustomDataGrid;

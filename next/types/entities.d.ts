@@ -49,6 +49,7 @@ interface User {
 interface Organisation {
   name: string;
   id: string;
+  image: File;
 }
 
 interface RoundtableSeries {
@@ -57,4 +58,25 @@ interface RoundtableSeries {
   researchPartner: User;
   videoLink: string;
   organisation: Organisation;
+  image: File;
+  files: File[];
+}
+
+interface File {
+  _id: string;
+  name: string;
+  hash: string;
+  ext: string;
+  mime: string;
+  size: string;
+  width: number;
+  height: number;
+  url: number;
+  driveFileId: string;
+  driveFileUrl: string;
+  driveFileFolderUrl: string;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  id: string;
 }
