@@ -14,18 +14,28 @@ const axios = require("axios");
  */
 module.exports = {
   /**
-   * Retrieve records.
+   * Retrieve a roundtable preview, including participants preview.
    *
-   * @return {Array}
+   * @return {
+   * start: string,
+   * end: string,
+   * location: string,
+   * createdAt: string,
+   * participants: any[],
+   * files: any[]
+   * }
    */
   async find(ctx) {
-    const { uri } = ctx.params;
+    /***
+     * No Param
+     */
+
+    const { uri } = ctx.query;
 
     /***
      * Get roundtable detail from Calendly
      */
-    const roundtableURI =
-      "https://api.calendly.com/scheduled_events/" + roundtable.roundtableURI;
+    const roundtableURI = "https://api.calendly.com/scheduled_events/" + uri;
     const roundtableURLresponse = await axios({
       method: "get",
       url: roundtableURI,
@@ -33,16 +43,14 @@ module.exports = {
         Authorization: `Bearer ${process.env.CALENDLY_TOKEN}`,
       },
     });
-    const roundtableDetails = roundtableURLresponse.resource;
+    const roundtableDetails = roundtableURLresponse.data.resource;
 
     /***
      * Get All participants from Calendly
      */
-    const inviteeURI =
-      "https://api.calendly.com/scheduled_events/" +
-      roundtableDetails.roundtableURI +
-      "/invitees";
-    const inviteesURLresponse = await axios({
+    let inviteeURI =
+      "https://api.calendly.com/scheduled_events/" + uri + "/invitees";
+    let inviteesURLresponse = await axios({
       method: "get",
       url: inviteeURI,
       headers: {
@@ -50,36 +58,62 @@ module.exports = {
       },
     });
 
-    const invitees = inviteesURLresponse.collection;
+    let invitees = inviteesURLresponse.data.collection;
 
     /***
      * Merge MongoDB and Calendly by participants
      */
-    var participants = [];
-    invitees.forEach(function (invitee) {
-      participants.push({
-        uri: invitee.uri.split("/").at(-1),
+    let participants = invitees.map(function (invitee) {
+      return {
+        uri: invitee.uri.split("/").pop(),
         name: invitee.name,
         email: invitee.email,
         payment: "",
         certification: "",
-      });
+      };
     });
+
+    /***
+     * Continue get participants if there are more
+     * results from Calendly
+     */
+    while (inviteesURLresponse.data.pagination.next_page !== null) {
+      inviteeURI = inviteesURLresponse.data.pagination.next_page;
+      inviteesURLresponse = await axios({
+        method: "get",
+        url: inviteeURI,
+        headers: {
+          Authorization: `Bearer ${process.env.CALENDLY_TOKEN}`,
+        },
+      });
+
+      invitees = inviteesURLresponse.data.collection;
+
+      participants += invitees.map(function (invitee) {
+        return {
+          uri: invitee.uri.split("/").pop(),
+          name: invitee.name,
+          email: invitee.email,
+          payment: "",
+          certification: "",
+        };
+      });
+    }
 
     /***
      * Get roundtable files from Strapi
      */
-    const entity = await strapi.services["roundtables"].findOne({
+    const params = {
       roundtableURI: uri,
-    });
+    };
+    const entity = await strapi.query("roundtables").findOne(params);
 
     const roundtable = sanitizeEntity(entity, {
       model: strapi.models["roundtables"],
     });
 
-    var roundtableFiles = [];
-    roundtable.files.forEach(function (file) {
-      roundtableFiles.push(file.driveFileId);
+    let roundtableFiles = roundtable.files.map(function (file) {
+      return file.driveFileUrl;
     });
 
     /***
@@ -87,13 +121,9 @@ module.exports = {
      */
     for (const participant of participants) {
       for (const participantData of roundtable.participants) {
-        var participantEntity = await strapi.services["participants"].findOne({
-          participantURI: participantData.participantURI,
-        });
-
-        if (participant.uri === participantEntity.participantURI) {
-          participant.payment = participantEntity.receipt.driveFileId;
-          participant.certification = participantEntity.certificate.driveFileId;
+        if (participant.uri === participantData.participantURI) {
+          participant.payment = participantData.receipt.driveFileUrl;
+          participant.certification = participantData.certificate.driveFileUrl;
         }
       }
     }
@@ -104,7 +134,7 @@ module.exports = {
     const finalRes = {
       start: roundtableDetails.start_time,
       end: roundtableDetails.end_time,
-      location: roundtableDetails.location.location,
+      location: roundtableDetails.location.join_url,
       createdAt: roundtableDetails.created_at,
       participants: participants,
       files: roundtableFiles,
