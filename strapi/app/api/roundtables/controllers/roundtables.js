@@ -7,14 +7,11 @@
 const { sanitizeEntity } = require("strapi-utils");
 const axios = require("axios");
 
-/***
- * Currently no series identifer is given. So have to return all rountables regardless which series they belong to.
- * If the API calls can container series identifier, this api can be modified to only
- * return the corresponding roundtables, which I think is more reasonable.
- */
 module.exports = {
   /**
-   * Retrieve a roundtable preview, including participants preview.
+   * if a roundtable uri is given,
+   * then retrieve a roundtable preview, including participants preview.
+   * else return a list of raw roundtables defined in Strapi.
    *
    * @return {
    * start: string,
@@ -26,11 +23,20 @@ module.exports = {
    * }
    */
   async find(ctx) {
+    const { uri } = ctx.query;
+
     /***
      * No Param
      */
+    if (uri === undefined) {
+      const entity = await strapi.query("roundtables").find();
 
-    const { uri } = ctx.query;
+      const roundtables = sanitizeEntity(entity, {
+        model: strapi.models["roundtables"],
+      });
+
+      return roundtables;
+    }
 
     /***
      * Get roundtable detail from Calendly
