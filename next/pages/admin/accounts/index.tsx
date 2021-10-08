@@ -2,11 +2,10 @@
 import { Dialog, Grid } from "@material-ui/core";
 import {
   GridColumns,
+  GridRenderCellParams,
   GridRowData,
-  // GridActionsCellItem,
-  GridRowParams,
 } from "@mui/x-data-grid";
-// import EditIcon from "@material-ui/icons/Edit";
+
 import { GeneralButton, IconLabelButton } from "components/Buttons";
 import DataTable from "components/DataTable";
 import React, { useState } from "react";
@@ -51,7 +50,7 @@ const AccountManagement = () => {
     setHideForm(false);
   };
 
-  const columns: GridColumns[] = [
+  const columns: GridColumns = [
     { field: "username", headerName: "Username", flex: 1 },
     { field: "accessLevel", headerName: "Access Level", flex: 1 },
     { field: "active", headerName: "Active", flex: 1 },
@@ -59,7 +58,7 @@ const AccountManagement = () => {
       field: "edit",
       headerName: "Edit",
       flex: 1,
-      renderCell: (params: GridRowParams) => (
+      renderCell: (params: GridRenderCellParams) => (
         <GeneralButton onClick={() => onEditClick(params.row.actions)}>
           Edit
         </GeneralButton>
@@ -67,44 +66,6 @@ const AccountManagement = () => {
     },
   ];
 
-  // {
-  //   field: "actions",
-  //   headerName: "Actions",
-  //   type: "actions",
-  //   flex: 1,
-  //   getActions: (params: GridRowParams) => [
-  //     <GeneralButton onClick={() => onEditClick(params)}>
-  //       Edit
-  //     </GeneralButton>,
-  //     <GeneralButton onClick={() => onEditClick(params)}>
-  //       Deactivate
-  //     </GeneralButton>,
-  //     // <GridActionsCellItem
-  //     //   icon={<EditIcon />}
-  //     //   onClick={onEditClick(params)}
-  //     //   label="Edit"
-  //     //   showInMenu
-  //     // />,
-  //     // <GridActionsCellItem
-  //     //   icon={<EditIcon />}
-  //     //   onClick={onEditClick(params)}
-  //     //   label="Edit"
-  //     //   showInMenu
-  //     // />,
-  //   ],
-  // },
-  //   ],
-  //   [onEditClick]
-  // );
-
-  //   <>
-  //   <GeneralButton onClick={() => onEditClick(params)}>
-  //     Edit
-  //   </GeneralButton>
-  //   <GeneralButton onClick={() => onEditClick(params)}>
-  //     Deactivate
-  //   </GeneralButton>
-  // </>;
   const accountRows: GridRowData[] = [];
   if (allUserData.isSuccess) {
     allUserData.data.forEach((user) =>
@@ -129,7 +90,7 @@ const AccountManagement = () => {
         CREATE NEW
       </IconLabelButton>
       <Grid container>
-        <Grid item lg={8}>
+        <Grid item lg={12}>
           <DataTable rows={accountRows} columns={columns} />
         </Grid>
       </Grid>

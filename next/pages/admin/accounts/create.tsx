@@ -6,9 +6,6 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import LoadingButton from "components/LoadingButton";
 
 import Form, {
@@ -31,7 +28,7 @@ interface FormValues {
   role: Role;
   organisation: Organisation;
   date: Date;
-  // input: File;
+  blocked: Boolean;
 }
 
 interface Status {
@@ -41,7 +38,7 @@ interface Status {
 
 const STATUSES: Status[] = [
   { name: "Active", value: false },
-  { name: "Blocked", value: true },
+  { name: "Inactive", value: true },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -80,11 +77,13 @@ const updateUser = async (updatedUserData: FormValues, userId?: string) => {
     phone: updatedUserData.phone,
     role: updatedUserData.role,
     organisation: updatedUserData.organisation,
+    blocked: updatedUserData.blocked,
   };
 
   try {
     // Send put request with updated values of the user
-    await gnFetch.put(`/users/${userId}`, data);
+    const req = await gnFetch.put(`/users/${userId}`, data);
+    console.log("Res:", req.data);
   } catch (e) {
     console.log(e);
   }
@@ -315,39 +314,6 @@ const AccountForm: React.FC<AccountFormProps> = ({
             }
           />
 
-          <Typography gutterBottom variant="subtitle2">
-            Profile Picture Upload
-          </Typography>
-
-          <div className={classes.root}>
-            <input
-              accept="image/*"
-              // className={classes.input}
-              id="contained-button-file"
-              multiple
-              type="file"
-            />
-            <label htmlFor="contained-button-file">
-              <Button variant="contained" color="primary" component="span">
-                Upload
-              </Button>
-            </label>
-            <input
-              accept="image/*"
-              // className={classes.input}
-              id="icon-button-file"
-              type="file"
-            />
-            <label htmlFor="icon-button-file">
-              <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="span"
-              >
-                <PhotoCamera />
-              </IconButton>
-            </label>
-          </div>
           <LoadingButton
             isloading={pending}
             type="submit"
