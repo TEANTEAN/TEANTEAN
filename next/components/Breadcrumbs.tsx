@@ -4,12 +4,7 @@ import MuiBreadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { Button, Typography } from "@material-ui/core";
-
-function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-  event.preventDefault();
-  console.info("You clicked a breadcrumb.");
-}
+import { Typography } from "@material-ui/core";
 
 interface DynamicRouteLabels {
   [dynamicRoute: string]: string;
@@ -28,10 +23,7 @@ const Breadcrumbs = () => {
 
   const router = useRouter();
 
-  console.log("router aspath: ", router.asPath);
-
   React.useEffect(() => {
-    console.log("router query params inside useEffect: ", router.query);
     if (router) {
       const getBreadcrumbs = () => {
         const splitPath = router.asPath.split("/");
@@ -71,7 +63,7 @@ const Breadcrumbs = () => {
   }, [router.asPath]);
 
   return (
-    <div role="presentation" onClick={handleClick}>
+    <div role="presentation">
       <MuiBreadcrumbs aria-label="breadcrumb">
         {breadcrumbs.map((crumb, index) => {
           if (index === breadcrumbs.length - 1) {
