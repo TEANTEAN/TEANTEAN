@@ -51,7 +51,7 @@ const SideNavItem: React.FC<SideNavItemProps> = (props) => {
   return (
     <>
       {!!props.link && (
-        <Link href={props.link} passHref>
+        <Link key={`${props.link}_${props.text}`} href={props.link} passHref>
           <ListItem
             key={props.link}
             button
@@ -66,7 +66,11 @@ const SideNavItem: React.FC<SideNavItemProps> = (props) => {
         </Link>
       )}
       {!!props.onClick && (
-        <ListItem button key={props.text} onClick={props.onClick}>
+        <ListItem
+          button
+          key={`${props.text}_${props.onClick.toString}`}
+          onClick={props.onClick}
+        >
           <ListItemIcon className={classes.listItemIcon}>
             {props.icon}
           </ListItemIcon>
