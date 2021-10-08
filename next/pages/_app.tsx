@@ -2,7 +2,7 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
-import { AppProps, AppContext } from "next/app";
+import { AppProps } from "next/app";
 import Head from "next/head";
 import theme from "styles/theme";
 import DateFnsUtils from "@date-io/date-fns";
@@ -16,6 +16,7 @@ import AdminNavigation from "components/AdminNavigation";
 import withAuth from "util/hooks/withAuth";
 import PublicNavigation from "components/PublicNavigation";
 import { SnackbarProvider } from "notistack";
+import Breadcrumbs from "components/Breadcrumbs";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const AdminWrapper = ({ Component, pageProps }) => {
   if (session && haveAuthenticated()) {
     return (
       <AdminNavigation>
+        <Breadcrumbs />
         <Component {...pageProps} />
       </AdminNavigation>
     );
