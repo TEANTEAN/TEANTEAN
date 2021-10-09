@@ -18,7 +18,13 @@ module.exports = {
    * end: string,
    * location: string,
    * createdAt: string,
-   * participants: any[],
+   * participants: any[{
+   *      uri: string,
+   *      name: string,
+   *      email: string,
+   *      payment: string,
+   *      certification: string
+   *    }],
    * files: any[]
    * }
    */

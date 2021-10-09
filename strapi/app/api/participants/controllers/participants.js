@@ -17,7 +17,11 @@ module.exports = {
    * booking: string,
    * name: string,
    * email: string,
-   * responses: any[],
+   * responses: any[{
+   *    answer: string,
+   *    positin: int,
+   *    question: string
+   * }],
    * certificate: string,
    * receipt: string
    * }
