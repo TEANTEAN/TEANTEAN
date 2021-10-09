@@ -6,6 +6,8 @@
  */
 const { sanitizeEntity } = require("strapi-utils");
 const axios = require("axios");
+const getFormattedDate = require("../../../util/formatDate");
+const { drive } = require("../../../util/GoogleDrive");
 
 module.exports = {
   /**
@@ -19,6 +21,7 @@ module.exports = {
    * location: string,
    * createdAt: string,
    * participants: any[{
+   *      id: string,
    *      uri: string,
    *      name: string,
    *      email: string,
@@ -28,14 +31,14 @@ module.exports = {
    * files: any[]
    * }
    */
-  async find(ctx) {
+  async findOne(ctx) {
     try {
-      const { uri } = ctx.query;
+      const { id } = ctx.params;
 
       /***
        * No Param
        */
-      if (uri === undefined) {
+      if (id === undefined) {
         const entity = await strapi.query("roundtables").find();
 
         const roundtables = sanitizeEntity(entity, {
@@ -45,10 +48,23 @@ module.exports = {
         return roundtables;
       }
 
+      const entity = await strapi.query("roundtables").findOne({ id });
+
+      const roundtable = sanitizeEntity(entity, {
+        model: strapi.models["roundtables"],
+      });
+
+      if (roundtable === null) {
+        return {};
+      }
+
+      const folderID = roundtable.meetingFolderId;
+      const uri = roundtable.meetingFolderName.split(" ").pop();
+
       /***
        * Get roundtable detail from Calendly
        */
-      const roundtableURI = "https://api.calendly.com/scheduled_events/" + uri;
+      const roundtableURI = `https://api.calendly.com/scheduled_events/${uri}`;
       const roundtableURLresponse = await axios({
         method: "get",
         url: roundtableURI,
@@ -61,8 +77,7 @@ module.exports = {
       /***
        * Get All participants from Calendly
        */
-      let inviteeURI =
-        "https://api.calendly.com/scheduled_events/" + uri + "/invitees";
+      let inviteeURI = `https://api.calendly.com/scheduled_events/${uri}/invitees`;
       let inviteesURLresponse = await axios({
         method: "get",
         url: inviteeURI,
@@ -74,10 +89,11 @@ module.exports = {
       let invitees = inviteesURLresponse.data.collection;
 
       /***
-       * Merge MongoDB and Calendly by participants
+       * Start merging Strapi and Calendly by participants
        */
       let participants = invitees.map(function (invitee) {
         return {
+          id: "",
           uri: invitee.uri.split("/").pop(),
           name: invitee.name,
           email: invitee.email,
@@ -104,6 +120,7 @@ module.exports = {
 
         participants += invitees.map(function (invitee) {
           return {
+            id: "",
             uri: invitee.uri.split("/").pop(),
             name: invitee.name,
             email: invitee.email,
@@ -116,31 +133,114 @@ module.exports = {
       /***
        * Get roundtable files from Strapi
        */
-      const params = {
-        roundtableURI: uri,
-      };
-      const entity = await strapi.query("roundtables").findOne(params);
-
-      const roundtable = sanitizeEntity(entity, {
-        model: strapi.models["roundtables"],
-      });
-
       let roundtableFiles = roundtable.files.map(function (file) {
         return file.driveFileUrl;
       });
 
       /***
-       * Get participant files from Strapi
+       * Get set of strapi participant uri
+       */
+      const strapiMap = new Map();
+      for (const participant of roundtable.participants) {
+        strapiMap.set(participant.participantURI, participant);
+      }
+
+      /***
+       * merge caldenly participant with strapi data
+       *
+       * if this participant is stored in Strapi,
+       * retrieve its files.
+       *
+       * if this participant is not stored in Strapi,
+       * create folder and store it into Strapi.
        */
       for (const participant of participants) {
-        for (const participantData of roundtable.participants) {
-          if (participant.uri === participantData.participantURI) {
-            participant.payment = participantData.receipt.driveFileUrl;
-            participant.certification =
-              participantData.certificate.driveFileUrl;
+        const pURI = participant.uri;
+        if (!strapiMap.has(pURI)) {
+          try {
+            // create new folder for participant
+            const newParticipantFolder = (
+              await drive.files.create({
+                supportsAllDrives: true,
+                supportsTeamDrives: true,
+                fields: "id, name",
+                requestBody: {
+                  mimeType: "application/vnd.google-apps.folder",
+                  name: `${participant.name} - ${uri}`,
+                  parents: [`${folderID}`],
+                },
+              })
+            ).data;
+            // create new entry in strapi
+            const res = await strapi.services["participants"].create({
+              participantURI: pURI,
+              participantFolderId: newParticipantFolder.id,
+              participantFolderName: newParticipantFolder.name,
+              roundtable: roundtable.id,
+            });
+            strapiMap.set(pURI, {
+              id: res.id,
+              receipt: {
+                driveFileUrl: "",
+              },
+              certificate: {
+                driveFileUrl: "",
+              },
+            });
+          } catch (error) {
+            throw error;
           }
         }
       }
+
+      const filteredParticipants = participants.map(function (participant) {
+        const pURI = participant.uri;
+        if (strapiMap.has(pURI)) {
+          (participant.id = strapiMap.get(pURI).id),
+            (participant.payment = strapiMap.get(pURI).receipt.driveFileUrl);
+          participant.certification =
+            strapiMap.get(pURI).certificate.driveFileUrl;
+        }
+        return participant;
+      });
+      // const filteredParticipants = participants.map(async function (
+      //   participant
+      // ) {
+      //   const pURI = participant.uri;
+      //   if (strapiMap.has(pURI)) {
+      //     participant.payment = strapiMap.get(pURI).receipt.driveFileUrl;
+      //     participant.certification =
+      //       strapiMap.get(pURI).certificate.driveFileUrl;
+      //   } else {
+      //     try {
+      //       // create new folder for participant
+      //       const newParticipantFolder = (
+      //         await drive.files.create({
+      //           supportsAllDrives: true,
+      //           supportsTeamDrives: true,
+      //           fields: "id, name",
+      //           requestBody: {
+      //             mimeType: "application/vnd.google-apps.folder",
+      //             name: `${participant.name} - ${uri}`,
+      //             parents: [`${folderID}`],
+      //           },
+      //         })
+      //       ).data;
+      //       // create new entry in strapi
+      //       const res = await strapi.services["participants"].create({
+      //         participantURI: pURI,
+      //         participantFolderId: newParticipantFolder.id,
+      //         participantFolderName: newParticipantFolder.name,
+      //         roundtable: roundtable.id,
+      //       });
+      //       return participant;
+      //     } catch (error) {
+      //       throw error;
+      //     }
+      //   }
+
+      //   return participant;
+      // });
 
       /***
        * Merge results from Roundtable and Participants together
@@ -150,7 +250,7 @@ module.exports = {
         end: roundtableDetails.end_time,
         location: roundtableDetails.location.join_url,
         createdAt: roundtableDetails.created_at,
-        participants: participants,
+        participants: filteredParticipants,
         files: roundtableFiles,
       };
 
