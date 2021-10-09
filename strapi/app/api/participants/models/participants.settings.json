@@ -46,6 +46,12 @@
       "plugin": "upload",
       "required": false,
       "pluginOptions": {}
+    },
+    "participantFolderId": {
+      "type": "string"
+    },
+    "participantFolderName": {
+      "type": "string"
     }
   }
 }

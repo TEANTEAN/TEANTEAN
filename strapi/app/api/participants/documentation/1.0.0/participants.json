@@ -548,6 +548,12 @@
                   "type": "string"
                 }
               },
+              "meetingFolderName": {
+                "type": "string"
+              },
+              "meetingFolderId": {
+                "type": "string"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -708,6 +714,12 @@
               }
             }
           },
+          "participantFolderId": {
+            "type": "string"
+          },
+          "participantFolderName": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -724,6 +736,12 @@
             "maxLength": 600
           },
           "participantURI": {
+            "type": "string"
+          },
+          "participantFolderId": {
+            "type": "string"
+          },
+          "participantFolderName": {
             "type": "string"
           },
           "published_at": {
