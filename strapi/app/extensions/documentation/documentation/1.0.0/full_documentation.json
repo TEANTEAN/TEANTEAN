@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "10/08/2021 3:31:28 PM"
+    "x-generation-date": "10/09/2021 6:56:41 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -4619,7 +4619,10 @@
                   "type": "string"
                 }
               },
-              "roundtableURI": {
+              "meetingFolderName": {
+                "type": "string"
+              },
+              "meetingFolderId": {
                 "type": "string"
               },
               "published_at": {
@@ -4782,6 +4785,12 @@
               }
             }
           },
+          "participantFolderId": {
+            "type": "string"
+          },
+          "participantFolderName": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -4798,6 +4807,12 @@
             "maxLength": 600
           },
           "participantURI": {
+            "type": "string"
+          },
+          "participantFolderId": {
+            "type": "string"
+          },
+          "participantFolderName": {
             "type": "string"
           },
           "published_at": {
@@ -5027,7 +5042,10 @@
                     "type": "string"
                   }
                 },
-                "roundtableURI": {
+                "meetingFolderName": {
+                  "type": "string"
+                },
+                "meetingFolderId": {
                   "type": "string"
                 },
                 "published_at": {
@@ -5041,6 +5059,24 @@
                 }
               }
             }
+          },
+          "seriesFolderName": {
+            "type": "string"
+          },
+          "seriesFolderId": {
+            "type": "string"
+          },
+          "researchPartnerFolderName": {
+            "type": "string"
+          },
+          "researchPartnerFolderId": {
+            "type": "string"
+          },
+          "roundtablesFolderId": {
+            "type": "string"
+          },
+          "roundtablesFolderName": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -5072,6 +5108,24 @@
             "items": {
               "type": "string"
             }
+          },
+          "seriesFolderName": {
+            "type": "string"
+          },
+          "seriesFolderId": {
+            "type": "string"
+          },
+          "researchPartnerFolderName": {
+            "type": "string"
+          },
+          "researchPartnerFolderId": {
+            "type": "string"
+          },
+          "roundtablesFolderId": {
+            "type": "string"
+          },
+          "roundtablesFolderName": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -5130,6 +5184,24 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "seriesFolderName": {
+                "type": "string"
+              },
+              "seriesFolderId": {
+                "type": "string"
+              },
+              "researchPartnerFolderName": {
+                "type": "string"
+              },
+              "researchPartnerFolderId": {
+                "type": "string"
+              },
+              "roundtablesFolderId": {
+                "type": "string"
+              },
+              "roundtablesFolderName": {
+                "type": "string"
               },
               "published_at": {
                 "type": "string"
@@ -5227,6 +5299,12 @@
                 "receipt": {
                   "type": "string"
                 },
+                "participantFolderId": {
+                  "type": "string"
+                },
+                "participantFolderName": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },
@@ -5313,7 +5391,10 @@
               }
             }
           },
-          "roundtableURI": {
+          "meetingFolderName": {
+            "type": "string"
+          },
+          "meetingFolderId": {
             "type": "string"
           },
           "published_at": {
@@ -5336,7 +5417,10 @@
               "type": "string"
             }
           },
-          "roundtableURI": {
+          "meetingFolderName": {
+            "type": "string"
+          },
+          "meetingFolderId": {
             "type": "string"
           },
           "published_at": {
@@ -5575,6 +5659,79 @@
               },
               "updated_by": {
                 "type": "string"
+              }
+            }
+          },
+          "roundtableSeries": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "videoLink",
+                "seriesURI",
+                "title"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "researchPartner": {
+                  "type": "string"
+                },
+                "videoLink": {
+                  "type": "string"
+                },
+                "seriesURI": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "organisation": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "files": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "roundtables": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "seriesFolderName": {
+                  "type": "string"
+                },
+                "seriesFolderId": {
+                  "type": "string"
+                },
+                "researchPartnerFolderName": {
+                  "type": "string"
+                },
+                "researchPartnerFolderId": {
+                  "type": "string"
+                },
+                "roundtablesFolderId": {
+                  "type": "string"
+                },
+                "roundtablesFolderName": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           },

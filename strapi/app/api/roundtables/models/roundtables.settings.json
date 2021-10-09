@@ -13,8 +13,8 @@
   "pluginOptions": {},
   "attributes": {
     "series": {
-      "model": "roundtable-series",
-      "via": "roundtables"
+      "via": "roundtables",
+      "model": "roundtable-series"
     },
     "peerLeader": {
       "plugin": "users-permissions",
@@ -36,7 +36,10 @@
       "required": false,
       "pluginOptions": {}
     },
-    "roundtableURI": {
+    "meetingFolderName": {
+      "type": "string"
+    },
+    "meetingFolderId": {
       "type": "string"
     }
   }
