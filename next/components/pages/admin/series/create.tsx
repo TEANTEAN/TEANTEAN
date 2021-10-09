@@ -30,6 +30,7 @@ interface SeriesFormProps {
   onSubmitSettled: () => void;
   handleClose: () => void;
   organisations: Organisation[];
+  newSeries: CalendlySeries[];
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -54,12 +55,6 @@ const useStyles = makeStyles((theme) => ({
     "& a": { textDecoration: "none", color: "inherit" },
   },
 }));
-const fetchCalendlyData = async () => {
-  const res = await gnFetch.get<GetSeriesResponse>(
-    `calendly/event_types?user=${process.env.CALENDLY_USER_ID}&count=100`
-  );
-  return res.data;
-};
 
 // Need to pass in the research partners and Organisations from index
 const postNewSeries = async (newSeriesData) => {
@@ -126,6 +121,7 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
   onSubmitSettled,
   handleClose,
   organisations,
+  newSeries,
 }) => {
   const classes = useStyles();
   const [pending, setPending] = React.useState(false);
@@ -133,11 +129,6 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
   const [selectedEvent, setSelectedEvent] = React.useState(null);
   const [submitSuccessful, setSubmitSuccessful] = React.useState(false);
   const { easyEnqueueSnackbar } = easySnackbar();
-
-  const calendlyEvents = useQuery<GetSeriesResponse>(
-    "get-calendly-events",
-    fetchCalendlyData
-  );
 
   const allResearcherData = useQuery(
     "get-all-users",
@@ -215,10 +206,7 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
           control={methods.control}
           name="calendlyMeeting"
           label="Calendly Meeting"
-          options={
-            calendlyEvents.isSuccess ? calendlyEvents.data.collection : []
-          }
-          loading={calendlyEvents.isLoading}
+          options={newSeries}
           getOptionLabel={(cEvent) => cEvent.name}
           rules={{
             required: {

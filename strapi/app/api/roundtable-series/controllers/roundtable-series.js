@@ -12,7 +12,7 @@ const getFormattedDate = require("../../../util/formatDate");
 module.exports = {
   async create(ctx) {
     try {
-      const newSeries = {
+      let newSeries = {
         ...ctx.request.body,
       };
 
@@ -25,57 +25,73 @@ module.exports = {
        *  - created_at
        *  - scheduling_url
        */
-      const calendlyEventTypeData = await calendlyAxios(newSeries.seriesURI);
+      const calendlyEventTypeData = (await calendlyAxios(newSeries.seriesURI))
+        .data.resource;
       const seriesUri = calendlyEventTypeData.uri.split("/").pop();
 
+      const newSeriesFolderName = `${calendlyEventTypeData.name} - ${seriesUri}`;
       // Create new folder for series
-      const newSeriesFolder = await drive.files.create({
-        supportsAllDrives: true,
-        supportsTeamDrives: true,
-        fields: "id",
-        requestBody: {
-          mimeType: "application/vnd.google-apps.folder",
-          name: `${calendlyEventTypeData.name} - ${seriesUri}`,
-          parents: [`${process.env.ROOT_SERIES_FOLDER_ID}`],
-        },
-      });
+      const newSeriesFolder = (
+        await drive.files.create({
+          supportsAllDrives: true,
+          supportsTeamDrives: true,
+          fields: "id",
+          requestBody: {
+            mimeType: "application/vnd.google-apps.folder",
+            name: newSeriesFolderName,
+            parents: [`${process.env.ROOT_SERIES_FOLDER_ID}`],
+          },
+        })
+      ).data;
 
-      const newResearchPartnerFolder = await drive.files.create({
-        supportsAllDrives: true,
-        supportsTeamDrives: true,
-        fields: "id",
-        requestBody: {
-          mimeType: "application/vnd.google-apps.folder",
-          name: `Research Partner SHARED - ${seriesUri}`,
-          parents: [newSeriesFolder.id],
-        },
-      });
+      const newResearchPartnerFolderName = `Research Partner SHARED - ${seriesUri}`;
+      const newResearchPartnerFolder = (
+        await drive.files.create({
+          supportsAllDrives: true,
+          supportsTeamDrives: true,
+          fields: "id",
+          requestBody: {
+            mimeType: "application/vnd.google-apps.folder",
+            name: newResearchPartnerFolderName,
+            parents: [newSeriesFolder.id],
+          },
+        })
+      ).data;
 
-      const newRoundtablesFolder = await drive.files.create({
-        supportsAllDrives: true,
-        supportsTeamDrives: true,
-        fields: "id",
-        requestBody: {
-          mimeType: "application/vnd.google-apps.folder",
-          name: `Roundtables - ${seriesUri}`,
-          parents: [newSeriesFolder.id],
-        },
-      });
+      const newRoundtablesFolderName = `Roundtables - ${seriesUri}`;
+      const newRoundtablesFolder = (
+        await drive.files.create({
+          supportsAllDrives: true,
+          supportsTeamDrives: true,
+          fields: "id",
+          requestBody: {
+            mimeType: "application/vnd.google-apps.folder",
+            name: newRoundtablesFolderName,
+            parents: [newSeriesFolder.id],
+          },
+        })
+      ).data;
 
       newSeries = {
         ...newSeries,
-        seriesFolderName: newSeriesFolder.name,
+        seriesFolderName: newSeriesFolderName,
         seriesFolderId: newSeriesFolder.id,
-        researchPartnerFolderName: newResearchPartnerFolder.name,
+        researchPartnerFolderName: newResearchPartnerFolderName,
         researchPartnerFolderId: newResearchPartnerFolder.id,
-        roundtablesFolderName: newRoundtablesFolder.name,
+        roundtablesFolderName: newRoundtablesFolderName,
         roundtablesFolderId: newRoundtablesFolder.id,
       };
 
-      entity = await strapi.services.restaurant.create(newSeries);
-      return sanitizeEntity(entity, { model: strapi.models.restaurant });
+      const entity = await strapi.services["roundtable-series"].create(
+        newSeries
+      );
+      return sanitizeEntity(entity, {
+        model: strapi.models["roundtable-series"],
+      });
       // folder id
-    } catch (e) {}
+    } catch (e) {
+      throw e;
+    }
   },
 
   /**

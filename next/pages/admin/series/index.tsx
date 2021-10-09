@@ -53,6 +53,12 @@ const SeriesListPage = () => {
     "get-all-organisations",
     async () => (await gnFetch.get("/organisations")).data
   );
+
+  const allNewSeries = useQuery<CalendlySeries[]>(
+    "get-all-new-series",
+    async () => (await gnFetch.get("/calendly/event_types")).data
+  );
+
   const onCreateNewClick = () => {
     setHideForm(false);
   };
@@ -78,6 +84,7 @@ const SeriesListPage = () => {
       </Grid>
       <Dialog open={!hideForm} onClose={() => setHideForm(true)}>
         <CreateSeriesForm
+          newSeries={allNewSeries.isSuccess ? allNewSeries.data : []}
           organisations={allOrgs.isSuccess ? allOrgs.data : []}
           handleClose={() => setHideForm(true)}
           onSubmitSettled={() =>

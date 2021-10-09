@@ -81,7 +81,7 @@ interface File {
   id: string;
 }
 
-interface Series {
+interface CalendlySeries {
   uri: string;
   name: string;
   active: boolean;
