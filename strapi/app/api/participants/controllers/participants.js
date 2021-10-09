@@ -27,22 +27,22 @@ module.exports = {
    * }
    */
   async find(ctx) {
-    const { participantURI, roundtableURI } = ctx.query;
-
-    /***
-     * No Param
-     */
-    if (participantURI === undefined || roundtableURI === undefined) {
-      const entity = await strapi.query("participants").find();
-
-      const participants = sanitizeEntity(entity, {
-        model: strapi.models["participants"],
-      });
-
-      return participants;
-    }
-
     try {
+      const { participantURI, roundtableURI } = ctx.query;
+
+      /***
+       * No Param
+       */
+      if (participantURI === undefined || roundtableURI === undefined) {
+        const entity = await strapi.query("participants").find();
+
+        const participants = sanitizeEntity(entity, {
+          model: strapi.models["participants"],
+        });
+
+        return participants;
+      }
+
       /***
        * Get participants detail from Calendly
        */

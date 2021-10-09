@@ -29,22 +29,22 @@ module.exports = {
    * }
    */
   async find(ctx) {
-    const { uri } = ctx.query;
-
-    /***
-     * No Param
-     */
-    if (uri === undefined) {
-      const entity = await strapi.query("roundtables").find();
-
-      const roundtables = sanitizeEntity(entity, {
-        model: strapi.models["roundtables"],
-      });
-
-      return roundtables;
-    }
-
     try {
+      const { uri } = ctx.query;
+
+      /***
+       * No Param
+       */
+      if (uri === undefined) {
+        const entity = await strapi.query("roundtables").find();
+
+        const roundtables = sanitizeEntity(entity, {
+          model: strapi.models["roundtables"],
+        });
+
+        return roundtables;
+      }
+
       /***
        * Get roundtable detail from Calendly
        */
