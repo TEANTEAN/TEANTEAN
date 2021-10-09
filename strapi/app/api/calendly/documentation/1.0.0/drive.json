@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/calendly/event_types": {
+    "/drive": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -52,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Calendly"
+          "Drive"
         ],
         "parameters": [
           {
@@ -197,7 +197,7 @@
   },
   "tags": [
     {
-      "name": "Calendly"
+      "name": "Drive"
     }
   ]
 }

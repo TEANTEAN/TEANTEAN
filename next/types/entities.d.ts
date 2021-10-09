@@ -80,3 +80,27 @@ interface File {
   __v: number;
   id: string;
 }
+
+interface Series {
+  uri: string;
+  name: string;
+  active: boolean;
+  slug: string;
+  scheduling_url: string;
+  duration: number;
+  kind: string;
+  pooling_type?: string;
+  type: string;
+  color: string;
+  created_at: Date;
+  updated_at: Date;
+  internal_note: string;
+  description_plain: string;
+  description_html: string;
+  profile: {
+    type: string;
+    name: string;
+    owner: string;
+  };
+  secret: boolean;
+}
