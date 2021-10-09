@@ -59,6 +59,24 @@
     "roundtables": {
       "via": "series",
       "collection": "roundtables"
+    },
+    "seriesFolderName": {
+      "type": "string"
+    },
+    "seriesFolderId": {
+      "type": "string"
+    },
+    "researchPartnerFolderName": {
+      "type": "string"
+    },
+    "researchPartnerFolderId": {
+      "type": "string"
+    },
+    "roundtablesFolderId": {
+      "type": "string"
+    },
+    "roundtablesFolderName": {
+      "type": "string"
     }
   }
 }

@@ -563,6 +563,24 @@
                   "type": "string"
                 }
               },
+              "seriesFolderName": {
+                "type": "string"
+              },
+              "seriesFolderId": {
+                "type": "string"
+              },
+              "researchPartnerFolderName": {
+                "type": "string"
+              },
+              "researchPartnerFolderId": {
+                "type": "string"
+              },
+              "roundtablesFolderId": {
+                "type": "string"
+              },
+              "roundtablesFolderName": {
+                "type": "string"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -665,6 +683,12 @@
                 "receipt": {
                   "type": "string"
                 },
+                "participantFolderId": {
+                  "type": "string"
+                },
+                "participantFolderName": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },
@@ -751,6 +775,12 @@
               }
             }
           },
+          "meetingFolderName": {
+            "type": "string"
+          },
+          "meetingFolderId": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -770,6 +800,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "meetingFolderName": {
+            "type": "string"
+          },
+          "meetingFolderId": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",

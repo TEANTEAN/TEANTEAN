@@ -808,6 +808,12 @@
                     "type": "string"
                   }
                 },
+                "meetingFolderName": {
+                  "type": "string"
+                },
+                "meetingFolderId": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },
@@ -819,6 +825,24 @@
                 }
               }
             }
+          },
+          "seriesFolderName": {
+            "type": "string"
+          },
+          "seriesFolderId": {
+            "type": "string"
+          },
+          "researchPartnerFolderName": {
+            "type": "string"
+          },
+          "researchPartnerFolderId": {
+            "type": "string"
+          },
+          "roundtablesFolderId": {
+            "type": "string"
+          },
+          "roundtablesFolderName": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -853,6 +877,24 @@
             "items": {
               "type": "string"
             }
+          },
+          "seriesFolderName": {
+            "type": "string"
+          },
+          "seriesFolderId": {
+            "type": "string"
+          },
+          "researchPartnerFolderName": {
+            "type": "string"
+          },
+          "researchPartnerFolderId": {
+            "type": "string"
+          },
+          "roundtablesFolderId": {
+            "type": "string"
+          },
+          "roundtablesFolderName": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
