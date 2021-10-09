@@ -814,6 +814,9 @@
                 "meetingFolderId": {
                   "type": "string"
                 },
+                "calendlyUri": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },
