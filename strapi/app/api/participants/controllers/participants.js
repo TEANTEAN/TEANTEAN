@@ -26,14 +26,14 @@ module.exports = {
    * receipt: string
    * }
    */
-  async find(ctx) {
+  async findOne(ctx) {
     try {
-      const { participantURI, roundtableURI } = ctx.query;
+      const { id } = ctx.params;
 
       /***
        * No Param
        */
-      if (participantURI === undefined || roundtableURI === undefined) {
+      if (id === undefined) {
         const entity = await strapi.query("participants").find();
 
         const participants = sanitizeEntity(entity, {
@@ -44,13 +44,27 @@ module.exports = {
       }
 
       /***
+       * Get participant files from Strapi
+       */
+      const entity = await strapi.query("participants").findOne({ id });
+
+      const participantData = sanitizeEntity(entity, {
+        model: strapi.models["participants"],
+      });
+
+      if (participantData.certificate === undefined) {
+        participantData.certificate = { driveFileUrl: "" };
+      }
+
+      if (participantData.receipt === undefined) {
+        participantData.receipt = { driveFileUrl: "" };
+      }
+
+      /***
        * Get participants detail from Calendly
        */
-      const uri =
-        "https://api.calendly.com/scheduled_events/" +
-        roundtableURI +
-        "/invitees/" +
-        participantURI;
+      const meetingURI = participantData.participantFolderName.split(" ").pop();
+      const uri = `https://api.calendly.com/scheduled_events/${meetingURI}/invitees/${participantData.participantURI}`;
       const response = await axios({
         method: "get",
         url: uri,
@@ -59,18 +73,6 @@ module.exports = {
         },
       });
       const participantDetail = response.data.resource;
-
-      /***
-       * Get participant files from Strapi
-       */
-      const params = {
-        participantURI: participantURI,
-      };
-      const entity = await strapi.query("participants").findOne(params);
-
-      const participantData = sanitizeEntity(entity, {
-        model: strapi.models["participants"],
-      });
 
       /***
        * Merge results from details and data together

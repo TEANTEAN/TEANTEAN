@@ -246,8 +246,8 @@ module.exports = {
        * Merge results from Roundtable and Participants together
        */
       const finalRes = {
-        start: roundtableDetails.start_time,
-        end: roundtableDetails.end_time,
+        start: getFormattedDate(new Date(roundtableDetails.start_time)),
+        end: getFormattedDate(new Date(roundtableDetails.end_time)),
         location: roundtableDetails.location.join_url,
         createdAt: roundtableDetails.created_at,
         participants: filteredParticipants,
