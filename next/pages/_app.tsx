@@ -2,8 +2,7 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
-import {Box, Typography} from "@material-ui/core";
-import { AppProps, AppContext } from "next/app";
+import { AppProps } from "next/app";
 import Head from "next/head";
 import theme from "styles/theme";
 import DateFnsUtils from "@date-io/date-fns";
@@ -17,20 +16,31 @@ import AdminNavigation from "components/AdminNavigation";
 import withAuth from "util/hooks/withAuth";
 import PublicNavigation from "components/PublicNavigation";
 import { SnackbarProvider } from "notistack";
-
-/*************************** Constants ***************************************/
-
-const ADMIN_ROLE_NAME = "Genyus Admin";
-const RESEARCHER_ROLE_NAME = "Research Partner";
-
-/*****************************************************************************/
+import Breadcrumbs from "components/Breadcrumbs";
 
 const queryClient = new QueryClient();
+
+const AdminWrapper = ({ Component, pageProps }) => {
+  const { session, haveAuthenticated } = withAuth({
+    redirectTo: "/login",
+  });
+
+  if (session && haveAuthenticated()) {
+    return (
+      <AdminNavigation>
+        <Breadcrumbs />
+        <Component {...pageProps} />
+      </AdminNavigation>
+    );
+  }
+
+  // Don't show admin portal while authenticating
+  return null;
+};
 
 const AppWrapper = ({ Component, pageProps }) => {
   const hasMounted = useHasMounted();
   const router = useRouter();
-  const { session, haveAuthenticated } = withAuth();
 
   // Our application hasn't mounted yet so we don't know who's trying to access what pages
   // Safest is to render nothing
@@ -38,50 +48,17 @@ const AppWrapper = ({ Component, pageProps }) => {
     return null;
   }
 
-  // Login page doesn't need navigation
-  if (router.pathname.includes("/login"))
-    return <Component {...pageProps} key={router.asPath} />;
-
-  // admin path
+  // If user is logged in and the route includes /admin, render the admin navigation skeleton and page
   if (router.pathname.includes("/admin")) {
-    // logind in
-    if (haveAuthenticated() && session.user.role == ADMIN_ROLE_NAME) {
-      return (
-        <AdminNavigation>
-          <Component {...pageProps} />
-        </AdminNavigation>
-      );
-    }
-    return (
-      <PublicNavigation>
-        <Typography variant="h5" align="center"> You don't have the previlege to access this page </Typography>
-      </PublicNavigation>
-    );
+    return <AdminWrapper Component={Component} pageProps={pageProps} />;
   }
 
-  // researcher path
-  if (router.pathname.includes("/research")) {
-    if (haveAuthenticated() && session.user.role == RESEARCHER_ROLE_NAME) {
-      return (
-        <AdminNavigation>
-          <h1> Researcher </h1>
-        </AdminNavigation>
-      );
-    }
-    return (
-      <PublicNavigation>
-        <Typography variant="h5" align="center"> You don't have the previlege to access this page </Typography>
-      </PublicNavigation>
-    );
-  }
-
-  // Everthing else is public
+  // No login is required, so render the page as normal without the admin skeleton
   return (
     <PublicNavigation>
-      <Component {...pageProps} key={router.asPath} />{" "}
+      <Component {...pageProps} key={router.asPath} />
     </PublicNavigation>
   );
-
 };
 
 const App = ({ Component, pageProps }: AppProps) => (
@@ -93,13 +70,11 @@ const App = ({ Component, pageProps }: AppProps) => (
           name="viewport"
           content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1"
         />
+        <title>genyus Roundtable</title>
       </Head>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <ThemeProvider theme={theme}>
-          <SnackbarProvider
-            maxSnack={3}
-            content={(key, message) => <div data-cy="snack bar">{message}</div>}
-          >
+          <SnackbarProvider maxSnack={3}>
             <CssBaseline />
             <AppWrapper Component={Component} pageProps={pageProps} />
           </SnackbarProvider>

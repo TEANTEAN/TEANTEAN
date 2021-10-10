@@ -177,7 +177,7 @@ const AdminSeriesPage = () => {
             // All of these should be based on other data (you may have to fetch these from Strapi)
             collectionName="roundtable-series"
             driveFolderName={seriesFolderName}
-            recordId={`${seriesId}`} // the exact record id to attach this file to
+            recordId={seriesId} // the exact record id to attach this file to
             recordFieldName="image"
           />
         )}
