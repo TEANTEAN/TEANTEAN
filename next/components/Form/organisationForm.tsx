@@ -135,10 +135,13 @@ const OrganisationForm: React.FC<OrganisationFormProps> = ({
           className={classes.closeButton}
           onClick={onClose}
         />
-        <Typography variant="body1">
-          Don&apos;t forget after creating an organisation click the
-          &quot;upload image&quot; button on the table on the organisation page
-        </Typography>
+        {isCreateOrg && (
+          <Typography variant="body1">
+            Don&apos;t forget after creating an organisation click the
+            &quot;upload image&quot; button on the table on the organisation
+            page
+          </Typography>
+        )}
         <Form<FormValues> methods={methods} onSubmit={onSubmit}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
