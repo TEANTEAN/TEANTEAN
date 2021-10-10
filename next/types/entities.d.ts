@@ -60,8 +60,8 @@ interface User {
   createdAt: string;
   updatedAt: string;
   role: Role;
-  roundtableSeries: RoundtableSeries;
   id: string;
+  organisation: { name: string, id: string, image: File }
 }
 
 interface Organisation {
