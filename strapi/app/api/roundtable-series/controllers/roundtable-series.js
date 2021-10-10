@@ -158,7 +158,8 @@ module.exports = {
        *  - created_at
        *  - scheduling_url
        */
-      const calendlyEventType = await calendlyAxios(series.seriesURI);
+      const calendlyEventType = (await calendlyAxios(series.seriesURI)).data
+        .resource;
 
       // Calendly API URL to get all scheduled events (Booking was made on the calendly booking tool)
       const cScheduledEventsURL = `https://api.calendly.com/scheduled_events?user=${
@@ -167,7 +168,7 @@ module.exports = {
       }&count=100`;
 
       // For holding the scheduled events
-      let roundtables = [];
+      let calendlyRoundtables = [];
 
       // Get all scheduled events (there's no way to get all events that belong to one event type)
       let response = await calendlyAxios(cScheduledEventsURL);
@@ -181,7 +182,7 @@ module.exports = {
        * - created_at
        * - uri
        */
-      roundtables = [
+      calendlyRoundtables = [
         ...response.data.collection.filter(
           // only select scheduled events associated with the series
           (e) => e.event_type === series.seriesURI
@@ -190,8 +191,8 @@ module.exports = {
       // Keep making request if multiple pages
       while (response.data.pagination.next_page) {
         response = await calendlyAxios(response.data.pagination.next_page);
-        roundtables = [
-          ...roundtables,
+        calendlyRoundtables = [
+          ...calendlyRoundtables,
           ...response.data.collection.filter(
             (e) => e.event_type === series.seriesURI
           ),
@@ -199,16 +200,16 @@ module.exports = {
       }
 
       // Sync the roundtables in this series with the ones in the database)
-      for (let i = 0; i < roundtables.length; i++) {
-        const roundtable = roundtables[i];
+      for (let i = 0; i < calendlyRoundtables.length; i++) {
+        const calendlyRoundtable = calendlyRoundtables[i];
         let dbRoundtableMatchIndex = series.roundtables.findIndex(
-          (dbRoundTable) => dbRoundTable.calendlyUri == roundtable.uri
+          (dbRoundTable) => dbRoundTable.calendlyUri == calendlyRoundtable.uri
         );
         if (dbRoundtableMatchIndex === -1) {
           // The record does not exist, so we need to make one
           // Create google drive folder for the meeting inside the series folder
-          const startTime = new Date(roundtable.start_time);
-          const endTime = new Date(roundtable.end_time);
+          const startTime = new Date(calendlyRoundtable.start_time);
+          const endTime = new Date(calendlyRoundtable.end_time);
           const meetingFolderName = `Roundtable (${getFormattedDate(
             startTime
           )} - ${getFormattedDate(endTime)}) - ${series.seriesURI
@@ -217,7 +218,7 @@ module.exports = {
           const newFolder = await drive.files.create({
             supportsAllDrives: true,
             supportsTeamDrives: true,
-            fields: "id",
+            fields: "id, name",
             requestBody: {
               mimeType: "application/vnd.google-apps.folder",
               name: meetingFolderName,
@@ -225,22 +226,26 @@ module.exports = {
             },
           });
 
-          console.log("new folder created: ", newFolder);
-          const newRoundtable = await strapi.services.restaurant.create({
-            meetingFolderName: newFolder.name,
-            meetingFolderId: newFolder.id,
+          const newRoundtable = await strapi.services["roundtables"].create({
+            meetingFolderName: newFolder.data.name,
+            meetingFolderId: newFolder.data.id,
+            calendlyUri: calendlyRoundtable.uri,
+            series: series.id,
           });
+
+          const sanitizedRoundtable = sanitizeEntity(newRoundtable, {
+            model: strapi.models.roundtables,
+          });
+
           series.roundtables.push({
-            ...sanitizeEntity(newRoundtable, {
-              model: strapi.models[roundtables],
-            }),
-            ...roundtable,
+            ...sanitizedRoundtable,
+            ...calendlyRoundtable,
           });
         } else {
           // Merge the two
           series.roundtables[dbRoundtableMatchIndex] = {
             ...series.roundtables[dbRoundtableMatchIndex],
-            ...roundtable,
+            ...calendlyRoundtable,
           };
         }
       }
@@ -297,7 +302,10 @@ module.exports = {
       //   calendlyEvent: calendlyEventType.data.resource,
       //   calendlyScheduledEvents: roundtables,
       // };
-      return series;
+      return {
+        ...series,
+        ...calendlyEventType,
+      };
     } catch (e) {
       throw e;
     }

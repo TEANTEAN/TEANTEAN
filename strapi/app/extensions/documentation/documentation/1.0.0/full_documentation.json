@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "10/10/2021 2:20:54 PM"
+    "x-generation-date": "10/10/2021 3:38:47 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -5868,79 +5868,6 @@
               },
               "updated_by": {
                 "type": "string"
-              }
-            }
-          },
-          "roundtableSeries": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id",
-                "videoLink",
-                "seriesURI",
-                "title"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "researchPartner": {
-                  "type": "string"
-                },
-                "videoLink": {
-                  "type": "string"
-                },
-                "seriesURI": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "organisation": {
-                  "type": "string"
-                },
-                "image": {
-                  "type": "string"
-                },
-                "files": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "roundtables": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "seriesFolderName": {
-                  "type": "string"
-                },
-                "seriesFolderId": {
-                  "type": "string"
-                },
-                "researchPartnerFolderName": {
-                  "type": "string"
-                },
-                "researchPartnerFolderId": {
-                  "type": "string"
-                },
-                "roundtablesFolderId": {
-                  "type": "string"
-                },
-                "roundtablesFolderName": {
-                  "type": "string"
-                },
-                "published_at": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
               }
             }
           },

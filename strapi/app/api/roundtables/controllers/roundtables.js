@@ -59,15 +59,14 @@ module.exports = {
       }
 
       const folderID = roundtable.meetingFolderId;
-      const uri = roundtable.meetingFolderName.split(" ").pop();
+      const uri = roundtable.calendlyUri;
 
       /***
        * Get roundtable detail from Calendly
        */
-      const roundtableURI = `https://api.calendly.com/scheduled_events/${uri}`;
       const roundtableURLresponse = await axios({
         method: "get",
-        url: roundtableURI,
+        url: uri,
         headers: {
           Authorization: `Bearer ${process.env.CALENDLY_TOKEN}`,
         },
@@ -77,7 +76,7 @@ module.exports = {
       /***
        * Get All participants from Calendly
        */
-      let inviteeURI = `https://api.calendly.com/scheduled_events/${uri}/invitees`;
+      let inviteeURI = `${uri}/invitees`;
       let inviteesURLresponse = await axios({
         method: "get",
         url: inviteeURI,
@@ -94,7 +93,7 @@ module.exports = {
       let participants = invitees.map(function (invitee) {
         return {
           id: "",
-          uri: invitee.uri.split("/").pop(),
+          uri: invitee.uri,
           name: invitee.name,
           email: invitee.email,
           payment: "",
@@ -121,7 +120,7 @@ module.exports = {
         participants += invitees.map(function (invitee) {
           return {
             id: "",
-            uri: invitee.uri.split("/").pop(),
+            uri: invitee.uri,
             name: invitee.name,
             email: invitee.email,
             payment: "",
@@ -166,7 +165,7 @@ module.exports = {
                 fields: "id, name",
                 requestBody: {
                   mimeType: "application/vnd.google-apps.folder",
-                  name: `${participant.name} - ${uri}`,
+                  name: `${participant.name} - ${uri.split("/").pop()}`,
                   parents: [`${folderID}`],
                 },
               })
