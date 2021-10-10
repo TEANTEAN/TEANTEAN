@@ -1,5 +1,6 @@
 interface Roundtable {
   id: string;
+  name: string;
   zoomLink: string;
   description: string;
   capacity: number;
@@ -7,7 +8,27 @@ interface Roundtable {
   published_at: Date;
   createdAt: Date;
   updatedAt: Date;
-  participants: any[];
+  participants: Participant[];
+
+  files: File[];
+  meetingFolderName: string;
+  meetingFolderId: string;
+  published_at: Date;
+  created_at: Date;
+  status: string;
+  start_time: Date;
+  end_time: Date;
+  event_memberships: { user: string }[];
+  invitees_counter: {
+    active: number;
+    limit: number;
+    total: number;
+  };
+  location: {
+    join_url: string;
+    status: string;
+    type: string;
+  };
 }
 
 interface DriveFile {
@@ -30,7 +51,6 @@ interface Role {
 interface User {
   confirmed: boolean;
   blocked: boolean;
-  _id: string;
   username: string;
   email: string;
   firstName: string;
@@ -39,7 +59,6 @@ interface User {
   provider: string;
   createdAt: string;
   updatedAt: string;
-  __v: int;
   role: Role;
   roundtableSeries: RoundtableSeries;
   id: string;
@@ -52,18 +71,26 @@ interface Organisation {
   image: File;
 }
 
-interface RoundtableSeries {
-  title: string;
-  description: string;
+interface RoundtableSeries extends CalendlySeries {
+  id: string;
   researchPartner: User;
   videoLink: string;
   organisation: Organisation;
   image: File;
   files: File[];
+  seriesFolderName: string;
+  seriesFolderId: string;
+  researchPartnerFolderName: string;
+  researchPartnerFolderId: string;
+  roundtablesFolderName: string;
+  roundtablesFolderId: string;
+  published_at: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface File {
-  _id: string;
+  id: string;
   name: string;
   hash: string;
   ext: string;
@@ -77,8 +104,25 @@ interface File {
   driveFileFolderUrl: string;
   createdAt: Date;
   updatedAt: Date;
-  __v: number;
+}
+
+interface Participant {
   id: string;
+  participantURI: string;
+  participantFolderId: string;
+  participantFolderName: string;
+  published_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  cancel_url: string;
+  email: string;
+  name: string;
+  questions_and_answers: { question: string; answer: string }[];
+  reschedule_url: string;
+  rescheduled: string;
+  status: string;
+  text_reminder_number: string;
+  timezone: string;
 }
 
 interface CalendlySeries {
@@ -96,7 +140,6 @@ interface CalendlySeries {
   updated_at: Date;
   internal_note: string;
   description_plain: string;
-  description_html: string;
   profile: {
     type: string;
     name: string;

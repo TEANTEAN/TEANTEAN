@@ -55,10 +55,9 @@ module.exports = {
       /***
        * Get participants detail from Calendly
        */
-      const uri = `https://api.calendly.com/scheduled_events/${participantData.meetingURI}/invitees/${participantData.participantURI}`;
       const response = await axios({
         method: "get",
-        url: uri,
+        url: participantData.participantURI,
         headers: {
           Authorization: `Bearer ${process.env.CALENDLY_TOKEN}`,
         },
