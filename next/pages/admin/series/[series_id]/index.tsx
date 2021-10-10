@@ -61,8 +61,10 @@ const AdminSeriesPage = () => {
   );
 
   const onUrlSubmit = () => {
-    gnFetch.put(`/roundtable-series/${seriesId}`, { videoLink: tempUrl });
-    seriesData.refetch();
+    if (tempUrl) {
+      gnFetch.put(`/roundtable-series/${seriesId}`, { videoLink: tempUrl });
+      seriesData.refetch();
+    }
     setTempUrl(null);
     setEditUrl(false);
   };
