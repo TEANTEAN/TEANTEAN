@@ -4,23 +4,20 @@ import React from "react";
 import { Typography, Button, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import { useQuery } from "react-query";
 import Form, { TextField, AutocompleteField } from "components/Form";
 import Box from "@material-ui/core/Box";
 import LoadingButton from "components/LoadingButton";
 import gnFetch from "util/gnAxiosClient";
 import easySnackbar from "components/EasySnackbar";
 
-type Tresearcher = { username: string; id: string };
 interface FormValues {
   title: String;
   description: string;
   organisation: Organisation;
-  researcher: Tresearcher;
   photo: File;
   vedio: File;
   date: Date;
-  calendlyMeeting: string;
+  calendlyMeeting: CalendlySeries;
   calendlyEventSeriesName: string;
   calendlyEventTopic: string;
   calendlyEventDetails: string;
@@ -64,7 +61,7 @@ const postNewSeries = async (newSeriesData) => {
     title: newSeriesData.calendlyEventSeriesName || "No Title",
     organisation: newSeriesData.organisation,
     // eslint-disable-next-line no-underscore-dangle
-    researchPartner: newSeriesData.researcher.id,
+    // researchPartner: newSeriesData.researcher.id,
   };
   // eslint-disable-next-line no-useless-catch
   try {
@@ -77,45 +74,47 @@ const postNewSeries = async (newSeriesData) => {
 // Our TextField component is wrapped with controls, so cannot set values directly by using the value prop
 // Hence if calendlyEventObject exists show the template with the form control method,
 // the value is then populated via useEffects
-const displayCalendlyDetails: React.FunctionComponent = (
-  calendlyEventObject,
-  methods
-) => {
-  const displayTemplate = (
-    <>
-      <TextField
-        disabled
-        control={methods.control}
-        name="calendlyEventSeriesName"
-        label="Series Name"
-        defaultValue="No Name"
-      />
-      <TextField
-        disabled
-        control={methods.control}
-        name="calendlyEventTopic"
-        label="Topic"
-        defaultValue="No Topic"
-      />
-      <TextField
-        disabled
-        control={methods.control}
-        name="calendlyEventDetails"
-        label="Details"
-        multiline
-        defaultValue="No Description"
-      />
-      {!calendlyEventObject ? (
-        <Typography variant="subtitle2">
-          Please Select a Calendly Event
-        </Typography>
-      ) : (
-        <></>
-      )}
-    </>
-  );
-  return displayTemplate;
-};
+// const displayCalendlyDetails: React.FunctionComponent = (
+//   calendlyEventObject,
+//   methods
+// ) => {
+//   const displayTemplate = (
+//     <>
+//       <TextField
+//         disabled
+//         control={methods.control}
+//         name="calendlyEventSeriesName"
+//         label="Series Name"
+//         defaultValue="No Name"
+//       />
+//       <TextField
+//         disabled
+//         control={methods.control}
+//         name="calendlyEventTopic"
+//         label="Topic"
+//         defaultValue="No Topic"
+//       />
+//       <TextField
+//         disabled
+//         control={methods.control}
+//         name="calendlyEventDetails"
+//         label="Details"
+//         multiline
+//         defaultValue="No Description"
+//       />
+//       {!calendlyEventObject ? (
+//         <Typography variant="subtitle2">
+//           Please Select a Calendly Event
+//         </Typography>
+//       ) : (
+//         <></>
+//       )}
+//     </>
+//   );
+//   return displayTemplate;
+// };
+
+const noEventSelectedMessage = "Please select a Calendly event type";
 
 const CreateSeries: React.FC<SeriesFormProps> = ({
   onSubmitSettled,
@@ -126,39 +125,36 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
   const classes = useStyles();
   const [pending, setPending] = React.useState(false);
   const methods = useForm<FormValues>();
-  const [selectedEvent, setSelectedEvent] = React.useState(null);
+  // const [selectedEvent, setSelectedEvent] =
+  //   React.useState<CalendlySeries>(null);
   const [submitSuccessful, setSubmitSuccessful] = React.useState(false);
   const { easyEnqueueSnackbar } = easySnackbar();
 
-  const allResearcherData = useQuery(
-    "get-all-users",
-    async () => (await gnFetch("/users/")).data,
-    {
-      select: (fetchedUsers) =>
-        [...fetchedUsers]
-          .filter((u) => u?.role?.name === "Research Partner")
-          // eslint-disable-next-line no-underscore-dangle
-          .map((e) => ({ id: e._id, username: e.username })),
-    }
-  );
-  // Our Autocomplete component is wrapped with the form control stuff,
-  // Cannot use onChange directly hence this is a workaround to use the
-  // wrapping functionalities to get the value for selected event
+  // React.useEffect(() => {
+  //   const selectedCalendly = methods.watch<CalendlySeries>("calendlyMeeting");
+  //   // setSelectedEvent(selectedCalendly);
+  // }, [methods.watch("calendlyMeeting")]);
+
   React.useEffect(() => {
-    const selectedCalendly = methods.watch("calendlyMeeting");
-    setSelectedEvent(selectedCalendly);
-  }, [methods.watch("calendlyMeeting")]);
-  React.useEffect(() => {
-    if (selectedEvent) {
-      methods.setValue("calendlyEventSeriesName", selectedEvent.name);
-      methods.setValue("calendlyEventTopic", selectedEvent.name);
-      methods.setValue("calendlyEventDetails", selectedEvent.description_plain);
+    if (methods.watch("calendlyMeeting")) {
+      const meeting = methods.watch("calendlyMeeting");
+      methods.setValue("calendlyEventSeriesName", meeting.name);
+      methods.setValue("calendlyEventTopic", meeting.name);
+      methods.setValue("calendlyEventDetails", meeting.description_plain);
     } else {
-      methods.setValue("calendlyEventSeriesName", "No Calendly Event Selected");
-      methods.setValue("calendlyEventTopic", "No Calendly Event Selected");
-      methods.setValue("calendlyEventDetails", "No Calendly Event Selected");
+      methods.setValue("calendlyEventSeriesName", noEventSelectedMessage);
+      methods.setValue("calendlyEventTopic", noEventSelectedMessage);
+      methods.setValue("calendlyEventDetails", noEventSelectedMessage);
     }
-  }, [selectedEvent]);
+    // @ts-ignore
+  }, [methods.watch("calendlyMeeting")]);
+
+  React.useEffect(() => {
+    const subscription = methods.watch((value, { name, type }) =>
+      console.log(value, name, type)
+    );
+    return () => subscription.unsubscribe();
+  }, [methods.watch]);
 
   const onSubmit = async (data) => {
     setPending(true);
@@ -215,8 +211,29 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
             },
           }}
         />
-        {displayCalendlyDetails(selectedEvent, methods)}
-        <Button
+        <TextField
+          disabled
+          control={methods.control}
+          name="calendlyEventSeriesName"
+          label="Series Name"
+          defaultValue="Please select a Calendly event type"
+        />
+        <TextField
+          disabled
+          control={methods.control}
+          name="calendlyEventTopic"
+          label="Topic"
+          defaultValue="Please select a Calendly event type"
+        />
+        <TextField
+          disabled
+          control={methods.control}
+          name="calendlyEventDetails"
+          label="Details"
+          multiline
+          defaultValue="Please select a Calendly event type"
+        />
+        {/* <Button
           className={classes.goLink}
           variant="contained"
           component="span"
@@ -226,8 +243,9 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
           <a href="https://calendly.com/" target="_blank" rel="noreferrer">
             Go to Calendly
           </a>
-        </Button>
+        </Button> */}
         <AutocompleteField<Organisation>
+          disabled={!methods.watch("calendlyMeeting")}
           control={methods.control}
           name="organisation"
           label="Organisation"
@@ -241,7 +259,7 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
           }}
         />
 
-        <AutocompleteField
+        {/* <AutocompleteField
           control={methods.control}
           name="researcher"
           label="Researcher"
@@ -254,15 +272,17 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
               message: "Calendly event is required",
             },
           }}
-        />
-        <LoadingButton
-          isloading={pending}
-          type="submit"
-          variant="contained"
-          color="primary"
-        >
-          Done
-        </LoadingButton>
+        /> */}
+        <Box>
+          <LoadingButton
+            isloading={pending}
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+            Done
+          </LoadingButton>
+        </Box>
       </Form>
     </Paper>
   );

@@ -62,10 +62,16 @@ interface User {
   role: Role;
   roundtableSeries: RoundtableSeries;
   id: string;
-  organisation: Organisation;
 }
 
 interface Organisation {
+  name: string;
+  id: string;
+  image: File;
+  users: User[];
+}
+
+interface OrganisationOmitUsers {
   name: string;
   id: string;
   image: File;
@@ -73,7 +79,6 @@ interface Organisation {
 
 interface RoundtableSeries extends CalendlySeries {
   id: string;
-  researchPartner: User;
   videoLink: string;
   organisation: Organisation;
   image: File;
