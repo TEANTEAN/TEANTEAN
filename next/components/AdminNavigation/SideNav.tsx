@@ -60,11 +60,13 @@ const SideNav: React.FC<SideNavProps> = (props) => {
   const adminNavItemsTop = React.useMemo(
     () => [
       <SideNavItem
+        key="/admin/accounts"
         text="Accounts"
         icon={<PeopleIcon />}
         link="/admin/accounts"
       />,
       <SideNavItem
+        key="/admin/series"
         text="Series"
         icon={<AccessTimeIcon />}
         link="/admin/series"
@@ -77,6 +79,7 @@ const SideNav: React.FC<SideNavProps> = (props) => {
   const adminNavItemsBottom = React.useMemo(
     () => [
       <SideNavItem
+        key="logout"
         text="Logout"
         icon={<ExitToAppIcon />}
         onClick={() => {

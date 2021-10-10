@@ -16,6 +16,7 @@ import AdminNavigation from "components/AdminNavigation";
 import withAuth from "util/hooks/withAuth";
 import PublicNavigation from "components/PublicNavigation";
 import { SnackbarProvider } from "notistack";
+import Breadcrumbs from "components/Breadcrumbs";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const AdminWrapper = ({ Component, pageProps }) => {
   if (session && haveAuthenticated()) {
     return (
       <AdminNavigation>
+        <Breadcrumbs />
         <Component {...pageProps} />
       </AdminNavigation>
     );
