@@ -1,4 +1,11 @@
-import { Box, Dialog, Fab, useMediaQuery, useTheme } from "@material-ui/core";
+import {
+  Box,
+  Dialog,
+  Fab,
+  useMediaQuery,
+  useTheme,
+  Typography,
+} from "@material-ui/core";
 import { GridCellParams, GridColumns, GridRowData } from "@mui/x-data-grid";
 import AddIcon from "@material-ui/icons/Add";
 import { GeneralButton, IconLabelButton } from "components/Buttons";
@@ -10,10 +17,14 @@ import { makeStyles } from "@material-ui/core/styles";
 // import ResponsiveDataGrid from "components/ResponsiveGrid";
 import gnFetch from "util/gnAxiosClient";
 import CreateSeriesForm from "components/pages/admin/series/CreateEditSeriesForm";
+import LoadingScreen from "components/LoadingScreen";
 
 const useStyles = makeStyles({
   createButton: {
     marginBottom: 12,
+  },
+  heading: {
+    lineHeight: 3,
   },
   fab: {
     margin: "0px",
@@ -95,9 +106,13 @@ const SeriesManagement = () => {
     );
   }
 
+  if (!allSeriesData.isSuccess) return <LoadingScreen />;
+
   return (
     <>
-      <h1>Series Overview</h1>
+      <Typography variant="h4" className={classes.heading}>
+        Series Overview
+      </Typography>
       {!isMobile && (
         <Box className={classes.createButton}>
           <IconLabelButton

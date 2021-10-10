@@ -1,4 +1,4 @@
-import { Box } from "@material-ui/core";
+import { Box, Card } from "@material-ui/core";
 import { DataGrid, DataGridProps } from "@mui/x-data-grid";
 import React from "react";
 
@@ -7,15 +7,18 @@ const CustomDataGrid = (props: DataGridProps) => {
 
   return (
     <Box>
-      <DataGrid
-        rows={props.rows}
-        columns={props.columns}
-        pageSize={pageSize}
-        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-        autoHeight
-        rowsPerPageOptions={props.rowsPerPageOptions || [5, 10, 20, 50]}
-        {...props}
-      />
+      <Card>
+        <DataGrid
+          rows={props.rows}
+          columns={props.columns}
+          pageSize={pageSize}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          autoHeight
+          rowsPerPageOptions={props.rowsPerPageOptions || [5, 10, 20, 50]}
+          disableSelectionOnClick
+          {...props}
+        />
+      </Card>
     </Box>
   );
 };

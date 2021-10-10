@@ -129,6 +129,9 @@ interface Participant {
   status: string;
   text_reminder_number: string;
   timezone: string;
+  certificateSent: boolean;
+  paid: boolean;
+  receiptSent: boolean;
 }
 
 interface CalendlySeries {
@@ -146,6 +149,7 @@ interface CalendlySeries {
   updated_at: Date;
   internal_note: string;
   description_plain: string;
+  description_html: string;
   profile: {
     type: string;
     name: string;

@@ -23,35 +23,20 @@
     "participantURI": {
       "type": "string"
     },
-    "certificate": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ],
-      "plugin": "upload",
-      "required": false,
-      "pluginOptions": {}
-    },
-    "receipt": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ],
-      "plugin": "upload",
-      "required": false,
-      "pluginOptions": {}
-    },
     "participantFolderId": {
       "type": "string"
     },
     "participantFolderName": {
       "type": "string"
+    },
+    "certificateSent": {
+      "type": "boolean"
+    },
+    "paid": {
+      "type": "boolean"
+    },
+    "receiptSent": {
+      "type": "boolean"
     }
   }
 }

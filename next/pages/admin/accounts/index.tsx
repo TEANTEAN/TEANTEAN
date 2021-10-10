@@ -1,5 +1,12 @@
 /* eslint-disable no-underscore-dangle */
-import { Box, Dialog, Fab, useMediaQuery, useTheme } from "@material-ui/core";
+import {
+  Box,
+  Dialog,
+  Fab,
+  useMediaQuery,
+  useTheme,
+  Typography,
+} from "@material-ui/core";
 import {
   GridColumns,
   GridRowData,
@@ -17,6 +24,9 @@ import AccountForm from "../../../components/Form/accountForm";
 const useStyles = makeStyles({
   createButton: {
     marginBottom: 12,
+  },
+  heading: {
+    lineHeight: 3,
   },
   fab: {
     margin: "0px",
@@ -110,7 +120,9 @@ const AccountManagement = () => {
 
   return (
     <>
-      <h1>Acount Overview</h1>
+      <Typography variant="h4" className={classes.heading}>
+        Acount Overview
+      </Typography>
       {!isMobile && (
         <Box className={classes.createButton}>
           <IconLabelButton

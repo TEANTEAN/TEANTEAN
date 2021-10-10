@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import gnFetch from "util/gnAxiosClient";
-import { Box, Dialog, Fab, useMediaQuery, useTheme } from "@material-ui/core";
+import {
+  Box,
+  Dialog,
+  Fab,
+  useMediaQuery,
+  useTheme,
+  Typography,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { GeneralButton, IconLabelButton } from "components/Buttons";
 import AddIcon from "@material-ui/icons/Add";
@@ -26,6 +33,9 @@ const useStyles = makeStyles({
     left: "auto",
     position: "fixed",
   },
+  heading: {
+    lineHeight: 3,
+  },
 });
 
 const OrganisationManagement = () => {
@@ -33,6 +43,7 @@ const OrganisationManagement = () => {
   const [creationMode, setCreationMode] = useState(false);
   const [editOrg, setEditOrg] = useState(null);
   const [openUploadDialog, setOpenUploadDialog] = React.useState(false);
+  const [orgIdToUpload, setOrgIdToUpload] = React.useState<string>(null);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
@@ -53,9 +64,6 @@ const OrganisationManagement = () => {
     async () => (await gnFetch.get("/roundtable-series")).data
   );
 
-  if (allOrgs.isSuccess) console.log(allOrgs.data);
-  if (allSeries.isSuccess) console.log(allOrgs.data);
-
   const onCreateNewClick = () => {
     setEditOrg(null);
     setCreationMode(true);
@@ -73,11 +81,21 @@ const OrganisationManagement = () => {
     { field: "numSeries", headerName: "Number of Series", flex: 1 },
     { field: "numUsers", headerName: "Number of Users", flex: 1 },
     {
+      field: "image",
+      headerName: "Logo",
+      flex: 1,
+    },
+    {
       field: "uploadImage",
       headerName: "Upload Image",
       flex: 1,
-      renderCell: () => (
-        <GeneralButton onClick={() => setOpenUploadDialog(true)}>
+      renderCell: (params) => (
+        <GeneralButton
+          onClick={() => {
+            setOrgIdToUpload(params.row.id);
+            setOpenUploadDialog(true);
+          }}
+        >
           Upload Image
         </GeneralButton>
       ),
@@ -115,13 +133,35 @@ const OrganisationManagement = () => {
         numSeries,
         numUsers,
         actions: org,
+        image: org?.image?.name,
       });
     });
   }
 
+  const getUploadDialog = React.useMemo(
+    () => (
+      <UploadDialog
+        open={openUploadDialog}
+        onClose={() => setOpenUploadDialog(false)}
+        onUploadComplete={() => {
+          setOrgIdToUpload(null);
+          allOrgs.refetch();
+        }}
+        allowedFileTypes={[".png"]}
+        collectionName="organisation"
+        driveFolderName="Organisation Logo Uploads"
+        recordId={orgIdToUpload}
+        recordFieldName="image"
+      />
+    ),
+    [orgIdToUpload]
+  );
+
   return (
     <>
-      <h1>Organisations</h1>
+      <Typography variant="h4" className={classes.heading}>
+        Organisations
+      </Typography>
       {!isMobile && (
         <Box className={classes.createButton}>
           <IconLabelButton
@@ -139,16 +179,7 @@ const OrganisationManagement = () => {
         </Fab>
       )}
       <ResponsiveDataGrid rows={orgRows} columns={columns} />
-      <UploadDialog
-        open={openUploadDialog}
-        onClose={() => setOpenUploadDialog(false)}
-        onUploadComplete={() => {}}
-        allowedFileTypes={[".png"]}
-        collectionName="roundtable-series" // organisations // TODO: CHECK THESE WHEN READY
-        driveFolderName="test upload dialog folder (roundtable-series)"
-        recordId="613230c9a104701f199eb6ff" // org id  // the exact record id to attach this file to
-        recordFieldName="image"
-      />
+      {orgIdToUpload && getUploadDialog}
       <Dialog open={!hideForm} onClose={() => setHideForm(true)}>
         <OrganisationForm
           isCreateOrg={creationMode}

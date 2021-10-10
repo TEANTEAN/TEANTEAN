@@ -668,17 +668,20 @@
                 "participantURI": {
                   "type": "string"
                 },
-                "certificate": {
-                  "type": "string"
-                },
-                "receipt": {
-                  "type": "string"
-                },
                 "participantFolderId": {
                   "type": "string"
                 },
                 "participantFolderName": {
                   "type": "string"
+                },
+                "certificateSent": {
+                  "type": "boolean"
+                },
+                "paid": {
+                  "type": "boolean"
+                },
+                "receiptSent": {
+                  "type": "boolean"
                 },
                 "published_at": {
                   "type": "string"

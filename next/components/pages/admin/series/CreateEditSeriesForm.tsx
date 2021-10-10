@@ -60,8 +60,6 @@ const postNewSeries = async (newSeriesData) => {
     seriesURI: newSeriesData.calendlyMeeting.uri,
     title: newSeriesData.calendlyEventSeriesName || "No Title",
     organisation: newSeriesData.organisation,
-    // eslint-disable-next-line no-underscore-dangle
-    // researchPartner: newSeriesData.researcher.id,
   };
   // eslint-disable-next-line no-useless-catch
   try {
@@ -70,49 +68,6 @@ const postNewSeries = async (newSeriesData) => {
     throw e;
   }
 };
-
-// Our TextField component is wrapped with controls, so cannot set values directly by using the value prop
-// Hence if calendlyEventObject exists show the template with the form control method,
-// the value is then populated via useEffects
-// const displayCalendlyDetails: React.FunctionComponent = (
-//   calendlyEventObject,
-//   methods
-// ) => {
-//   const displayTemplate = (
-//     <>
-//       <TextField
-//         disabled
-//         control={methods.control}
-//         name="calendlyEventSeriesName"
-//         label="Series Name"
-//         defaultValue="No Name"
-//       />
-//       <TextField
-//         disabled
-//         control={methods.control}
-//         name="calendlyEventTopic"
-//         label="Topic"
-//         defaultValue="No Topic"
-//       />
-//       <TextField
-//         disabled
-//         control={methods.control}
-//         name="calendlyEventDetails"
-//         label="Details"
-//         multiline
-//         defaultValue="No Description"
-//       />
-//       {!calendlyEventObject ? (
-//         <Typography variant="subtitle2">
-//           Please Select a Calendly Event
-//         </Typography>
-//       ) : (
-//         <></>
-//       )}
-//     </>
-//   );
-//   return displayTemplate;
-// };
 
 const noEventSelectedMessage = "Please select a Calendly event type";
 
@@ -130,11 +85,6 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
   const [submitSuccessful, setSubmitSuccessful] = React.useState(false);
   const { easyEnqueueSnackbar } = easySnackbar();
 
-  // React.useEffect(() => {
-  //   const selectedCalendly = methods.watch<CalendlySeries>("calendlyMeeting");
-  //   // setSelectedEvent(selectedCalendly);
-  // }, [methods.watch("calendlyMeeting")]);
-
   React.useEffect(() => {
     if (methods.watch("calendlyMeeting")) {
       const meeting = methods.watch("calendlyMeeting");
@@ -148,13 +98,6 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
     }
     // @ts-ignore
   }, [methods.watch("calendlyMeeting")]);
-
-  React.useEffect(() => {
-    const subscription = methods.watch((value, { name, type }) =>
-      console.log(value, name, type)
-    );
-    return () => subscription.unsubscribe();
-  }, [methods.watch]);
 
   const onSubmit = async (data) => {
     setPending(true);
@@ -186,16 +129,6 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
         <Typography gutterBottom variant="h6">
           Creating a New Series
         </Typography>
-        <Button
-          className={classes.smallRound}
-          variant="contained"
-          color="primary"
-          component="span"
-          size="small"
-          onClick={onClose}
-        >
-          Cancel
-        </Button>
       </Box>
       <Form<FormValues> methods={methods} onSubmit={onSubmit}>
         <AutocompleteField
@@ -233,17 +166,7 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
           multiline
           defaultValue="Please select a Calendly event type"
         />
-        {/* <Button
-          className={classes.goLink}
-          variant="contained"
-          component="span"
-          size="small"
-          color="secondary"
-        >
-          <a href="https://calendly.com/" target="_blank" rel="noreferrer">
-            Go to Calendly
-          </a>
-        </Button> */}
+
         <AutocompleteField<Organisation>
           disabled={!methods.watch("calendlyMeeting")}
           control={methods.control}
@@ -259,21 +182,7 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
           }}
         />
 
-        {/* <AutocompleteField
-          control={methods.control}
-          name="researcher"
-          label="Researcher"
-          options={allResearcherData.isSuccess ? allResearcherData.data : []}
-          loading={!allResearcherData.isSuccess}
-          getOptionLabel={(rp) => rp.username}
-          rules={{
-            required: {
-              value: true,
-              message: "Calendly event is required",
-            },
-          }}
-        /> */}
-        <Box>
+        <Box display="flex" flexDirection="row-reverse">
           <LoadingButton
             isloading={pending}
             type="submit"
@@ -282,6 +191,9 @@ const CreateSeries: React.FC<SeriesFormProps> = ({
           >
             Done
           </LoadingButton>
+          <Button disabled={pending} onClick={onClose}>
+            Cancel
+          </Button>
         </Box>
       </Form>
     </Paper>
