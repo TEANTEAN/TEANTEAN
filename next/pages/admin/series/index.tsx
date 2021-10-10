@@ -1,5 +1,5 @@
 import { Box, Dialog, Fab, useMediaQuery, useTheme } from "@material-ui/core";
-import { GridColumns, GridRowData } from "@mui/x-data-grid";
+import { GridCellParams, GridColumns, GridRowData } from "@mui/x-data-grid";
 import AddIcon from "@material-ui/icons/Add";
 import { GeneralButton, IconLabelButton } from "components/Buttons";
 import ResponsiveDataGrid from "components/ResponsiveGrid";
@@ -56,7 +56,7 @@ const SeriesManagement = () => {
   };
 
   const columns: GridColumns = [
-    { field: "title", headerName: "Series", flex: 1 },
+    { field: "name", headerName: "Series", flex: 1 },
     // { field: "researchpartner", headerName: "Research Partner", flex: 1 },
     { field: "organisation", headerName: "Organisation", flex: 1 },
     // { field: "serieuri", headerName: "Link", flex: 1 },
@@ -64,8 +64,18 @@ const SeriesManagement = () => {
       field: "id",
       headerName: "Details",
       flex: 1,
-      renderCell: ({ id }) => (
-        <Link href={`/admin/series/${id}`} passHref>
+      renderCell: (params: GridCellParams) => (
+        <Link
+          href={{
+            pathname: "/admin/series/[series_id]",
+            query: {
+              series_id: params.row.id,
+              "series_id--label": params.row.name,
+            },
+          }}
+          as={`/admin/series/${params.row.id}?series_id--label=${params.row.name}`}
+          passHref
+        >
           <GeneralButton>Details</GeneralButton>
         </Link>
       ),
@@ -77,7 +87,7 @@ const SeriesManagement = () => {
     allSeriesData.data.forEach((serie) =>
       accountRows.push({
         id: serie.id,
-        title: serie.name,
+        name: serie.name,
         // researchpartner: serie?.researchpartner?.name,
         organisation: serie?.organisation?.name,
         // serieuri: serie.seriesURI,
