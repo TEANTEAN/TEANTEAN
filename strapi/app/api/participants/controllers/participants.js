@@ -52,19 +52,10 @@ module.exports = {
         model: strapi.models["participants"],
       });
 
-      if (participantData.certificate === undefined) {
-        participantData.certificate = { driveFileUrl: "" };
-      }
-
-      if (participantData.receipt === undefined) {
-        participantData.receipt = { driveFileUrl: "" };
-      }
-
       /***
        * Get participants detail from Calendly
        */
-      const meetingURI = participantData.participantFolderName.split(" ").pop();
-      const uri = `https://api.calendly.com/scheduled_events/${meetingURI}/invitees/${participantData.participantURI}`;
+      const uri = `https://api.calendly.com/scheduled_events/${participantData.meetingURI}/invitees/${participantData.participantURI}`;
       const response = await axios({
         method: "get",
         url: uri,
@@ -78,12 +69,8 @@ module.exports = {
        * Merge results from details and data together
        */
       const finalRes = {
-        booking: participantDetail.created_at,
-        name: participantDetail.name,
-        email: participantDetail.email,
-        responses: participantDetail.questions_and_answers,
-        certificate: participantData.certificate.driveFileUrl,
-        receipt: participantData.receipt.driveFileUrl,
+        ...participantData,
+        ...participantDetail,
       };
 
       return finalRes;
