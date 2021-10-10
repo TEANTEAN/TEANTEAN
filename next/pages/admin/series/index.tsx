@@ -49,18 +49,6 @@ const SeriesManagement = () => {
     async () => (await gnFetch.get("/calendly/event_types")).data
   );
 
-  // const allResearchers = useQuery(
-  //   "get-all-users",
-  //   async () => (await gnFetch("/users/")).data,
-  //   {
-  //     select: (fetchedUsers) =>
-  //       [...fetchedUsers]
-  //         .filter((u) => u?.role?.name === "Research Partner")
-  //         // eslint-disable-next-line no-underscore-dangle
-  //         .map((e) => ({ id: e._id, username: e.username })),
-  //   }
-  // );
-
   const onCreateNewClick = () => {
     setEditSerie(null);
     setCreationMode(true);

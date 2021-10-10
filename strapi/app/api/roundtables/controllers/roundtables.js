@@ -119,7 +119,9 @@ module.exports = {
                 fields: "id, name",
                 requestBody: {
                   mimeType: "application/vnd.google-apps.folder",
-                  name: `${participant.name} - ${uri.split("/").pop()}`,
+                  name: `${participant.name} - ${participant.uri
+                    .split("/")
+                    .pop()}`,
                   parents: [`${folderID}`],
                 },
               })

@@ -212,7 +212,7 @@ module.exports = {
           const endTime = new Date(calendlyRoundtable.end_time);
           const meetingFolderName = `Roundtable (${getFormattedDate(
             startTime
-          )} - ${getFormattedDate(endTime)}) - ${series.seriesURI
+          )} - ${getFormattedDate(endTime)}) - ${calendlyRoundtable.uri
             .split("/")
             .pop()}`;
           const newFolder = await drive.files.create({
