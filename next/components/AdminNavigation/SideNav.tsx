@@ -5,6 +5,7 @@ import Divider from "@material-ui/core/Divider";
 import PeopleIcon from "@material-ui/icons/People";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import BusinessIcon from "@material-ui/icons/Business";
 import Hidden from "@material-ui/core/Hidden";
 import List from "@material-ui/core/List";
 import Box from "@material-ui/core/Box";
@@ -70,6 +71,12 @@ const SideNav: React.FC<SideNavProps> = (props) => {
         text="Series"
         icon={<AccessTimeIcon />}
         link="/admin/series"
+      />,
+      <SideNavItem
+        key="/admin/organisations"
+        text="Organisations"
+        icon={<BusinessIcon />}
+        link="/admin/organisations"
       />,
     ],
     []
