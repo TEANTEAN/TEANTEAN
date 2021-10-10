@@ -6,7 +6,7 @@ export async function getStaticProps() {
   let imageBuffer;
   try {
     const driveImageAsBase64String = await getDriveImageAsString(
-      "1A7fhh3eIhYq4FMykgKqj4ZGxD_nn7YzH"
+      "1GFtekWD0tSI5N7dG3GOD1WSikmGAxQF-"
     );
     imageBuffer = driveImageAsBase64String;
   } catch (err) {
