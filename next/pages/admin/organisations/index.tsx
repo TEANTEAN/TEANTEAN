@@ -144,9 +144,9 @@ const OrganisationManagement = () => {
         onClose={() => setOpenUploadDialog(false)}
         onUploadComplete={() => {}}
         allowedFileTypes={[".png"]}
-        collectionName="roundtable-series" // TODO: CHECK THESE WHEN READY
+        collectionName="roundtable-series" // organisations // TODO: CHECK THESE WHEN READY
         driveFolderName="test upload dialog folder (roundtable-series)"
-        recordId="613230c9a104701f199eb6ff" // the exact record id to attach this file to
+        recordId="613230c9a104701f199eb6ff" // org id  // the exact record id to attach this file to
         recordFieldName="image"
       />
       <Dialog open={!hideForm} onClose={() => setHideForm(true)}>
