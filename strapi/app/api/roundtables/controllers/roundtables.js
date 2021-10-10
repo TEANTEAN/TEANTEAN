@@ -102,16 +102,14 @@ module.exports = {
       /***
        * Merge Calendly's participants' details into Strapi's participants
        */
-      const strapiSet = new Set();
-      for (const participant of roundtable.participants) {
-        strapiSet.add(participant.participantURI);
-      }
-
       for (const participant of invitees) {
         const pURI = participant.uri;
+        let index = roundtable.participants.findIndex(
+          (o) => o.participantURI == pURI
+        );
         // if Strapi does not conatin the entry
         // create one
-        if (!strapiSet.has(pURI)) {
+        if (index === -1) {
           try {
             // create new folder for participant
             const newParticipantFolder = (
@@ -148,9 +146,6 @@ module.exports = {
         } else {
           // if Strapi contains the entry
           // merge Strapi and Calendly by participant
-          let index = roundtable.participants.findIndex(
-            (o) => o.participantURI == pURI
-          );
           roundtable.participants[index] = {
             ...participant,
             ...roundtable.participants[index],
