@@ -1877,9 +1877,9 @@
     react-is "^17.0.2"
 
 "@mui/x-data-grid@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-4.0.0.tgz#e9e9c33a8b86e85872c48f30f4a8de72ee819153"
-  integrity sha512-BYn7uLx5tJbMarcWltjjVArWNBdC22/2xOpq3Azhltbb3TRx3h2RLUeKwZI685xmGHmzvtu6QqaoYqQgFe/h+g==
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-4.0.1.tgz#7b1ad30a8ecf2981a5b7940805daf993ddd73a50"
+  integrity sha512-KFymxOnTNFa7/An5blbNbPBgrjrrZLi3YzFV0uyxcECO/cqWUoaC+/AUct1MaTrnLvc5jjYDglN0IRGwzOAZ4Q==
   dependencies:
     "@material-ui/utils" "^5.0.0-beta.4"
     clsx "^1.1.1"
