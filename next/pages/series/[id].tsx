@@ -10,6 +10,7 @@ import {
 import ReactPlayer from "react-player/youtube";
 import SubHeader from "components/SubHeader";
 import Image from "next/image";
+import { getDriveImageAsString } from "util/DriveController";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -63,7 +64,7 @@ function YouTubeSection(youtube_link: string): JSX.Element {
   );
 }
 
-function DetailsSection({ series }): JSX.Element {
+function DetailsSection({ series, image }): JSX.Element {
   const classes = useStyles();
   return (
     <Grid container className={classes.section}>
@@ -71,13 +72,18 @@ function DetailsSection({ series }): JSX.Element {
         <Typography variant="h5">
           <strong>{series.name}</strong>
         </Typography>
-        <Typography variant="h6">
-          {series.organisation.name}
-        </Typography>
+        <Typography variant="h6">{series.organisation.name}</Typography>
       </Grid>
-      <Grid item className={classes.image}>
-        <Image src="/florey-logo.png" alt="logo" width="200px" height="100px" />
-      </Grid>
+      {image ? (
+        <Grid item className={classes.image}>
+          <Image
+            src={`data:image/png;base64,${image}`}
+            alt="logo"
+            width="200px"
+            height="100px"
+          />
+        </Grid>
+      ) : null}
       <Grid item xs={12} sm={9}>
         <Typography variant="h6">
           <strong>Description</strong>
@@ -103,13 +109,12 @@ function CalendlySection({ series }): JSX.Element {
   );
 }
 
-function Series({ series }): JSX.Element {
-  console.log(series)
+function Series({ series, imageBuffer }): JSX.Element {
   return (
     <>
       <SubHeader> Details </SubHeader>
-      <DetailsSection series={series} />
-      { series.videoLink ? YouTubeSection(series.videoLink) : null } 
+      <DetailsSection series={series} image={imageBuffer} />
+      {series.videoLink ? YouTubeSection(series.videoLink) : null}
       <SubHeader> Register for a Roundtable </SubHeader>
       <CalendlySection series={series} />
     </>
@@ -117,13 +122,25 @@ function Series({ series }): JSX.Element {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+  // get response from
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/roundtable-series/${params.id}`
   );
   const series = await res.json();
 
+  // get image from Google Drive
+  let imageBuffer;
+  try {
+    const driveImageAsBase64String = await getDriveImageAsString(
+      series.organisation.image.driveFileId
+    );
+    imageBuffer = driveImageAsBase64String;
+  } catch (err) {
+    imageBuffer = "";
+  }
+
   return {
-    props: { series },
+    props: { series, imageBuffer },
   };
 };
 
