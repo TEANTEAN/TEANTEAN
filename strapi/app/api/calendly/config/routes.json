@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/calendly/event_types",
+      "handler": "calendly.find",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

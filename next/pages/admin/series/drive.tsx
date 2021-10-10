@@ -12,7 +12,7 @@ import { NextPage } from "next";
 import React, { useEffect, useState } from "react";
 import gnFetch from "util/gnAxiosClient";
 
-const SeriesDrive: NextPage = ({}) => {
+const SeriesDrive: NextPage = () => {
   const [state, setState] = useState({
     series: null,
     roundtables: null,

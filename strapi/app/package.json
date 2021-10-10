@@ -4,7 +4,9 @@
   "version": "0.1.0",
   "description": "A Strapi application",
   "scripts": {
+    "debug": "node --inspect=0.0.0.0:9229 ./node_modules/strapi/bin/strapi develop",
     "develop": "strapi develop",
+    "debug": "node --inspect=0.0.0.0:9229 ./node_modules/strapi/bin/strapi develop",
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi"

@@ -41,6 +41,9 @@
     },
     "meetingFolderId": {
       "type": "string"
+    },
+    "calendlyUri": {
+      "type": "string"
     }
   }
 }

@@ -9,7 +9,7 @@ import Link from "next/link";
 import { makeStyles } from "@material-ui/core/styles";
 // import ResponsiveDataGrid from "components/ResponsiveGrid";
 import gnFetch from "util/gnAxiosClient";
-// import CreateSerieForm from "./create";
+import CreateSeriesForm from "components/pages/admin/series/CreateEditSeriesForm";
 
 const useStyles = makeStyles({
   createButton: {
@@ -27,8 +27,8 @@ const useStyles = makeStyles({
 
 const SeriesManagement = () => {
   const [hideForm, setHideForm] = useState(true);
-  // const [creationMode, setCreationMode] = useState(false);
-  // const [editSerie, setEditSerie] = useState(null);
+  const [creationMode, setCreationMode] = useState(false);
+  const [editSerie, setEditSerie] = useState(null);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
@@ -44,10 +44,15 @@ const SeriesManagement = () => {
     async () => (await gnFetch.get("/organisations")).data
   );
 
+  const calendlySeriesNotYetSynced = useQuery<CalendlySeries[]>(
+    "get-calendly-series",
+    async () => (await gnFetch.get("/calendly/event_types")).data
+  );
+
   const onCreateNewClick = () => {
-    // setEditSerie(null);
-    // setCreationMode(true);
-    // setHideForm(false);
+    setEditSerie(null);
+    setCreationMode(true);
+    setHideForm(false);
   };
 
   const columns: GridColumns = [
@@ -72,7 +77,7 @@ const SeriesManagement = () => {
     allSeriesData.data.forEach((serie) =>
       accountRows.push({
         id: serie.id,
-        title: serie.title,
+        title: serie.name,
         // researchpartner: serie?.researchpartner?.name,
         organisation: serie?.organisation?.name,
         // serieuri: serie.seriesURI,
@@ -103,15 +108,20 @@ const SeriesManagement = () => {
 
       <ResponsiveDataGrid rows={accountRows} columns={columns} />
 
-      {/* <Dialog open={!hideForm} onClose={() => setHideForm(true)}>
-          <CreateSeriesForm
-            organisations={allOrgs.isSuccess ? allOrgs.data : []}
-            handleClose={() => setHideForm(true)}
-            onSubmitSettled={() =>
-              allSeriesData.refetch().then(() => setHideForm(true))
-            }
-          />
-        </Dialog>  */}
+      <Dialog open={!hideForm} onClose={() => setHideForm(true)}>
+        <CreateSeriesForm
+          newSeries={
+            calendlySeriesNotYetSynced.isSuccess
+              ? calendlySeriesNotYetSynced.data
+              : []
+          }
+          organisations={allOrgs.isSuccess ? allOrgs.data : []}
+          handleClose={() => setHideForm(true)}
+          onSubmitSettled={() =>
+            allSeriesData.refetch().then(() => setHideForm(true))
+          }
+        />
+      </Dialog>
     </>
   );
 };

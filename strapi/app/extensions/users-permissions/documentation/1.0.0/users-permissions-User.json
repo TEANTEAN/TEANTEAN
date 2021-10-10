@@ -1251,79 +1251,6 @@
               }
             }
           },
-          "roundtableSeries": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id",
-                "videoLink",
-                "seriesURI",
-                "title"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "researchPartner": {
-                  "type": "string"
-                },
-                "videoLink": {
-                  "type": "string"
-                },
-                "seriesURI": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "organisation": {
-                  "type": "string"
-                },
-                "image": {
-                  "type": "string"
-                },
-                "files": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "roundtables": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "seriesFolderName": {
-                  "type": "string"
-                },
-                "seriesFolderId": {
-                  "type": "string"
-                },
-                "researchPartnerFolderName": {
-                  "type": "string"
-                },
-                "researchPartnerFolderId": {
-                  "type": "string"
-                },
-                "roundtablesFolderId": {
-                  "type": "string"
-                },
-                "roundtablesFolderName": {
-                  "type": "string"
-                },
-                "published_at": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "firstName": {
             "type": "string"
           },
@@ -1340,6 +1267,15 @@
               },
               "name": {
                 "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "users": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "published_at": {
                 "type": "string"
@@ -1398,12 +1334,6 @@
           },
           "role": {
             "type": "string"
-          },
-          "roundtableSeries": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "firstName": {
             "type": "string"

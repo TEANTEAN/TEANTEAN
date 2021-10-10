@@ -1,18 +1,18 @@
 {
   "paths": {
-    "/participants": {
+    "/roundtables": {
       "get": {
         "deprecated": false,
-        "description": "Find all the participants's records",
+        "description": "Find all the roundtables's records",
         "responses": {
           "200": {
-            "description": "Retrieve participants document(s)",
+            "description": "Retrieve roundtables document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Participants"
+                    "$ref": "#/components/schemas/Roundtables"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Participants"
+          "Roundtables"
         ],
         "parameters": [
           {
@@ -194,14 +194,14 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new participants record",
+        "description": "Create a new roundtables record",
         "responses": {
           "200": {
-            "description": "Retrieve participants document(s)",
+            "description": "Retrieve roundtables document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Participants"
+                  "$ref": "#/components/schemas/Roundtables"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Participants"
+          "Roundtables"
         ],
         "requestBody": {
           "description": "",
@@ -247,20 +247,20 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewParticipants"
+                "$ref": "#/components/schemas/NewRoundtables"
               }
             }
           }
         }
       }
     },
-    "/participants/count": {
+    "/roundtables/count": {
       "get": {
         "deprecated": false,
-        "description": "Retrieve the numver of participants documents",
+        "description": "Retrieve the numver of roundtables documents",
         "responses": {
           "200": {
-            "description": "Retrieve participants document(s)",
+            "description": "Retrieve roundtables document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -306,22 +306,22 @@
         },
         "summary": "",
         "tags": [
-          "Participants"
+          "Roundtables"
         ],
         "parameters": []
       }
     },
-    "/participants/{id}": {
+    "/roundtables/{id}": {
       "get": {
         "deprecated": false,
-        "description": "Find one participants record",
+        "description": "Find one roundtables record",
         "responses": {
           "200": {
-            "description": "Retrieve participants document(s)",
+            "description": "Retrieve roundtables document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Participants"
+                  "$ref": "#/components/schemas/Roundtables"
                 }
               }
             }
@@ -359,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Participants"
+          "Roundtables"
         ],
         "parameters": [
           {
@@ -376,14 +376,14 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a single participants record",
+        "description": "Update a single roundtables record",
         "responses": {
           "200": {
-            "description": "Retrieve participants document(s)",
+            "description": "Retrieve roundtables document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Participants"
+                  "$ref": "#/components/schemas/Roundtables"
                 }
               }
             }
@@ -421,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Participants"
+          "Roundtables"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewParticipants"
+                "$ref": "#/components/schemas/NewRoundtables"
               }
             }
           }
@@ -449,10 +449,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single participants record",
+        "description": "Delete a single roundtables record",
         "responses": {
           "200": {
-            "description": "deletes a single participants based on the ID supplied",
+            "description": "deletes a single roundtables based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -495,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Participants"
+          "Roundtables"
         ],
         "parameters": [
           {
@@ -514,7 +514,7 @@
   },
   "components": {
     "schemas": {
-      "Participants": {
+      "Roundtables": {
         "required": [
           "id"
         ],
@@ -522,25 +522,31 @@
           "id": {
             "type": "string"
           },
-          "roundtable": {
+          "series": {
             "required": [
-              "id"
+              "id",
+              "videoLink",
+              "seriesURI",
+              "title"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
-              "series": {
+              "videoLink": {
                 "type": "string"
               },
-              "peerLeader": {
+              "seriesURI": {
                 "type": "string"
               },
-              "participants": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
+              "title": {
+                "type": "string"
+              },
+              "organisation": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
               },
               "files": {
                 "type": "array",
@@ -548,14 +554,11 @@
                   "type": "string"
                 }
               },
-              "meetingFolderName": {
-                "type": "string"
-              },
-              "meetingFolderId": {
-                "type": "string"
-              },
-              "calendlyUri": {
-                "type": "string"
+              "roundtables": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "published_at": {
                 "type": "string"
@@ -568,74 +571,56 @@
               }
             }
           },
-          "note": {
-            "type": "string",
-            "maxLength": 600
-          },
-          "participantURI": {
-            "type": "string"
-          },
-          "certificate": {
+          "peerLeader": {
             "required": [
               "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "driveFileId",
-              "provider"
+              "username",
+              "email"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
-              "name": {
+              "username": {
                 "type": "string"
               },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "driveFileId": {
-                "type": "string"
-              },
-              "previewUrl": {
+              "email": {
                 "type": "string"
               },
               "provider": {
                 "type": "string"
               },
-              "provider_metadata": {
-                "type": "object"
+              "password": {
+                "type": "string"
               },
-              "related": {
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmationToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "organisation": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "logoURL": {
                 "type": "string"
               },
               "created_by": {
@@ -646,81 +631,118 @@
               }
             }
           },
-          "receipt": {
-            "required": [
-              "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "driveFileId",
-              "provider"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "driveFileId": {
-                "type": "string"
-              },
-              "previewUrl": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
+          "participants": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "roundtable": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "participantURI": {
+                  "type": "string"
+                },
+                "certificate": {
+                  "type": "string"
+                },
+                "receipt": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           },
-          "participantFolderId": {
-            "type": "string"
+          "files": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "name",
+                "hash",
+                "mime",
+                "size",
+                "url",
+                "driveFileId",
+                "provider"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "alternativeText": {
+                  "type": "string"
+                },
+                "caption": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "integer"
+                },
+                "height": {
+                  "type": "integer"
+                },
+                "formats": {
+                  "type": "object"
+                },
+                "hash": {
+                  "type": "string"
+                },
+                "ext": {
+                  "type": "string"
+                },
+                "mime": {
+                  "type": "string"
+                },
+                "size": {
+                  "type": "number"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "driveFileId": {
+                  "type": "string"
+                },
+                "previewUrl": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "string"
+                },
+                "provider_metadata": {
+                  "type": "object"
+                },
+                "related": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
           },
-          "participantFolderName": {
+          "roundtableURI": {
             "type": "string"
           },
           "published_at": {
@@ -729,22 +751,21 @@
           }
         }
       },
-      "NewParticipants": {
+      "NewRoundtables": {
         "properties": {
-          "roundtable": {
+          "series": {
             "type": "string"
           },
-          "note": {
-            "type": "string",
-            "maxLength": 600
-          },
-          "participantURI": {
+          "peerLeader": {
             "type": "string"
           },
-          "participantFolderId": {
-            "type": "string"
+          "participants": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
-          "participantFolderName": {
+          "roundtableURI": {
             "type": "string"
           },
           "published_at": {
@@ -763,7 +784,7 @@
   },
   "tags": [
     {
-      "name": "Participants"
+      "name": "Roundtables"
     }
   ]
 }
