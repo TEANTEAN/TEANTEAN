@@ -25,7 +25,8 @@
       "required": true
     },
     "organisation": {
-      "model": "organisation"
+      "model": "organisation",
+      "via": "roundtable_series"
     },
     "image": {
       "model": "file",

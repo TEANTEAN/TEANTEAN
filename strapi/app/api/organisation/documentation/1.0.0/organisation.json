@@ -659,6 +659,76 @@
               }
             }
           },
+          "roundtable_series": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "videoLink",
+                "seriesURI",
+                "title"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "videoLink": {
+                  "type": "string"
+                },
+                "seriesURI": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "organisation": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "files": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "roundtables": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "seriesFolderName": {
+                  "type": "string"
+                },
+                "seriesFolderId": {
+                  "type": "string"
+                },
+                "researchPartnerFolderName": {
+                  "type": "string"
+                },
+                "researchPartnerFolderId": {
+                  "type": "string"
+                },
+                "roundtablesFolderId": {
+                  "type": "string"
+                },
+                "roundtablesFolderName": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -671,6 +741,12 @@
             "type": "string"
           },
           "users": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "roundtable_series": {
             "type": "array",
             "items": {
               "type": "string"
