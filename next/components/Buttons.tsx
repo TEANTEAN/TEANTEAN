@@ -7,7 +7,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import AddIcon from "@material-ui/icons/Add";
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from "@material-ui/icons/Close";
 
 // Current mui button props that we are accepting to build all of our buttons from.
 interface GeneralButtonProps {
@@ -152,14 +152,10 @@ interface IconLabelProps {
 }
 
 // A button that contains text and an icon on a specified side
-export const IconLabelButton: React.FC<IconProps & IconLabelProps> = ({
-  children,
-  type,
-  iconPosition,
-  fontSize,
-  color,
-  onClick,
-}) => {
+export const IconLabelButton: React.FC<IconProps & IconLabelProps> = (
+  props
+) => {
+  const { children, type, iconPosition, fontSize, color, onClick } = props;
   const icon = <IconMaker fontSize={fontSize} type={type} />;
 
   return (
