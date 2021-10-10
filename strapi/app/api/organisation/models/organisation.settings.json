@@ -31,6 +31,10 @@
       "via": "organisation",
       "plugin": "users-permissions",
       "collection": "user"
+    },
+    "roundtable_series": {
+      "via": "organisation",
+      "collection": "roundtable-series"
     }
   }
 }

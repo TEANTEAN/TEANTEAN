@@ -9,6 +9,31 @@ const calendlyAxios = require("../../../util/calendlyAxios");
 const { drive } = require("../../../util/GoogleDrive");
 const getFormattedDate = require("../../../util/formatDate");
 
+async function filteredFind(user) {
+  const entity = await strapi
+    .query("organisation")
+    .findOne({ id: user.organisation });
+
+  const organisation = sanitizeEntity(entity, {
+    model: strapi.models["organisation"],
+  });
+
+  const series = organisation.roundtable_series;
+  let res = new Array(series.length);
+
+  for (let i = 0; i < series.length; i++) {
+    const seriesEntity = await strapi
+      .query("roundtable-series")
+      .findOne({ id: series[i].id });
+    const newSeries = sanitizeEntity(seriesEntity, {
+      model: strapi.models["roundtable-series"],
+    });
+    res[i] = newSeries;
+  }
+
+  return res;
+}
+
 module.exports = {
   async create(ctx) {
     try {
@@ -94,6 +119,13 @@ module.exports = {
   },
 
   async find(ctx) {
+    if ("user" in ctx.state) {
+      const { ...user } = ctx.state.user;
+      if (user.role.type === "research_partner") {
+        return filteredFind(user);
+      }
+    }
+
     const entities = await strapi.services["roundtable-series"].find();
     const allSeries = entities.map((entity) =>
       sanitizeEntity(entity, {
