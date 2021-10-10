@@ -88,10 +88,48 @@ module.exports = {
       return sanitizeEntity(entity, {
         model: strapi.models["roundtable-series"],
       });
-      // folder id
     } catch (e) {
       throw e;
     }
+  },
+
+  async find(ctx) {
+    const entities = await strapi.services["roundtable-series"].find();
+    const allSeries = entities.map((entity) =>
+      sanitizeEntity(entity, {
+        model: strapi.models["roundtable-series"],
+      })
+    );
+
+    const calendlyEventTypesUrl = `https://api.calendly.com/event_types?user=${
+      process.env.CALENDLY_USER_ID ||
+      "https://api.calendly.com/users/EDEFZMCPTDBY2COR"
+    }&count=100`;
+
+    let response = await calendlyAxios(calendlyEventTypesUrl);
+    let eventTypes = response.data.collection;
+
+    // Keep making request if multiple pages
+    while (response.data.pagination.next_page) {
+      response = await calendlyAxios(response.data.pagination.next_page);
+      eventTypes = [...eventTypes, ...response.data.collection];
+    }
+
+    // Merge calendly event type data with series
+    for (let i = 0; i < allSeries.length; i++) {
+      let matchingEventType = eventTypes.find(
+        (eventType) => eventType.uri === allSeries[i].seriesURI
+      );
+
+      if (matchingEventType) {
+        allSeries[i] = {
+          ...allSeries[i],
+          ...matchingEventType,
+        };
+      }
+    }
+
+    return allSeries;
   },
 
   /**
