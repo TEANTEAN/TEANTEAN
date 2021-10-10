@@ -42,14 +42,19 @@ const useStyles = makeStyles(() =>
   })
 );
 
-function YouTubeSection({ series }): JSX.Element {
+// remove the <p></p> surrounding event description
+function trim(string: string): string {
+  return string.substring(3, string.length - 4);
+}
+
+function YouTubeSection(youtube_link: string): JSX.Element {
   const classes = useStyles();
   return (
     <Box className={classes.section}>
       <Box className={classes.playerWrapper}>
         <ReactPlayer
           controls
-          url={series.videoLink}
+          url={youtube_link}
           className={classes.video}
           width="100%"
         />
@@ -60,22 +65,14 @@ function YouTubeSection({ series }): JSX.Element {
 
 function DetailsSection({ series }): JSX.Element {
   const classes = useStyles();
-  const description =
-    "\
-  This research aims to help the Florey Institute understand the support needed by young stroke survivors. \
-  Currently, the majority of the literature focuses on the elderly. \
-  Information such as medical history, healthcare experience, and post stroke symptoms will be collected. \
-  This information will help to create policies and direct funding to resources more suitable and accessible for young stroke survivors. \
-  Organized as a friendly roundtable discussion, each meeting allows participants to meet their peers who are also young stroke survivors. Participants have the opportunity to get their voice heard while speaking to their peers. \
-  ";
   return (
     <Grid container className={classes.section}>
       <Grid item xs={12} className={classes.title}>
         <Typography variant="h5">
-          <strong>{series.title}</strong>
+          <strong>{series.name}</strong>
         </Typography>
         <Typography variant="h6">
-          by The Florey Institute of Neuroscience
+          {series.organisation.name}
         </Typography>
       </Grid>
       <Grid item className={classes.image}>
@@ -85,7 +82,7 @@ function DetailsSection({ series }): JSX.Element {
         <Typography variant="h6">
           <strong>Description</strong>
         </Typography>
-        <Typography variant="body1">{description}</Typography>
+        <Typography variant="body1">{trim(series.description_html)}</Typography>
       </Grid>
     </Grid>
   );
@@ -96,7 +93,8 @@ function CalendlySection({ series }): JSX.Element {
   return (
     <Grid container className={classes.section}>
       <iframe
-        src={series.schedulingUrl}
+        data-cy="calendar"
+        src={series.scheduling_url}
         title="booking"
         className={classes.calendar}
         frameBorder="0"
@@ -106,11 +104,12 @@ function CalendlySection({ series }): JSX.Element {
 }
 
 function Series({ series }): JSX.Element {
+  console.log(series)
   return (
     <>
       <SubHeader> Details </SubHeader>
       <DetailsSection series={series} />
-      <YouTubeSection series={series} />
+      { series.videoLink ? YouTubeSection(series.videoLink) : null } 
       <SubHeader> Register for a Roundtable </SubHeader>
       <CalendlySection series={series} />
     </>
