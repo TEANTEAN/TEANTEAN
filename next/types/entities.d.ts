@@ -53,6 +53,7 @@ interface Organisation {
 }
 
 interface RoundtableSeries {
+  id: string;
   title: string;
   description: string;
   researchPartner: User;

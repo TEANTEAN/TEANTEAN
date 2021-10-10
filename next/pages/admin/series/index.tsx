@@ -1,62 +1,125 @@
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { useForm } from "react-hook-form";
-import IconButton from "@material-ui/core/IconButton";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
-import { NextPage } from "next";
-import SeriesTable, { SeriesData } from "components/SeriesTable";
-import { GeneralButton } from "components/Buttons";
+import { Box, Dialog, Fab, useMediaQuery, useTheme } from "@material-ui/core";
+import { GridColumns, GridRowData } from "@mui/x-data-grid";
+import AddIcon from "@material-ui/icons/Add";
+import { GeneralButton, IconLabelButton } from "components/Buttons";
+import ResponsiveDataGrid from "components/ResponsiveGrid";
+import React, { useState } from "react";
+import { useQuery } from "react-query";
+import Link from "next/link";
+import { makeStyles } from "@material-ui/core/styles";
+// import ResponsiveDataGrid from "components/ResponsiveGrid";
+import gnFetch from "util/gnAxiosClient";
+// import CreateSerieForm from "./create";
 
-const buttonToDrive = <GeneralButton href="/admin/series/drive">FILES</GeneralButton>;
-const buttonToParticipants = <GeneralButton href="/admin/series/participants">TRACK</GeneralButton>;
-const testData: SeriesData[] = [
-  {
-    seriesName: "PPE and Me",
-    researcherName: "Unimelb",
-    beginDate: new Date("2021-02-11T10:00"),
-    endDate: new Date("2021-08-11T10:00"),
-    children1: buttonToDrive,
-    children2: buttonToParticipants,
+const useStyles = makeStyles({
+  createButton: {
+    marginBottom: 12,
   },
-  {
-    seriesName: "PPE and Me2",
-    researcherName: "Unimelb2",
-    beginDate: new Date("2021-02-11T10:00"),
-    endDate: new Date("2021-08-11T10:00"),
-    children1: buttonToDrive,
-    children2: buttonToParticipants,
+  fab: {
+    margin: "0px",
+    top: "auto",
+    right: "30px",
+    bottom: "30px",
+    left: "auto",
+    position: "fixed",
   },
-  {
-    seriesName: "PPE and Me3",
-    researcherName: "Unimelb3",
-    beginDate: new Date("2021-02-11T10:00"),
-    endDate: new Date("2021-08-11T10:00"),
-    children1: buttonToDrive,
-    children2: buttonToParticipants,
-  },
-];
+});
 
-function SeriesListPage(): JSX.Element {
-  return (
-    <Grid container xs={12}>
-      <Grid container xs={12}>
-        <Grid item xs={4} style={{ padding: "48px", marginLeft: "48px" }}>
-          <Typography variant="h4">SERIES</Typography>
-        </Grid>
+const SeriesManagement = () => {
+  const [hideForm, setHideForm] = useState(true);
+  // const [creationMode, setCreationMode] = useState(false);
+  // const [editSerie, setEditSerie] = useState(null);
 
-        <Grid item xs={6} style={{ padding: "24px" }}>
-          <GeneralButton> CREATE NEW </GeneralButton>
-        </Grid>
-      </Grid>
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const classes = useStyles();
 
-      <Grid container item md={8} xs={12}>
-        <Grid item xs={12} style={{ padding: "24px 24px 0 24px" }}>
-          <SeriesTable data={testData} />
-        </Grid>
-      </Grid>
-    </Grid>
+  const allSeriesData = useQuery<RoundtableSeries[]>(
+    "get-all-series",
+    async () => (await gnFetch.get("/roundtable-series/")).data
   );
-}
-export default SeriesListPage;
+
+  const allOrgs = useQuery<Organisation[]>(
+    "get-series-organisations",
+    async () => (await gnFetch.get("/organisations")).data
+  );
+
+  const onCreateNewClick = () => {
+    // setEditSerie(null);
+    // setCreationMode(true);
+    // setHideForm(false);
+  };
+
+  const columns: GridColumns = [
+    { field: "title", headerName: "Series", flex: 1 },
+    // { field: "researchpartner", headerName: "Research Partner", flex: 1 },
+    { field: "organisation", headerName: "Organisation", flex: 1 },
+    // { field: "serieuri", headerName: "Link", flex: 1 },
+    {
+      field: "id",
+      headerName: "Details",
+      flex: 1,
+      renderCell: ({ id }) => (
+        <Link href={`/admin/series/${id}`} passHref>
+          <GeneralButton>Details</GeneralButton>
+        </Link>
+      ),
+    },
+  ];
+
+  const accountRows: GridRowData[] = [];
+  if (allSeriesData.isSuccess) {
+    allSeriesData.data.forEach((serie) =>
+      accountRows.push({
+        id: serie.id,
+        title: serie.title,
+        // researchpartner: serie?.researchpartner?.name,
+        organisation: serie?.organisation?.name,
+        // serieuri: serie.seriesURI,
+      })
+    );
+  }
+
+  return (
+    <>
+      <h1>Series Overview</h1>
+      {!isMobile && (
+        <Box className={classes.createButton}>
+          <IconLabelButton
+            type="add"
+            iconPosition="start"
+            onClick={onCreateNewClick}
+          >
+            CREATE NEW SERIES
+          </IconLabelButton>
+        </Box>
+      )}
+
+      {isMobile && (
+        <Fab className={classes.fab} color="primary" onClick={onCreateNewClick}>
+          <AddIcon />
+        </Fab>
+      )}
+
+      <ResponsiveDataGrid rows={accountRows} columns={columns} />
+
+      {/* <Dialog open={!hideForm} onClose={() => setHideForm(true)}>
+          <CreateSeriesForm
+            organisations={allOrgs.isSuccess ? allOrgs.data : []}
+            handleClose={() => setHideForm(true)}
+            onSubmitSettled={() =>
+              allSeriesData.refetch().then(() => setHideForm(true))
+            }
+          />
+        </Dialog>  */}
+    </>
+  );
+};
+
+export default SeriesManagement;
+
+/*  renderCell: (id: any) => (
+        <Link href={`/admin/series/details${id}`} passHref>
+          <GeneralButton>Details</GeneralButton>
+        </Link>
+      ), */
