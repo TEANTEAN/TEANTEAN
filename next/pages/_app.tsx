@@ -70,6 +70,7 @@ const App = ({ Component, pageProps }: AppProps) => (
           name="viewport"
           content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1"
         />
+        <title>genyus Roundtable</title>
       </Head>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <ThemeProvider theme={theme}>
