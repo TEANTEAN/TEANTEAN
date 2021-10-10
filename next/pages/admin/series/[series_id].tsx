@@ -27,11 +27,20 @@ const AdminSeriesPage = () => {
   const { series_id: seriesId } = router.query;
 
   const [openUploadDialog, setOpenUploadDialog] = React.useState(false);
+  const [editUrl, setEditUrl] = React.useState(false);
+  const [tempUrl, setTempUrl] = React.useState(null);
 
   const seriesData = useQuery<RoundtableSeries>(
     "get-specific-series",
     async () => (await gnFetch.get(`/roundtable-series/${seriesId}`)).data
   );
+
+  const onUrlSubmit = () => {
+    gnFetch.put(`/roundtable-series/${seriesId}`, { videoLink: tempUrl });
+    seriesData.refetch();
+    setTempUrl(null);
+    setEditUrl(false);
+  };
 
   if (seriesData.isSuccess) {
     console.log(seriesData.data);
@@ -44,7 +53,7 @@ const AdminSeriesPage = () => {
       createdAt,
       seriesFolderName,
       organisation,
-      files,
+      image,
       videoLink,
       roundtables,
     } = seriesData.data;
@@ -124,17 +133,28 @@ const AdminSeriesPage = () => {
           <TableRow>
             <TableCell>Video URL</TableCell>
             <TableCell>
-              {videoLink.length === 0 ? "No Link Provided" : videoLink}
+              {editUrl ? (
+                <Input
+                  value={tempUrl ?? videoLink}
+                  onChange={(e) => setTempUrl(e.target.value)}
+                />
+              ) : (
+                videoLink ?? "No Link Provided"
+              )}
             </TableCell>
             <TableCell>
-              <GeneralButton>Edit</GeneralButton>
+              {!editUrl ? (
+                <GeneralButton onClick={() => setEditUrl(true)}>
+                  Edit
+                </GeneralButton>
+              ) : (
+                <GeneralButton onClick={onUrlSubmit}>Save</GeneralButton>
+              )}
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Logo</TableCell>
-            <TableCell>
-              {files.length === 0 ? "no files found" : "files found"}
-            </TableCell>
+            <TableCell>{image.driveFileUrl ?? "no image found"}</TableCell>
             <TableCell>
               <GeneralButton onClick={() => setOpenUploadDialog(true)}>
                 Upload
