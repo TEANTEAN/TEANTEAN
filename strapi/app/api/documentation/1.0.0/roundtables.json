@@ -1,82 +1,18 @@
 {
   "paths": {
-    "/users-permissions/roles/{id}": {
+    "/roundtables": {
       "get": {
         "deprecated": false,
-        "description": "Retrieve a role depending on its id",
+        "description": "Find all the roundtables's records",
         "responses": {
           "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsersPermissionsRole"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "UsersPermissions - Role"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/users-permissions/roles": {
-      "get": {
-        "deprecated": false,
-        "description": "Retrieve all role documents",
-        "responses": {
-          "200": {
-            "description": "response",
+            "description": "Retrieve roundtables document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UsersPermissionsRole"
+                    "$ref": "#/components/schemas/Roundtables"
                   }
                 }
               }
@@ -115,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "UsersPermissions - Role"
+          "Roundtables"
         ],
         "parameters": [
           {
@@ -258,14 +194,14 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new role",
+        "description": "Create a new roundtables record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve roundtables document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsersPermissionsRole"
+                  "$ref": "#/components/schemas/Roundtables"
                 }
               }
             }
@@ -303,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "UsersPermissions - Role"
+          "Roundtables"
         ],
         "requestBody": {
           "description": "",
@@ -311,99 +247,26 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewUsersPermissionsRole"
+                "$ref": "#/components/schemas/NewRoundtables"
               }
             }
           }
         }
       }
     },
-    "/users-permissions/roles/{role}": {
-      "put": {
+    "/roundtables/count": {
+      "get": {
         "deprecated": false,
-        "description": "Update a role",
+        "description": "Retrieve the numver of roundtables documents",
         "responses": {
           "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsersPermissionsRole"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "UsersPermissions - Role"
-        ],
-        "parameters": [
-          {
-            "name": "role",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewUsersPermissionsRole"
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "deprecated": false,
-        "description": "Delete a role",
-        "responses": {
-          "200": {
-            "description": "response",
+            "description": "Retrieve roundtables document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "properties": {
-                    "foo": {
-                      "type": "string"
+                    "count": {
+                      "type": "integer"
                     }
                   }
                 }
@@ -443,11 +306,200 @@
         },
         "summary": "",
         "tags": [
-          "UsersPermissions - Role"
+          "Roundtables"
+        ],
+        "parameters": []
+      }
+    },
+    "/roundtables/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "Find one roundtables record",
+        "responses": {
+          "200": {
+            "description": "Retrieve roundtables document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Roundtables"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Roundtables"
         ],
         "parameters": [
           {
-            "name": "role",
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "put": {
+        "deprecated": false,
+        "description": "Update a single roundtables record",
+        "responses": {
+          "200": {
+            "description": "Retrieve roundtables document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Roundtables"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Roundtables"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewRoundtables"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "deprecated": false,
+        "description": "Delete a single roundtables record",
+        "responses": {
+          "200": {
+            "description": "deletes a single roundtables based on the ID supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Roundtables"
+        ],
+        "parameters": [
+          {
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -462,55 +514,149 @@
   },
   "components": {
     "schemas": {
-      "UsersPermissionsRole": {
+      "Roundtables": {
         "required": [
-          "id",
-          "name"
+          "id"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "name": {
-            "type": "string",
-            "minLength": 3
+          "series": {
+            "required": [
+              "id",
+              "videoLink",
+              "seriesURI",
+              "title"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "videoLink": {
+                "type": "string"
+              },
+              "seriesURI": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "organisation": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "roundtables": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
-          "description": {
-            "type": "string"
+          "peerLeader": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmationToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "organisation": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "logoURL": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
-          "type": {
-            "type": "string"
-          },
-          "permissions": {
+          "participants": {
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "type",
-                "controller",
-                "action",
-                "enabled"
+                "id"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "type": {
+                "roundtable": {
                   "type": "string"
                 },
-                "controller": {
+                "note": {
                   "type": "string"
                 },
-                "action": {
+                "participantURI": {
                   "type": "string"
                 },
-                "enabled": {
-                  "type": "boolean"
-                },
-                "policy": {
+                "certificate": {
                   "type": "string"
                 },
-                "role": {
+                "receipt": {
+                  "type": "string"
+                },
+                "published_at": {
                   "type": "string"
                 },
                 "created_by": {
@@ -522,58 +668,69 @@
               }
             }
           },
-          "users": {
+          "files": {
             "type": "array",
             "items": {
               "required": [
                 "id",
-                "username",
-                "email"
+                "name",
+                "hash",
+                "mime",
+                "size",
+                "url",
+                "driveFileId",
+                "provider"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "username": {
+                "name": {
                   "type": "string"
                 },
-                "email": {
+                "alternativeText": {
+                  "type": "string"
+                },
+                "caption": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "integer"
+                },
+                "height": {
+                  "type": "integer"
+                },
+                "formats": {
+                  "type": "object"
+                },
+                "hash": {
+                  "type": "string"
+                },
+                "ext": {
+                  "type": "string"
+                },
+                "mime": {
+                  "type": "string"
+                },
+                "size": {
+                  "type": "number"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "driveFileId": {
+                  "type": "string"
+                },
+                "previewUrl": {
                   "type": "string"
                 },
                 "provider": {
                   "type": "string"
                 },
-                "password": {
-                  "type": "string"
+                "provider_metadata": {
+                  "type": "object"
                 },
-                "resetPasswordToken": {
-                  "type": "string"
-                },
-                "confirmationToken": {
-                  "type": "string"
-                },
-                "confirmed": {
-                  "type": "boolean"
-                },
-                "blocked": {
-                  "type": "boolean"
-                },
-                "role": {
-                  "type": "string"
-                },
-                "firstName": {
-                  "type": "string"
-                },
-                "lastName": {
-                  "type": "string"
-                },
-                "organisation": {
-                  "type": "string"
-                },
-                "phone": {
-                  "type": "string"
-                },
-                "logoURL": {
+                "related": {
                   "type": "string"
                 },
                 "created_by": {
@@ -584,35 +741,36 @@
                 }
               }
             }
+          },
+          "roundtableURI": {
+            "type": "string"
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
-      "NewUsersPermissionsRole": {
-        "required": [
-          "name"
-        ],
+      "NewRoundtables": {
         "properties": {
-          "name": {
+          "series": {
+            "type": "string"
+          },
+          "peerLeader": {
+            "type": "string"
+          },
+          "participants": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "roundtableURI": {
+            "type": "string"
+          },
+          "published_at": {
             "type": "string",
-            "minLength": 3
-          },
-          "description": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "permissions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "users": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "format": "date-time"
           },
           "created_by": {
             "type": "string"
@@ -626,7 +784,7 @@
   },
   "tags": [
     {
-      "name": "UsersPermissions - Role"
+      "name": "Roundtables"
     }
   ]
 }

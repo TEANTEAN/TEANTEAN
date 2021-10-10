@@ -59,10 +59,6 @@
       "plugin": "users-permissions",
       "configurable": false
     },
-    "roundtableSeries": {
-      "via": "researchPartner",
-      "collection": "roundtable-series"
-    },
     "firstName": {
       "type": "string"
     },

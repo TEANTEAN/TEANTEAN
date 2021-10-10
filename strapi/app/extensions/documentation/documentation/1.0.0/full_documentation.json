@@ -5038,72 +5038,6 @@
           "id": {
             "type": "string"
           },
-          "researchPartner": {
-            "required": [
-              "id",
-              "username",
-              "email"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "username": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              },
-              "resetPasswordToken": {
-                "type": "string"
-              },
-              "confirmationToken": {
-                "type": "string"
-              },
-              "confirmed": {
-                "type": "boolean"
-              },
-              "blocked": {
-                "type": "boolean"
-              },
-              "role": {
-                "type": "string"
-              },
-              "roundtableSeries": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "firstName": {
-                "type": "string"
-              },
-              "lastName": {
-                "type": "string"
-              },
-              "organisation": {
-                "type": "string"
-              },
-              "phone": {
-                "type": "string"
-              },
-              "logoURL": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "videoLink": {
             "type": "string"
           },
@@ -5360,9 +5294,6 @@
           "title"
         ],
         "properties": {
-          "researchPartner": {
-            "type": "string"
-          },
           "videoLink": {
             "type": "string"
           },
@@ -5428,9 +5359,6 @@
             ],
             "properties": {
               "id": {
-                "type": "string"
-              },
-              "researchPartner": {
                 "type": "string"
               },
               "videoLink": {
@@ -5525,12 +5453,6 @@
               },
               "role": {
                 "type": "string"
-              },
-              "roundtableSeries": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "firstName": {
                 "type": "string"
@@ -5821,12 +5743,6 @@
                 "role": {
                   "type": "string"
                 },
-                "roundtableSeries": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "firstName": {
                   "type": "string"
                 },
@@ -6102,12 +6018,6 @@
           },
           "role": {
             "type": "string"
-          },
-          "roundtableSeries": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "firstName": {
             "type": "string"
