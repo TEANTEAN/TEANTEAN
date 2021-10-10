@@ -18,7 +18,11 @@ import { Alert } from "@material-ui/lab";
 import { Cloud, CloudUpload, DateRange } from "@material-ui/icons";
 import { GeneralButton } from "components/Buttons";
 import ResponsiveDataGrid from "components/ResponsiveGrid";
-import { GridRowData, GridColumns, GridRenderCellParams } from "@mui/x-data-grid";
+import {
+  GridRowData,
+  GridColumns,
+  GridRenderCellParams,
+} from "@mui/x-data-grid";
 
 function RoundtableTitle(
   series: RoundtableSeries,
@@ -142,6 +146,7 @@ function RoundtableParticipants(roundtable: Roundtable): JSX.Element {
         Participants
       </Typography>
       <ResponsiveDataGrid
+        // @ts-ignore
         dataGridProps={{ disableSelectionOnClick: true }}
         rows={participantRows}
         columns={participantsColumn}
