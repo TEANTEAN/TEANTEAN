@@ -3,6 +3,7 @@ import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import AppBar from "@material-ui/core/AppBar";
 import MenuIcon from "@material-ui/icons/Menu";
+import EventNoteIcon from '@material-ui/icons/EventNote';
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
@@ -45,6 +46,14 @@ const useStyles = makeStyles((theme: Theme) =>
     roundtableText: {
       marginLeft: "8px",
     },
+
+    calendlyIcon: {
+      marginRight: theme.spacing(0.5),
+    },
+    calendlyText: {
+      marginRight: "6px",
+      fontWeight: 500,
+    },
   })
 );
 
@@ -82,6 +91,17 @@ export default function SideNav(props: AppBarProps) {
           </Button>
         </Link>
         <Box flexGrow={1} />
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          href="https://calendly.com/genyusroundtable"
+          onClick={handleDrawerToggle}
+          className={classes.calendlyIcon}
+        >
+          <EventNoteIcon/>
+          <Typography className={classes.calendlyText}> Calendly</Typography>
+        </IconButton>
       </Toolbar>
     </AppBar>
   );
