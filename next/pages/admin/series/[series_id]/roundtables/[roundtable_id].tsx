@@ -18,7 +18,7 @@ import { Alert } from "@material-ui/lab";
 import { Cloud, CloudUpload, DateRange } from "@material-ui/icons";
 import { GeneralButton } from "components/Buttons";
 import ResponsiveDataGrid from "components/ResponsiveGrid";
-import { GridRowData, GridColumns } from "@mui/x-data-grid";
+import { GridRowData, GridColumns, GridRenderCellParams } from "@mui/x-data-grid";
 
 function RoundtableTitle(
   series: RoundtableSeries,
@@ -53,8 +53,8 @@ const participantsColumn: GridColumns = [
     field: "actions",
     headerName: "Actions",
     flex: 1,
-    renderCell: () => (
-      <Link href="https://calendly.com/event_types/user/me">
+    renderCell: (params: GridRenderCellParams) => (
+      <Link href={`/admin/participant/${params.row.id}`}>
         <GeneralButton>Details</GeneralButton>
       </Link>
     ),
