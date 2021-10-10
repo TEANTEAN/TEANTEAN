@@ -92,6 +92,7 @@ interface RoundtableSeries extends CalendlySeries {
   published_at: string;
   createdAt: string;
   updatedAt: string;
+  roundtables: Roundtable[];
 }
 
 interface File {
