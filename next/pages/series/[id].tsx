@@ -43,11 +43,11 @@ const useStyles = makeStyles(() =>
 );
 
 // remove the <p></p> surrounding event description
-function trim(string: String): String {
+function trim(string: string): string {
   return string.substring(3, string.length - 4);
 }
 
-function YouTubeSection(youtube_link: String): JSX.Element {
+function YouTubeSection(youtube_link: string): JSX.Element {
   const classes = useStyles();
   return (
     <Box className={classes.section}>
