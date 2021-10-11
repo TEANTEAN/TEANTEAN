@@ -247,6 +247,7 @@ module.exports = {
           )} - ${getFormattedDate(endTime)}) - ${calendlyRoundtable.uri
             .split("/")
             .pop()}`;
+          const researcherFolderName = "RESEARCHER SHARED " + meetingFolderName;
           const newFolder = await drive.files.create({
             supportsAllDrives: true,
             supportsTeamDrives: true,
@@ -258,9 +259,22 @@ module.exports = {
             },
           });
 
+          const newResearchPartnerFolder = await drive.files.create({
+            supportsAllDrives: true,
+            supportsTeamDrives: true,
+            fields: "id, name",
+            requestBody: {
+              mimeType: "application/vnd.google-apps.folder",
+              name: researcherFolderName,
+              parents: [`${series.roundtablesFolderId}`], // parent folder is series/roundtables/
+            },
+          });
+
           const newRoundtable = await strapi.services["roundtables"].create({
             meetingFolderName: newFolder.data.name,
             meetingFolderId: newFolder.data.id,
+            researchPartnerFolderId: newResearchPartnerFolder.data.id,
+            researchPartnerFolderName: newResearchPartnerFolder.data.name,
             calendlyUri: calendlyRoundtable.uri,
             series: series.id,
           });
