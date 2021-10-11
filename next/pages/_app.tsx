@@ -18,7 +18,13 @@ import PublicNavigation from "components/PublicNavigation";
 import { SnackbarProvider } from "notistack";
 import Breadcrumbs from "components/Breadcrumbs";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 0,
+    },
+  },
+});
 
 const AdminWrapper = ({ Component, pageProps }) => {
   const { session, haveAuthenticated } = withAuth({

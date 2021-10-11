@@ -185,7 +185,7 @@ module.exports = {
       /**
        * Relevant event fields:
        *  - name
-       *  - description_plain
+       *  - description_html
        *  - duration
        *  - created_at
        *  - scheduling_url

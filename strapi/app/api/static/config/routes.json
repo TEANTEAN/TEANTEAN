@@ -1,0 +1,21 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/static/roundtable-series",
+      "handler": "static.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/static/roundtable-series/:id",
+      "handler": "static.findOne",
+      "config": {
+        "policies": []
+      }
+    }
+  
+  ]
+}
