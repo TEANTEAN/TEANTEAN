@@ -3,7 +3,7 @@ name: Backend Pipeline
 on:
   push:
     branches:
-      - main
+      - deploy
     paths:
       - "strapi/app/**"
       - ".github/workflows/backend.yml"
