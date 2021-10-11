@@ -778,6 +778,15 @@
           "calendlyUri": {
             "type": "string"
           },
+          "researchPartnerFolderId": {
+            "type": "string"
+          },
+          "researchPartnerFolderName": {
+            "type": "string"
+          },
+          "recordingLink": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -805,6 +814,15 @@
             "type": "string"
           },
           "calendlyUri": {
+            "type": "string"
+          },
+          "researchPartnerFolderId": {
+            "type": "string"
+          },
+          "researchPartnerFolderName": {
+            "type": "string"
+          },
+          "recordingLink": {
             "type": "string"
           },
           "published_at": {

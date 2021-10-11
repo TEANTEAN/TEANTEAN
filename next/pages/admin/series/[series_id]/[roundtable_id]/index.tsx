@@ -11,7 +11,9 @@ import {
   TableRow,
   Typography,
   Card,
+  Input,
   makeStyles,
+  CircularProgress,
 } from "@material-ui/core";
 import gnFetch from "util/gnAxiosClient";
 import { useQuery } from "react-query";
@@ -21,6 +23,7 @@ import ResponsiveDataGrid from "components/ResponsiveGrid";
 import { GridColumns, GridRenderCellParams } from "@mui/x-data-grid";
 import LoadingScreen from "components/LoadingScreen";
 import NextLink from "next/link";
+import { getDriveFolderUrl } from "util/createDriveUrl";
 
 const useStyles = makeStyles({
   heading: {
@@ -33,6 +36,9 @@ const useStyles = makeStyles({
 });
 
 function Roundtable(): JSX.Element {
+  const [editUrl, setEditUrl] = React.useState(false);
+  const [tempUrl, setTempUrl] = React.useState(null);
+  const [pending, setPending] = React.useState(false);
   const router = useRouter();
   const classes = useStyles();
   const { series_id: seriesId, roundtable_id: roundtableId } = router.query;
@@ -45,6 +51,24 @@ function Roundtable(): JSX.Element {
     "get-roundtables",
     async () => (await gnFetch.get(`/roundtables/${roundtableId}`)).data
   );
+
+  const onUrlSubmit = async () => {
+    try {
+      if (tempUrl) {
+        setPending(true);
+        await gnFetch.put(`/roundtables/${roundtableId}`, {
+          recordingLink: tempUrl,
+        });
+        roundtable.refetch();
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setPending(false);
+      setTempUrl(null);
+      setEditUrl(false);
+    }
+  };
 
   if (!series.isSuccess || !roundtable.isSuccess) return <LoadingScreen />;
 
@@ -138,6 +162,70 @@ function Roundtable(): JSX.Element {
                   <TableCell>Created At</TableCell>
                   <TableCell>
                     {`${createdAt?.toDateString()} - ${createdAt?.toLocaleTimeString()}`}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Recording Link</TableCell>
+                  <TableCell>
+                    {editUrl ? (
+                      <Input
+                        value={tempUrl ?? roundtable?.data?.recordingLink}
+                        onChange={(e) => setTempUrl(e.target.value)}
+                      />
+                    ) : (
+                      roundtable?.data?.recordingLink ?? "No Link Provided"
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {!pending && (
+                      <>
+                        {!editUrl ? (
+                          <GeneralButton onClick={() => setEditUrl(true)}>
+                            Edit
+                          </GeneralButton>
+                        ) : (
+                          <>
+                            <GeneralButton
+                              disabled={pending}
+                              onClick={onUrlSubmit}
+                            >
+                              Save
+                            </GeneralButton>
+                          </>
+                        )}
+                      </>
+                    )}
+                    {pending && <CircularProgress size={16} />}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Drive Folder Link</TableCell>
+                  <TableCell>
+                    <Link
+                      href={getDriveFolderUrl(
+                        roundtable?.data?.meetingFolderId
+                      )}
+                    >
+                      {getDriveFolderUrl(
+                        roundtable?.data?.meetingFolderId
+                      ).slice(0, 30)}
+                      ...
+                    </Link>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Research Partner Folder Link</TableCell>
+                  <TableCell>
+                    <Link
+                      href={getDriveFolderUrl(
+                        roundtable?.data?.researchPartnerFolderId
+                      )}
+                    >
+                      {getDriveFolderUrl(
+                        roundtable?.data?.researchPartnerFolderId
+                      ).slice(0, 30)}
+                      ...
+                    </Link>
                   </TableCell>
                 </TableRow>
               </TableBody>

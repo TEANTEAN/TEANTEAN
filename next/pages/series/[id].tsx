@@ -151,7 +151,7 @@ export async function getStaticPaths() {
   );
   const series = await res.json();
 
-  const paths = series?.map((serie) => ({
+  const paths = series.map((serie) => ({
     params: { id: serie.id },
   }));
 

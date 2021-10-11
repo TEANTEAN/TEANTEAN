@@ -13,6 +13,9 @@ interface Roundtable {
   files: File[];
   meetingFolderName: string;
   meetingFolderId: string;
+  recordingLink: string;
+  researchPartnerFolderName: string;
+  researchPartnerFolderId: string;
   published_at: Date;
   created_at: Date;
   status: string;

@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "10/11/2021 1:25:31 PM"
+    "x-generation-date": "10/11/2021 3:14:17 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -5309,6 +5309,15 @@
               "calendlyUri": {
                 "type": "string"
               },
+              "researchPartnerFolderId": {
+                "type": "string"
+              },
+              "researchPartnerFolderName": {
+                "type": "string"
+              },
+              "recordingLink": {
+                "type": "string"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -5624,6 +5633,15 @@
                   "type": "string"
                 },
                 "calendlyUri": {
+                  "type": "string"
+                },
+                "researchPartnerFolderId": {
+                  "type": "string"
+                },
+                "researchPartnerFolderName": {
+                  "type": "string"
+                },
+                "recordingLink": {
                   "type": "string"
                 },
                 "published_at": {
@@ -5981,6 +5999,15 @@
           "calendlyUri": {
             "type": "string"
           },
+          "researchPartnerFolderId": {
+            "type": "string"
+          },
+          "researchPartnerFolderName": {
+            "type": "string"
+          },
+          "recordingLink": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -6008,6 +6035,15 @@
             "type": "string"
           },
           "calendlyUri": {
+            "type": "string"
+          },
+          "researchPartnerFolderId": {
+            "type": "string"
+          },
+          "researchPartnerFolderName": {
+            "type": "string"
+          },
+          "recordingLink": {
             "type": "string"
           },
           "published_at": {

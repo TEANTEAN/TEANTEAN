@@ -25,6 +25,7 @@ import UploadDialog from "components/Upload/UploadDialog";
 import ResponsiveDataGrid from "components/ResponsiveGrid";
 import NextLink from "next/link";
 import LoadingScreen from "components/LoadingScreen";
+import { getDriveFolderUrl } from "util/createDriveUrl";
 
 const useStyles = makeStyles({
   createButton: {
@@ -216,6 +217,18 @@ const AdminSeriesPage = () => {
                   <GeneralButton onClick={() => setOpenUploadDialog(true)}>
                     Upload
                   </GeneralButton>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Drive Folder Link</TableCell>
+                <TableCell>
+                  <a href={getDriveFolderUrl(seriesData?.data?.seriesFolderId)}>
+                    {getDriveFolderUrl(seriesData?.data?.seriesFolderId).slice(
+                      0,
+                      30
+                    )}
+                    ...
+                  </a>
                 </TableCell>
               </TableRow>
             </Table>
