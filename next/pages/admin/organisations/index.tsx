@@ -20,6 +20,7 @@ import {
 import ResponsiveDataGrid from "components/ResponsiveGrid";
 import OrganisationForm from "components/Form/organisationForm";
 import UploadDialog from "components/Upload/UploadDialog";
+import LoadingScreen from "components/LoadingScreen";
 
 const useStyles = makeStyles({
   createButton: {
@@ -156,6 +157,9 @@ const OrganisationManagement = () => {
     ),
     [orgIdToUpload]
   );
+
+  if (!allOrgs.isSuccess || !allSeries.isSuccess || !allUserData.isSuccess)
+    return <LoadingScreen />;
 
   return (
     <>
