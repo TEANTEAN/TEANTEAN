@@ -48,6 +48,11 @@ const AppWrapper = ({ Component, pageProps }) => {
     return null;
   }
 
+  // No wrapper for login
+  if (router.pathname.includes("/login")) {
+    return <Component {...pageProps} />;
+  }
+
   // If user is logged in and the route includes /admin, render the admin navigation skeleton and page
   if (router.pathname.includes("/admin")) {
     return <AdminWrapper Component={Component} pageProps={pageProps} />;

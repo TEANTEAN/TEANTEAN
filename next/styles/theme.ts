@@ -1,5 +1,8 @@
 import { createTheme, responsiveFontSizes } from "@material-ui/core/styles";
 
+// yellow paper
+export const paper: String = "#f3efde"
+
 const theme = createTheme({
   palette: {
     // The genyus blue
