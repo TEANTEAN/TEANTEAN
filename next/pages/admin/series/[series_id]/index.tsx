@@ -14,6 +14,7 @@ import {
   makeStyles,
   useMediaQuery,
   useTheme,
+  CircularProgress,
 } from "@material-ui/core";
 import { GridRenderCellParams, GridColumns } from "@mui/x-data-grid";
 import gnFetch from "util/gnAxiosClient";
@@ -54,19 +55,29 @@ const AdminSeriesPage = () => {
   const [openUploadDialog, setOpenUploadDialog] = React.useState(false);
   const [editUrl, setEditUrl] = React.useState(false);
   const [tempUrl, setTempUrl] = React.useState(null);
+  const [pending, setPending] = React.useState(false);
 
   const seriesData = useQuery<RoundtableSeries>(
     "get-specific-series",
     async () => (await gnFetch.get(`/roundtable-series/${seriesId}`)).data
   );
 
-  const onUrlSubmit = () => {
-    if (tempUrl) {
-      gnFetch.put(`/roundtable-series/${seriesId}`, { videoLink: tempUrl });
-      seriesData.refetch();
+  const onUrlSubmit = async () => {
+    try {
+      if (tempUrl) {
+        setPending(true);
+        await gnFetch.put(`/roundtable-series/${seriesId}`, {
+          videoLink: tempUrl,
+        });
+        seriesData.refetch();
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setPending(false);
+      setTempUrl(null);
+      setEditUrl(false);
     }
-    setTempUrl(null);
-    setEditUrl(false);
   };
 
   if (seriesData.isSuccess) {
@@ -189,7 +200,12 @@ const AdminSeriesPage = () => {
                       Edit
                     </GeneralButton>
                   ) : (
-                    <GeneralButton onClick={onUrlSubmit}>Save</GeneralButton>
+                    <>
+                      <GeneralButton disabled={pending} onClick={onUrlSubmit}>
+                        Save
+                      </GeneralButton>
+                      {pending && <CircularProgress size={16} />}
+                    </>
                   )}
                 </TableCell>
               </TableRow>

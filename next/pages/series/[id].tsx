@@ -124,7 +124,7 @@ function Series({ series, imageBuffer }): JSX.Element {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   // get response from
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/roundtable-series/${params.id}`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/static/roundtable-series/${params.id}`
   );
   const series = await res.json();
 
@@ -132,7 +132,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   let imageBuffer;
   try {
     const driveImageAsBase64String = await getDriveImageAsString(
-      series.organisation.image.driveFileId
+      series.organisation.driveFileId
     );
     imageBuffer = driveImageAsBase64String;
   } catch (err) {
@@ -141,16 +141,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: { series, imageBuffer },
+    revalidate: 10,
   };
 };
 
 export async function getStaticPaths() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/roundtable-series/`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/static/roundtable-series`
   );
   const series = await res.json();
 
-  const paths = series.map((serie) => ({
+  const paths = series?.map((serie) => ({
     params: { id: serie.id },
   }));
 
