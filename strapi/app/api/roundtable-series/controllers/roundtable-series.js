@@ -9,10 +9,33 @@ const calendlyAxios = require("../../../util/calendlyAxios");
 const { drive } = require("../../../util/GoogleDrive");
 const getFormattedDate = require("../../../util/formatDate");
 
-async function filteredFind(user) {
+async function researchPartnerFind(user) {
   const entity = await strapi
     .query("organisation")
     .findOne({ id: user.organisation });
+
+  const organisation = sanitizeEntity(entity, {
+    model: strapi.models["organisation"],
+  });
+
+  const series = organisation.roundtable_series;
+  let res = new Array(series.length);
+
+  for (let i = 0; i < series.length; i++) {
+    const seriesEntity = await strapi
+      .query("roundtable-series")
+      .findOne({ id: series[i].id });
+    const newSeries = sanitizeEntity(seriesEntity, {
+      model: strapi.models["roundtable-series"],
+    });
+    res[i] = newSeries;
+  }
+
+  return res;
+}
+
+async function peerLeaderFind(user) {
+  const entities = await strapi.services["roundtables"].find();
 
   const organisation = sanitizeEntity(entity, {
     model: strapi.models["organisation"],
@@ -122,12 +145,12 @@ module.exports = {
     if ("user" in ctx.state) {
       const { ...user } = ctx.state.user;
       if (user.role.type === "research_partner") {
-        return filteredFind(user);
+        return researchPartnerFind(user);
       }
     }
 
     const entities = await strapi.services["roundtable-series"].find();
-    const allSeries = entities.map((entity) =>
+    let allSeries = entities.map((entity) =>
       sanitizeEntity(entity, {
         model: strapi.models["roundtable-series"],
       })
@@ -158,6 +181,18 @@ module.exports = {
           ...allSeries[i],
           ...matchingEventType,
         };
+      }
+    }
+
+    if ("user" in ctx.state) {
+      const { ...user } = ctx.state.user;
+      if (user.role.type === "peer_leader") {
+        // Filter to only return the series that a peer leader has been assigned to
+        allSeries = allSeries.filter((series) => {
+          return series.roundtables.find(
+            (roundtable) => roundtable.peerLeader === user.id
+          );
+        });
       }
     }
 
