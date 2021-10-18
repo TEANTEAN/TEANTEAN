@@ -18,6 +18,7 @@ import {
 import { signOut } from "next-auth/client";
 import SideNavItem from "./SideNavItem";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/client";
 
 const drawerWidth = 200;
 
@@ -57,6 +58,9 @@ const SideNav: React.FC<SideNavProps> = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const router = useRouter();
+  const [session] = useSession();
+
+  // Admin nav items
 
   const adminNavItemsTop = React.useMemo(
     () => [
@@ -83,7 +87,22 @@ const SideNav: React.FC<SideNavProps> = (props) => {
   );
   const adminNavItemsMiddle = React.useMemo(() => [], []);
 
-  const adminNavItemsBottom = React.useMemo(
+  // Peer leader nav items
+
+  const peerNavItemsTop = React.useMemo(
+    () => [
+      <SideNavItem
+        key="/peerleader/series"
+        text="Series"
+        icon={<AccessTimeIcon />}
+        link="/peerleader/series"
+      />,
+    ],
+    []
+  );
+
+  // Shared
+  const bottomItems = React.useMemo(
     () => [
       <SideNavItem
         key="logout"
@@ -98,6 +117,26 @@ const SideNav: React.FC<SideNavProps> = (props) => {
     []
   );
 
+  const getTopItems = () => {
+    if (!session?.user?.role) return [];
+    console.log("session role: ", session?.user?.role);
+    if (session.user.role === "Genyus Admin") {
+      return adminNavItemsTop;
+    } else {
+      return peerNavItemsTop;
+    }
+  };
+
+  const getMiddleItems = () => {
+    if (!session?.user?.role) return [];
+    console.log("session role: ", session?.user?.role);
+    if (session.user.role === "Genyus Admin") {
+      return adminNavItemsMiddle;
+    } else {
+      return [];
+    }
+  };
+
   const drawerContents = React.useMemo(
     () => (
       <Box className={classes.drawerContents}>
@@ -105,11 +144,11 @@ const SideNav: React.FC<SideNavProps> = (props) => {
         <Hidden xsDown>
           <Box className={classes.toolbar} />
         </Hidden>
-        <List>{adminNavItemsTop.map((navItem) => navItem)}</List>
+        <List>{getTopItems().map((navItem) => navItem)}</List>
         <Divider />
-        <List>{adminNavItemsMiddle.map((navItem) => navItem)}</List>
+        <List>{getMiddleItems().map((navItem) => navItem)}</List>
         <Box className={classes.drawerSpace} />
-        <List>{adminNavItemsBottom.map((navItem) => navItem)}</List>
+        <List>{bottomItems.map((navItem) => navItem)}</List>
       </Box>
     ),
     []

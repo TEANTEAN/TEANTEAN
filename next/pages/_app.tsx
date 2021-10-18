@@ -13,10 +13,11 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { useRouter } from "next/router";
 import useHasMounted from "util/hooks/useHasMounted";
 import AdminNavigation from "components/AdminNavigation";
-import withAuth from "util/hooks/withAuth";
+import withAuth, { ROLES } from "util/hooks/withAuth";
 import PublicNavigation from "components/PublicNavigation";
 import { SnackbarProvider } from "notistack";
 import Breadcrumbs from "components/Breadcrumbs";
+import { Typography } from "@material-ui/core";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,17 +27,32 @@ const queryClient = new QueryClient({
   },
 });
 
-const AdminWrapper = ({ Component, pageProps }) => {
+//  TODO: Research Partner wrapper
+
+const AuthenticatedWrapper = ({ Component, pageProps }) => {
+  const router = useRouter();
   const { session, haveAuthenticated } = withAuth({
     redirectTo: "/login",
   });
 
   if (session && haveAuthenticated()) {
+    if (
+      (router.pathname.includes("/admin") &&
+        session.user?.role === ROLES.ADMIN) ||
+      (router.pathname.includes("/peerleader") &&
+        session.user?.role === ROLES.PEER_LEADER)
+    ) {
+      // We're properly authenticated for the page we're trying to access
+      return (
+        <AdminNavigation>
+          <Breadcrumbs />
+          <Component {...pageProps} />
+        </AdminNavigation>
+      );
+    }
     return (
-      <AdminNavigation>
-        <Breadcrumbs />
-        <Component {...pageProps} />
-      </AdminNavigation>
+      // eslint-disable-next-line react/no-unescaped-entities
+      <Typography variant="h5">You don't have access to this page</Typography>
     );
   }
 
@@ -59,9 +75,12 @@ const AppWrapper = ({ Component, pageProps }) => {
     return <Component {...pageProps} />;
   }
 
-  // If user is logged in and the route includes /admin, render the admin navigation skeleton and page
-  if (router.pathname.includes("/admin")) {
-    return <AdminWrapper Component={Component} pageProps={pageProps} />;
+  // If user is logged in and the route includes any of the authenticated page urls, render the admin navigation skeleton and page
+  if (
+    router.pathname.includes("/admin") ||
+    router.pathname.includes("/peerleader")
+  ) {
+    return <AuthenticatedWrapper Component={Component} pageProps={pageProps} />;
   }
 
   // No login is required, so render the page as normal without the admin skeleton
