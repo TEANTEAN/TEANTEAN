@@ -99,6 +99,7 @@ const AdminSeriesPage = () => {
 
     const columns: GridColumns = [
       { field: "date", headerName: "Date", flex: 1 },
+      { field: "attendees", headerName: "Attendees", flex: 1 },
       {
         field: "details",
         headerName: "Details",
@@ -131,6 +132,9 @@ const AdminSeriesPage = () => {
         id: roundtable.id,
         date: new Date(roundtable.start_time).toLocaleString(),
         details: "hey",
+        attendees: roundtable.invitees_counter
+          ? roundtable.invitees_counter.active
+          : 0,
       })
     );
     return (
