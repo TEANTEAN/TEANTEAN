@@ -163,7 +163,11 @@ const AdminSeriesPage = () => {
               <TableRow>
                 <TableCell>Description</TableCell>
                 <TableCell>
-                  {description_html.replace("<p>", "").replace("</p>", "")}
+                  {!description_html ? (
+                    <p>No Description provided in Calendly Event</p>
+                  ) : (
+                    description_html.replace("<p>", "").replace("</p>", "")
+                  )}
                 </TableCell>
               </TableRow>
               <TableRow>
