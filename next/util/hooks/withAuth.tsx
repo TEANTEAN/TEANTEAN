@@ -3,6 +3,12 @@ import Router from "next/router";
 import { Session } from "next-auth";
 import { useSession } from "next-auth/client";
 
+export const ROLES = {
+  ADMIN: "Genyus Admin",
+  RESEARCHER: "Researcher",
+  PEER_LEADER: "Peer Leader",
+};
+
 export interface WithAuthHook {
   session: Session;
   haveAuthenticated: () => boolean;

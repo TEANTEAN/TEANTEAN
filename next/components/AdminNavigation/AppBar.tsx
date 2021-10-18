@@ -1,15 +1,16 @@
 /* eslint-disable */
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
-import AppBar from "@material-ui/core/AppBar";
+import MuiAppBar from "@material-ui/core/AppBar";
 import MenuIcon from "@material-ui/icons/Menu";
-import EventNoteIcon from '@material-ui/icons/EventNote';
+import EventNoteIcon from "@material-ui/icons/EventNote";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Link from "next/link";
 import { Button } from "@material-ui/core";
+import useIsAdmin from "util/hooks/useIsAdmin";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,15 +62,16 @@ interface AppBarProps {
   setSideNavOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function SideNav(props: AppBarProps) {
+export default function AppBar(props: AppBarProps) {
   const classes = useStyles();
+  const isAdmin = useIsAdmin();
 
   const handleDrawerToggle = () => {
     props.setSideNavOpen(true);
   };
 
   return (
-    <AppBar position="fixed" className={classes.appBar}>
+    <MuiAppBar position="fixed" className={classes.appBar}>
       <Toolbar>
         <IconButton
           color="inherit"
@@ -80,7 +82,7 @@ export default function SideNav(props: AppBarProps) {
         >
           <MenuIcon />
         </IconButton>
-        <Link href="/admin/series" passHref>
+        <Link href={isAdmin ? "/admin/series" : "/peerleader/series"} passHref>
           <Button className={classes.logo}>
             <Typography className={classes.bold}>gen</Typography>
             <Typography className={classes.boldYellow}>y</Typography>
@@ -91,18 +93,20 @@ export default function SideNav(props: AppBarProps) {
           </Button>
         </Link>
         <Box flexGrow={1} />
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          href="https://calendly.com/genyusroundtable"
-          onClick={handleDrawerToggle}
-          className={classes.calendlyIcon}
-        >
-          <EventNoteIcon/>
-          <Typography className={classes.calendlyText}> Calendly</Typography>
-        </IconButton>
+        {isAdmin && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            href="https://calendly.com/genyusroundtable"
+            onClick={handleDrawerToggle}
+            className={classes.calendlyIcon}
+          >
+            <EventNoteIcon />
+            <Typography className={classes.calendlyText}> Calendly</Typography>
+          </IconButton>
+        )}
       </Toolbar>
-    </AppBar>
+    </MuiAppBar>
   );
 }
