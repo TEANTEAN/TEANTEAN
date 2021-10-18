@@ -34,29 +34,6 @@ async function researchPartnerFind(user) {
   return res;
 }
 
-async function peerLeaderFind(user) {
-  const entities = await strapi.services["roundtables"].find();
-
-  const organisation = sanitizeEntity(entity, {
-    model: strapi.models["organisation"],
-  });
-
-  const series = organisation.roundtable_series;
-  let res = new Array(series.length);
-
-  for (let i = 0; i < series.length; i++) {
-    const seriesEntity = await strapi
-      .query("roundtable-series")
-      .findOne({ id: series[i].id });
-    const newSeries = sanitizeEntity(seriesEntity, {
-      model: strapi.models["roundtable-series"],
-    });
-    res[i] = newSeries;
-  }
-
-  return res;
-}
-
 module.exports = {
   async create(ctx) {
     try {
