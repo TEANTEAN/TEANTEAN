@@ -73,11 +73,19 @@ const SeriesPage = () => {
     setHideForm(false);
   };
 
+  // Table sort by latest create date
+  /*
+  const [sortModel, setSortModel] = React.useState([
+    {
+      field: "createdate",
+      sort: "desc",
+    },
+  ]); */
+
   const columns: GridColumns = [
     { field: "name", headerName: "Series", flex: 1 },
-    // { field: "researchpartner", headerName: "Research Partner", flex: 1 },
     { field: "organisation", headerName: "Organisation", flex: 1 },
-    // { field: "serieuri", headerName: "Link", flex: 1 },
+    { field: "createdate", headerName: "Create Date", flex: 1 },
     {
       field: "id",
       headerName: "Details",
@@ -106,9 +114,8 @@ const SeriesPage = () => {
       accountRows.push({
         id: serie.id,
         name: serie.name,
-        // researchpartner: serie?.researchpartner?.name,
         organisation: serie?.organisation?.name,
-        // serieuri: serie.seriesURI,
+        createdate: new Date(serie.createdAt).toLocaleString(),
       })
     );
   }
@@ -138,7 +145,13 @@ const SeriesPage = () => {
         </Fab>
       )}
 
-      <ResponsiveDataGrid rows={accountRows} columns={columns} />
+      <ResponsiveDataGrid
+        rows={accountRows}
+        columns={columns}
+        // sortModel={sortModel}
+        // onSortModelChange={(model) => setSortModel(model)}
+        // sortModel={[{ field: "createdate", sort: "desc" }]}
+      />
 
       <Dialog open={!hideForm} onClose={() => setHideForm(true)}>
         <CreateSeriesForm

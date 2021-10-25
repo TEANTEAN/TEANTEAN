@@ -48,12 +48,8 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: "8px",
     },
 
-    calendlyIcon: {
-      marginRight: theme.spacing(0.5),
-    },
     calendlyText: {
-      marginRight: "6px",
-      fontWeight: 500,
+      marginRight: "8px",
     },
   })
 );
@@ -94,17 +90,11 @@ export default function AppBar(props: AppBarProps) {
         </Link>
         <Box flexGrow={1} />
         {isAdmin && (
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            href="https://calendly.com/genyusroundtable"
-            onClick={handleDrawerToggle}
-            className={classes.calendlyIcon}
-          >
-            <EventNoteIcon />
-            <Typography className={classes.calendlyText}> Calendly</Typography>
-          </IconButton>
+          <Link href="https://calendly.com/event_types/user/me" passHref>
+            <Button className={classes.logo}>
+              <Typography className={classes.calendlyText}>Calendly</Typography>
+            </Button>
+          </Link>
         )}
       </Toolbar>
     </MuiAppBar>

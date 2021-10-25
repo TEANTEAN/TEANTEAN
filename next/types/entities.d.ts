@@ -81,6 +81,7 @@ interface OrganisationOmitUsers {
 }
 
 interface RoundtableSeries extends CalendlySeries {
+  researchpartner: string;
   id: string;
   videoLink: string;
   organisation: Organisation;
@@ -93,7 +94,7 @@ interface RoundtableSeries extends CalendlySeries {
   roundtablesFolderName: string;
   roundtablesFolderId: string;
   published_at: string;
-  createdAt: string;
+  createdAt: Date;
   updatedAt: string;
   roundtables: Roundtable[];
 }
